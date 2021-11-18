@@ -21,7 +21,7 @@ estafeta(nome, rating).
 % 0 <= Rating <= 5
 
 % 5. Definição preço de entrega
-preco(encomenda, transporteUtilizado).
+preco(Encomenda, TransporteUtilizado, P) :- P is Encomenda * TransporteUtilizado.
 
 
 % Meio de Transporte        Peso máximo das encomendas (Kg)        Velocidade Máxima (Km/h)
