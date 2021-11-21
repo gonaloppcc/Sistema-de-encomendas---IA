@@ -48,7 +48,7 @@ transporte(moto, 20, 35).
 transporte(carro, 100, 25).
 
 %Decide meio transporte
-
+%Está mal, falta a distancia e cálculo da velocidadeEntrega
 decideTransporte(_, encomenda(_, Peso, _, _, _, _), transporte(carro, 100, 25)) :- Peso > 20.
 decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua), transporte(bicicleta, 5, 10)) :-
     intervaloTempo(Data1, Data2, DataEntrega),
