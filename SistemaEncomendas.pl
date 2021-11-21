@@ -47,8 +47,28 @@ transporte(bicicleta, 5, 10).
 transporte(moto, 20, 35).
 transporte(carro, 100, 25).
 
+%Deviamos escolher um limite de horas de trabalho por dia
+%Porque ele não passa 24 horas na estrada
+calculaVelocidade(Distancia, data(Dia, Mes, Ano), Velocidade) :-
+    Horas is Dia*24+Mes*30*24+Ano*365*24,
+    Velocidade is Horas/Distancia.
+
+descobreCidade(Id, Cidade) :-
+    rua(Id, Cidade, _).
+
+distanciaPorRua(Rua, CidadeDest, Res) :-
+    descobreCidade(Rua, CidadeOrigem),
+    distancia(CidadeDest, CidadeOrigem, Res).
+
+decideTransporte(_, encomenda(_, Peso, _, _, _, _), transporte(carro, 100, 25)) :- Peso > 20.
+decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua), transporte(bicicleta, 5, 10)) :-
+    intervaloTempo(Data1, Data2, DataEntrega),
+    distanciaPorRua(Rua, Cidade, Distancia),
+    velocidadeEntrega is DataEntrega/Distancia,
+    velocidadeEntrega < 10.
+    
+
 %Decide meio transporte
-%Está mal, falta a distancia e cálculo da velocidadeEntrega
 decideTransporte(_, encomenda(_, Peso, _, _, _, _), transporte(carro, 100, 25)) :- Peso > 20.
 decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua), transporte(bicicleta, 5, 10)) :-
     intervaloTempo(Data1, Data2, DataEntrega),
