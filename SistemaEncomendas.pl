@@ -5,7 +5,7 @@
 % 1. Definição das ruas de uma freguesia
 %rua(id, freguesia, nome, ...). % Como é que definimos?
 rua(1, vilaDoConde, rua1). 
-rua(2, povoa_Varzim, rua1). 
+rua(2, povoaVarzim, rua1). 
 
 distancia(vilaDoConde, povoa_Varzim, 10). 
 
@@ -15,15 +15,17 @@ cliente(1, marco).
 
 
 % 3. Definição da encomenda
-%encomenda(clienteID, peso, volume, prazoEntrega, dataDeEncomenda, ruaEntrega). % Vai ser atribuido a um estafeta // dataDeEncomenda -> Data em que foi efetuada a encomenda pelo cliente
+%encomenda(encomendaID, clienteID, peso, volume, prazoEntrega, dataDeEncomenda, ruaID). % Vai ser atribuido a um estafeta // dataDeEncomenda -> Data em que foi efetuada a encomenda pelo cliente
 %                                   dias/horas, hora/min/dia/mes/ano
-encomenda(1, 20, 25, data(1,1,1), data(4,5,1), 2).
+encomenda(1, 1, 20, 25, data(1,1,1), data(4,5,1), 2).
 
+%entrega(estafeta, veiculo, encomenda, dataEntrega).
+entrega(1, carro, treta, rating, data(23/12/2019,18/40)).
 
 % 4. Definição do estafeta
 %Acho que é preciso atribuir a cidade de origem
-%estafeta(id, nome, rating, cidade).
-estafeta(1, diogo, 4, povoa_Varzim).
+%estafeta(id, nome, rating/num, cidade, nEncomendas).
+estafeta(1, diogo, 4/420, povoaVarzim, 2).
 
 %Atribuir ratings
 estafetaEntregaSucesso(estafeta(Id, Nome, 5), estafeta(Id, Nome, 5)):- !.
@@ -31,7 +33,7 @@ estafetaEntregaSucesso(estafeta(Id, Nome, Rating), estafeta(Id, Nome, RatingNovo
 
 
 estafetaEntregaFalhou(estafeta(Id, Nome, 0), estafeta(Id, Nome, 0)):- !.
-estafetaEntregaFalhou(estafeta(Id, Nome, Rating), estafeta(Id, Nome, RatingNovo)) :- RatingNovo is Rating-1.
+estafetaEntregaFalhot(estafeta(Id, Nome, Rating), estafeta(Id, Nome, RatingNovo)) :- RatingNovo is Rating-1.
 % Prazo não cumprido por parte do estafeta -> Diminuir o seu número de entregas
 
 % 0 <= Rating <= 5
@@ -105,3 +107,26 @@ estafetaMaisEcologico(Estafeta) :- findAll(estafeta, include(estafeta)).
 %
 %
 %
+
+
+
+
+l([1/[encomenda(2,qw,eqw,ads,asd,ads)], 2/[encomenda(3,lkj,kink,ads,çoadj,123)]]).
+
+% L = lista com pares(idEstafeta,Entregas).
+estafeta_clientes(ID, [ID/entregas|T], Clientes) :-
+    clientes_entregues(entregas, Clientes)
+.
+estafeta_clientes(ID, [ID2/entregas|T], Clientes) :-
+    ID \= ID2,
+    estafeta_clientes(ID,T,Clientes)
+.
+
+clientes_entregues([],R,L).
+clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
+    not(member(Cliente,L)),
+    clientes_entregues(T,[Cliente|R],L)
+.
+clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
+    clientes_entregues(T,R,L)
+.
