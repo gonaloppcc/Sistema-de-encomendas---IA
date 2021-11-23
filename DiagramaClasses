@@ -1,0 +1,80 @@
+Localização
+-Cidade
+-Rua
+
+Cliente 
+-Id/Nome
+
+Encomenda 
+-Id
+-Cliente
+-Data pedido?
+-Prazo
+-Peso
+-Destino
+
+Estafeta
+-Nome/Id
+
+Entrega
+-Estafeta
+-Data Entrega
+-Encomenda (ID)
+-Meio transporte
+-Satisfação 
+
+Datas
+Comparar para ver se pertence a um dia (query 4)
+
+Querys
+1-> Nas entregas
+Lista Vazia :- Nenhum
+Calcula o número de vezes que o primeiro estafeta usa meio ecológico
+Compara com o resultado da cauda
+
+2-> Nas entregas
+Cliente, ?id encomendas? -> Lista de estafetas 
+Verifica se encomenda atual é para o cliente. Se sim, adiciona à lista
+
+3-> Nas entregas
+Estafeta -> Lista de clientes
+Verifica se entrega da cabeça é deste estafeta
+    sim->Vai para a lista de saída
+    não->continua
+
+4->Valor faturado
+Dia->Valor
+Verifica se data entrega coincide com dia do argumento
+->sim, soma ao valor
+
+5->Quais as zonas
+nada -> Zona com mais entrega
+Vê quantas entregas foram para a zona da entrega atual. 
+Compara com o resultado da cauda
+
+6->Classificação média satisfação
+Nome Estafeta ->  Float (média)
+Percorre entregas para calcular soma das satisfações que estão associadas ao estafeta
+
+Por causa da 7 e 8, acho que faz sentido haver uma função que filtra as encomendas por período de tempo
+
+7-> número de entregas por meios de transporte em intervalo de tempo
+DataInicio, DataFim -> (total bicicleta, total mota, total carro)
+Entrega pertence ao intervalo de tempo
+->sim, aumenta número em função do veículo
+->nao, continua
+
+8->número total num intervalo de tempo
+DataInicio, DataFim -> int (número encomendas entregas)
+Parecida com anterior
+
+9-> Encomendas entregues não entregues num período de tempo
+DataInicio, DataFim -> (int, int) (encomendas entregas/não entregues)
+
+10-> Peso total por estafeta num dia
+Dia -> Estafeta/peso
+Encomenda pertence a dia
+Tenho de pensar
+
+
+
