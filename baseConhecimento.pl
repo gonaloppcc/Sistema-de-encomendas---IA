@@ -17,12 +17,12 @@ cliente(1, marco).
 encomenda(1, 1, 20, 25, data(1,1,1), data(4,5,1), 2).
 
 
-%entrega: estafeta, veiculo, encomendaID, dataEntrega -> {V,F}
-entrega(1, carro, 1, rating, data(23/12/2019,18/40)).
+%entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega -> {V,F}
+entrega(2, carro, 1, rating, data(23/12/2019,18/40)).
 
 
 %estafeta: id, nome, rating/num, cidade, nEncomendas -> {V,F}
-estafeta(1, diogo, 4/420, povoaVarzim, 2).
+estafeta(2, diogo, 4/420, povoaVarzim, 2).
 
 
 %transporte: nome, pesoMaximo, velMax -> {V,F}
