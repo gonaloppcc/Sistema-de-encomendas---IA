@@ -1,0 +1,5 @@
+test(encomenda(D1/M1/A1,J),[encomenda(D/M/A,K)|T],[encomenda(D1/M1/A1,J),encomenda(D/M/A,K)|T]):-
+    D1 >= D,
+    
+.
+test(X,)

@@ -68,7 +68,7 @@ intervaloTempo(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(DiaEntrega, 
 clientes_entregues([],R,L).
 clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
     not(member(Cliente,L)),
-    clientes_entregues(T,[Cliente|R],L)
+    clientes_entregues(T,L)
 .
 clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
     clientes_entregues(T,R,L)
