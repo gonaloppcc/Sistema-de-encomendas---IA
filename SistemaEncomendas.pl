@@ -121,12 +121,12 @@ estafeta_clientes(ID, [ID2/entregas|T], Clientes) :-
     ID \= ID2,
     estafeta_clientes(ID,T,Clientes)
 .
-
-clientes_entregues([],R,L).
-clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
+clientes_entregues([],[]).
+clientes_entregues([encomenda(Cliente,_,_,_,_)|T],[Cliente|L]) :-
     not(member(Cliente,L)),
-    clientes_entregues(T,[Cliente|R],L)
+    clientes_entregues(T,L)
 .
-clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
-    clientes_entregues(T,R,L)
+clientes_entregues([encomenda(Cliente,_,_,_,_)|T],[NCliente|L]) :-
+    Cliente \= NCliente,
+    clientes_entregues(T,[NCliente|L])
 .
