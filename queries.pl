@@ -1,5 +1,6 @@
 
 :- include('baseConhecimento.pl').
+:- include('SistemaEncomendas.pl').
 
 /* TODO: Falta resumir os objetivos/queries aqui
 *
@@ -56,5 +57,20 @@ estafeta_clientes(ID, [ID2/entregas|T], Clientes) :-
     estafeta_clientes(ID,T,Clientes).
 
 
-
-
+/*
+ *  Query 5
+ *
+ *  Retorna uma lista com todos os pares ruas/(vezes que foi entregue)
+ *
+ *  1º: Lista com pares estafeta/entregas
+ *  2º: Resultado
+ *
+ * TODO: Corrigir o facto de ao precionar ";" a função continua a vomitar valores
+ *       apesar de serem sempre iguais.
+ */
+ruaMaisEntregue([], []).
+ruaMaisEntregue([_/Entregas|T], NovaL) :-
+    ruaMaisEntregue(T, L),
+    contaEntregasCidade(Entregas, Contadas),
+    addCounterCidadeLista(Contadas,L, NovaL)
+.

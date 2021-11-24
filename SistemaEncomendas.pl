@@ -170,8 +170,60 @@ entrega_cliente(EncID, ClienteID) :-
 % estafeta_entregou_encomenda: encomendaID, estafetaID -> {V,F}
 estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _).
 
+/*
+ *  Percorre uma lista de pares Rua/Counter e retorna o que tem o maior counter
+ *
+ *  Nota: Esta função não foi implementada está aqui caso queiramos que a função
+ *        ruaMaisEntregue retorne apenas a rua mais entregue
+ *  
+ *  1º: Lista de pares Rua/Counter a ser percorrida
+ *  2º: Resultado
+ */
 calculaMaior([], 0/0).
 calculaMaior([Zona/NEnts|T], RZona/RNEnts) :-
     calculaMaior(T, TempZona/TempNEnts),
     veMaior(Zona/NEnts, TempZona/TempNEnts, RZona/RNEnts)
+.
+
+/*
+ *  Adiciona N ao counter da rua ou adiciona o par Rua/N caso a rua não exista na lista
+ *  
+ *  1º: Par Rua/N que vai ser adicionado
+ *  2º: Lista a que vai ser adicionado
+ *  3º: Resultado
+ */
+addCounterCidade(Rua/N, [], [Rua/N]).
+addCounterCidade(Rua/N, [Rua/N1|T], [Rua/N2|T]) :-
+    N2 is N+N1
+.
+addCounterCidade(Rua/N, [OutraRua/N1|T], [OutraRua/N1|L]) :-
+    OutraRua \= Rua,
+    addCounterCidade(Rua/N, T, L)
+.
+
+/*
+ *  Semelhante a addCounterCidade mas faz para uma lista de pares Rua/N
+ *  
+ *  1º: Lista de pares a adicionar
+ *  2º: Lista a que vai ser adicionado
+ *  3º: Resultado
+ */
+addCounterCidadeLista([],L,L).
+addCounterCidadeLista([Rua/N|T], L, R) :-
+    addCounterCidade(Rua/N,L,NovaL),
+    addCounterCidadeLista(T, NovaL, R)
+.
+
+/*
+ *  Percorre uma lista de entregas e retorna uma lista de pares Rua/Counter onde counter
+ *  é o número de vezes que Rua apareceu na lista de entregas
+ *
+ *  1º: Lista de entregas
+ *  2º: Resultado
+ */
+contaEntregasCidade([],[]).
+contaEntregasCidade([entrega(_,_,IDEnc,_,_,_,_)|T], NovaL) :-
+    contaEntregasCidade(T,L),
+    encomenda(IDEnc,_,_,_,_,_, Rua),
+    addCounterCidade(Rua/1, L, NovaL)
 .
