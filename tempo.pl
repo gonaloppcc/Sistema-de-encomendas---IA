@@ -6,7 +6,7 @@ intervaloTempo(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(DiaEntrega, 
     MesEntrega is Mes2-Mes1,
     AnoEntrega is Ano2-Ano1.
 
-estaEntreDuasDatas((D1, D2), entrega(_, _, _, _, Data, _)) :-
+estaEntreDuasDatas((D1, D2), entrega(_, _, _, _, Data, _), _) :-
     estaEntreDuasDatas(D1, D2, Data).
 
 estaEntreDuasDatas(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(Diat, Mest, Anot)) :-

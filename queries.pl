@@ -62,6 +62,15 @@ numeroEncomendas(Data1, Data2, Encomendas, NTotal) :-
     tamLista(EncomendasFiltradas, NTotal).
 
 %Versão sem Lista
+%Falta testar, não está a dar bem não sei porquê, é no *estaEntreDuasDatas*
 numeroEncomendas(Data1, Data2, NTotal) :-
-    findall(Entrega, estaEntreDuasDatas((D1, D2), Entrega), EncomendasFiltradas),
+    findall(Entrega, estaEntreDuasDatas((D1, D2), Entrega, o), EncomendasFiltradas),
     tamLista(EncomendasFiltradas, NTotal).
+
+
+%Query 10
+%Mas ele duplica uma entrega do estafeta 2, não sei se o problema é da baseConhecimento, mas não parece.
+%Mas está na entregasDoEstafeta
+totalPesoEstafeta(IdEstafeta, PesoTotal) :-
+  entregasDoEstafeta(IdEstafeta, IdsEnTregasFeitas),
+  calculaPesoPorEncomendas(IdsEnTregasFeitas, PesoTotal).

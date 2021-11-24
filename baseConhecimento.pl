@@ -16,12 +16,15 @@ cliente(1, marco).
 %                                   dias/horas, hora/min/dia/mes/ano
 encomenda(1, 1, 20, 25, data(1,1,1), data(4,5,1), 2).
 encomenda(2, 1, 20, 25, data(1,1,1), data(4,5,10), 1).
+encomenda(3, 1, 20, 25, data(1,1,1), data(4,5,10), 1).
+encomenda(4, 1, 21, 25, data(1,1,1), data(4,5,10), 1).
 
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
 entrega(2, carro, 1, rating, data(23,12,2019), hora(18,40)).
-entrega(2, carro, 1, rating, data(23,12,2), hora(18,40)).
-entrega(3, bicicleta, 1, rating, data(23,12,2039),hora(18,40)).
+entrega(2, carro, 2, rating, data(23,12,2), hora(18,40)).
+entrega(2, carro, 4, rating, data(23,12,2), hora(18,40)).
+entrega(3, bicicleta, 3, rating, data(23,12,2039),hora(18,40)).
 
 
 %estafeta: id, nome, rating/num, cidade, nEncomendas -> {V,F}
@@ -42,8 +45,8 @@ l([
   ]).
 % Lista de encomendas
 enc([
-    encomenda(2,qw,eqw,ads,asd,ads),
-    encomenda(3,lkj,kink,ads,çoadj,123)
+    encomenda(2,qw,eqw,ads,asd,ads, 4),
+    encomenda(3,lkj,kink,ads,çoadj,123, 4)
   ]).
 % Lista de entregas
 entr([

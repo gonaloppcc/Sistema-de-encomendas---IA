@@ -18,7 +18,8 @@ estafetaEntregaFalhot(estafeta(Id, Nome, Rating), estafeta(Id, Nome, RatingNovo)
 
 
 % 5. Definição preço de entrega
-preco(Encomenda, TransporteUtilizado, P) :- P is Encomenda * TransporteUtilizado.
+preco(encomenda(_, carro, _, _, _, _), P) :- P is Encomenda * TransporteUtilizado.
+entrega(2, carro, 1, rating, data(23,12,2), hora(18,40)).
 
 
 % 6. Meios de transporte
@@ -45,8 +46,8 @@ decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, 
     
 
 %Decide meio transporte
-decideTransporte(_, encomenda(_, Peso, _, _, _, _), transporte(carro, 100, 25)) :- Peso > 20.
-decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua), transporte(bicicleta, 5, 10)) :-
+decideTransporte(_, encomenda(_, Peso, _, _, _, _, _), transporte(carro, 100, 25)) :- Peso > 20.
+decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua, _), transporte(bicicleta, 5, 10)) :-
     intervaloTempo(Data1, Data2, DataEntrega),
     distancia(Rua, Cidade, Distancia),
     velocidadeEntrega is DataEntrega/Distancia,
@@ -124,17 +125,6 @@ entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], Resto) :-
 
 
 
-%Não sei o que é
-
-clientes_entregues([],R,L).
-clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
-    not(member(Cliente,L)),
-    clientes_entregues(T,L)
-.
-clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
-    clientes_entregues(T,R,L)
-.
-
 /* 
 *  Conta o número de vezes que cada estafeta utilizou cada veículo retornando uma lista com esta ordem Bicicleta, Mota, Carro
 *
@@ -175,7 +165,7 @@ encomendas_cliente(ClienteID, EncomendaID) :-
 % Identifica que cliente fez a encomenda
 % entrega_cliente: EncomendaID, ClienteID -> {V,F}
 entrega_cliente(EncID, ClienteID) :- 
-  encomenda(EncID, ClienteID, _, _, _, _, _), entrega(_, _, EncID, _, _).
+  encomenda(EncID, ClienteID, _, _, _, _, _), entrega(_, _, EncID, _, _, _).
 
 % Identifica que estafeta entregou a encomenda
 % estafeta_entregou_encomenda: encomendaID, estafetaID -> {V,F}
@@ -186,3 +176,21 @@ calculaMaior([Zona/NEnts|T], RZona/RNEnts) :-
     calculaMaior(T, TempZona/TempNEnts),
     veMaior(Zona/NEnts, TempZona/TempNEnts, RZona/RNEnts)
 .
+
+%Query 10
+%Retorna as entregas feitas pelo Estafeta
+entregasDoEstafeta(IdEstafeta, IdsEnTregasFeitas):-
+  findall(X, selecionaIdsEncomendas(X, IdEstafeta), IdsEnTregasFeitas).
+    
+    
+selecionaIdsEncomendas(X, IdEstafeta) :- 
+  entrega(IdEstafeta, _, X, _, _, _).
+
+%Recebe as entregas, procura as encomendas e soma pesos
+%Está certa
+calculaPesoPorEncomendas([], 0). 
+calculaPesoPorEncomendas([ IdEncomenda|Resto], PesoTotal):- 
+    encomenda(IdEncomenda, _, Peso, _, _, _, _),
+    calculaPesoPorEncomendas(Resto, PesoNovo),
+    PesoTotal is PesoNovo + Peso.
+   
