@@ -73,3 +73,18 @@ clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
 clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
     clientes_entregues(T,R,L)
 .
+
+
+% Identifica que encomendas um cliente fez.
+% encomendas_cliente: clienteID, encomendaID* -> {V, F}
+encomendas_cliente(ClienteID, EncomendaID) :- 
+  findall(EncID, entrega_cliente(EncID, ClienteID), EncomendaID).
+
+% Identifica que cliente fez a encomenda
+% entrega_cliente: EncomendaID, ClienteID -> {V,F}
+entrega_cliente(EncID, ClienteID) :- 
+  encomenda(EncID, ClienteID, _, _, _, _, _), entrega(_, _, EncID, _, _).
+
+% Identifica que estafeta entregou a encomenda
+% estafeta_entregou_encomenda: encomendaID, estafetaID -> {V,F}
+estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _).
