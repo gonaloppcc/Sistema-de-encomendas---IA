@@ -135,6 +135,37 @@ clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-
     clientes_entregues(T,R,L)
 .
 
+/* 
+*  Conta o número de vezes que cada estafeta utilizou cada veículo retornando uma lista com esta ordem Bicicleta, Mota, Carro
+*
+*  1º: Lista de entregas do estafeta
+*  2º: Número de vezes que utilizou bicicleta
+*  3º: Número de vezes que utilizou moto
+*  4º: Número de vezes que utilizou carro
+*/
+contaVeiculos([],0,0,0).
+contaVeiculos([entrega(_,bicicleta,_,_,_)|T], NovoNBicla, NMoto, NCarro) :-
+    contaVeiculos(T, NBicla, NMoto, NCarro),
+    NovoNBicla is NBicla + 1
+.
+contaVeiculos([entrega(_,moto,_,_,_)|T], NBicla, NovoNMoto, NCarro) :-
+    contaVeiculos(T, NBicla, NMoto, NCarro),
+    NovoNMoto is NMoto + 1
+.
+contaVeiculos([entrega(_,carro,_,_,_)|T], NBicla, NMoto, NovoNCarro) :-
+    contaVeiculos(T,NBicla,NMoto,NCarro),
+    NovoNCarro is NCarro + 1
+.
+
+/*
+*  Vê dos dois estafetas tem maior nº de usos e retorna o maior...
+*
+*  1º: (ID do estafeta)                                       /    (Nº de vezes que utilizou o veículo)
+*  2º: (ID do outro estafeta)                                 /    (Nº de vezes que utilizou o veículo)
+*  3º: (ID do estafeta que utilizou mais vezes o veículo)     /    (Nº de vezes que utilizou o veículo)
+*/
+veMaior(ID1/N1, ID2/N2, ID1/N1) :- N1 > N2.
+veMaior(ID1/N1, ID2/N2, ID2/N2) :- N2 >= N1.
 
 % Identifica que encomendas um cliente fez.
 % encomendas_cliente: clienteID, encomendaID* -> {V, F}
@@ -149,3 +180,9 @@ entrega_cliente(EncID, ClienteID) :-
 % Identifica que estafeta entregou a encomenda
 % estafeta_entregou_encomenda: encomendaID, estafetaID -> {V,F}
 estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _).
+
+calculaMaior([], 0/0).
+calculaMaior([Zona/NEnts|T], RZona/RNEnts) :-
+    calculaMaior(T, TempZona/TempNEnts),
+    veMaior(Zona/NEnts, TempZona/TempNEnts, RZona/RNEnts)
+.
