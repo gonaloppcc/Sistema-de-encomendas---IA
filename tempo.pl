@@ -6,6 +6,8 @@ intervaloTempo(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(DiaEntrega, 
     MesEntrega is Mes2-Mes1,
     AnoEntrega is Ano2-Ano1.
 
+estaEntreDuasDatas((D1, D2), entrega(_, _, _, _, Data, _)) :-
+    estaEntreDuasDatas(D1, D2, Data).
 
 estaEntreDuasDatas(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(Diat, Mest, Anot)) :-
     Ano1 =< Anot,
@@ -18,7 +20,8 @@ estaEntreDuasDatas(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(Diat, Me
     Ano1 < Anot,
     Anot < Ano2.
 
-%Isto não está a verificar
+
+%Validação das datas
 data(D, 1, A) :- D =< 31, D > 0,  A> 0.
 data(D, 2, A) :- D < 30, D > 0,  A> 0.
 data(D, 3, A) :- D =< 31, D > 0, A> 0.

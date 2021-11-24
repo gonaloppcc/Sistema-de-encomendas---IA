@@ -57,17 +57,12 @@ decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, 
 ecologicos([bicicleta, moto, carro]).
 
 
-
-%Devolve Entregas numa dada data
-%Recebe as duas datas e entregas todas.
-%Devolve as dessas Datas
+%Funções auxiliares
 pertencem([], _).
 pertencem([L1|R1], Tudo):-
     membro(L1, Tudo),
     \+ membro(L1, R1),
     pertencem(R1, Tudo).
-
-
 
 pertencem([L1|R1], Tudo):-
     \+ membro(L1, Tudo), !, false.
@@ -76,10 +71,11 @@ membro(X, [X|_]).
 membro(X, [_|Xs]):-
         membro(X, Xs).
 
-sublist( [], _ ).
-sublist( [X|XS], [X|XSS] ) :- sublist( XS, XSS ).
-sublist( [X|XS], [_|XSS] ) :- sublist( [X|XS], XSS ).
 
+tamLista([], 0).
+tamLista([X|R], N) :- 
+    tamLista(R, TamNew),
+    N is TamNew+1.
 
 entregasNC([entrega(2, carro, 1, rating, data(23,12,2), hora(18,40)), entrega(2, carro, 1, rating, data(23,12,3000), hora(18,40)), entrega(2, carro, 1, rating, data(23,12,2019), hora(18,40)), entrega(3, bicicleta, 1, rating, data(23,12,2039),hora(18,40))]).
 entregasC([entrega(2, carro, 1, rating, data(23,12,4), hora(18,40)),  entrega(2, carro, 1, rating, data(23,12,2019), hora(18,40)), entrega(3, bicicleta, 1, rating, data(23,12,2039),hora(18,40))]).
@@ -88,30 +84,45 @@ entregasC([entrega(2, carro, 1, rating, data(23,12,4), hora(18,40)),  entrega(2,
 
 %Encomendas - fora das duas datas = EncomendasFiltradas
 
-entregaEntreDatas(D1, D2, Encomendas, EncomendasFiltradas) :- findall(X, entregaEntreDatasFindAll(D1, D2, X)).
+entregaEntreDatas(D1, D2, Encomendas, EncomendasFiltradas) :- %findall(X, entregaEntreDatasFindAll(D1, D2, X)).
     %Todas as encomendas devem pertencer a EncomendasFiltradas
-    %pertencem(EncomendasFiltradas, Encomendas),
-    %entregaEntreDatasAux(D1, D2, Encomendas, EncomendasFiltradas).
+    %%pertencem(EncomendasFiltradas, Encomendas),
+    entregaEntreDatasAux(D1, D2, Encomendas, Encomendas, EncomendasFiltradas).
+
+%Versão que não recebe encomendas
+entregaEntreDatas(D1, D2, EncomendasFiltradas) :- %findall(X, entregaEntreDatasFindAll(D1, D2, X)).
+    entregaEntreDatasAux(D1, D2, EncomendasFiltradas).
+%
+%entrega(2, carro, 1, rating, data(23,12,4), hora(18,40)).
+%entregaEntreDatas2(D1, D2, EncomendasFiltradas) :- 
+%    findall(Entrega, entregaEntreDatasFindAll(D1, D2, Entrega), EncomendasFiltradas).
 
 %
-entrega(2, carro, 1, rating, data(23,12,4), hora(18,40)).
-entregaEntreDatas2(D1, D2, EncomendasFiltradas) :- 
-    findall(Entrega, entregaEntreDatasFindAll(D1, D2, Entrega), EncomendasFiltradas).
-
-%
-entregaEntreDatasFindAll(D1, D2, entrega(_, _, _, _, Data, _)):- estaEntreDuasDatas(D1, D2, Data).
+%entregaEntreDatasFindAll(D1, D2, entrega(_, _, _, _, Data, _)):- estaEntreDuasDatas(D1, D2, Data).
 
 %Todas as encondas filtradas tem de estar nas Encomendas.
-entregaEntreDatasAux(_, _, [], _).
-entregaEntreDatasAux(D1, D2, [entrega(X1, X2, X3, X4, Data, X5)|L], [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
+entregaEntreDatasAux(_, _, X, [], Filtrada) :- pertencem(Filtrada, X).
+entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
     estaEntreDuasDatas(D1, D2, Data),
-    entregaEntreDatasAux(D1, D2, L, Resto).
+    entregaEntreDatasAux(D1, D2, X, L, Resto).
+
+%Versão sem receber listas
+
+entregaEntreDatasAux(_, _, []).
+entregaEntreDatasAux(D1, D2, [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
+    estaEntreDuasDatas(D1, D2, Data),
+    entregaEntreDatasAux(D1, D2, Resto).
 
 
+entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
+    estaEntreDuasDatas(D1, D2, Data),
+    entregaEntreDatasAux(D1, D2, X, L, Resto).
 
-entregaEntreDatasAux(D1, D2, [entrega(X1, X2, X3, X4, Data, X5)|L], Resto) :-
+entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], Resto) :-
     \+ estaEntreDuasDatas(D1, D2, Data),
-    entregaEntreDatasAux(D1, D2, L, Resto).
+    entregaEntreDatasAux(D1, D2, X, L, Resto).
+
+
 
 %Não sei o que é
 

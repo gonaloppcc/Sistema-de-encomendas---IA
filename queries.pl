@@ -99,5 +99,12 @@ estafeta_clientes(ID, [ID2/entregas|T], Clientes) :-
     estafeta_clientes(ID,T,Clientes).
 
 
+%Query 8
+numeroEncomendas(Data1, Data2, Encomendas, NTotal) :-
+    entregaEntreDatas(Data1, Data2, Encomendas, EncomendasFiltradas),
+    tamLista(EncomendasFiltradas, NTotal).
 
-
+%Versão sem Lista
+numeroEncomendas(Data1, Data2, NTotal) :-
+    findall(Entrega, estaEntreDuasDatas((D1, D2), Entrega), EncomendasFiltradas),
+    tamLista(EncomendasFiltradas, NTotal).
