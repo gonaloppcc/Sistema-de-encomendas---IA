@@ -39,4 +39,42 @@ l([
     1/[encomenda(2,qw,eqw,ads,asd,ads)],
     2/[encomenda(3,lkj,kink,ads,çoadj,123)]
   ]).
-
+% Lista de encomendas
+enc([
+    encomenda(2,qw,eqw,ads,asd,ads),
+    encomenda(3,lkj,kink,ads,çoadj,123)
+  ]).
+% Lista de entregas
+entr([
+    entrega(o,carro,q,w,e),
+    entrega(w,carro,q,s,d),
+    entrega(d,moto,s,ad,s),
+    entrega(as,bicicleta,sa,s,d),
+    entrega(oeqw,bicicleta,21,qw,d)
+    ]).
+% Lista de estafeta/entregas
+esEnt(
+[
+  1/
+    [
+      entrega(o,carro,q,w,e),
+      entrega(w,carro,q,s,d),
+      entrega(as,bicicleta,sa,s,d),
+      entrega(as,bicicleta,sa,s,d)
+    ],
+  2/
+    [
+      entrega(d,moto,s,ad,s),
+      entrega(d,moto,s,ad,s),
+      entrega(d,moto,s,ad,s),
+      entrega(as,bicicleta,sa,s,d)
+    ],
+  3/
+    [
+      entrega(as,bicicleta,sa,s,d),
+      entrega(as,bicicleta,sa,s,d),
+      entrega(as,bicicleta,sa,s,d),
+      entrega(as,bicicleta,sa,s,d),
+      entrega(d,moto,s,ad,s)
+    ]
+]).
