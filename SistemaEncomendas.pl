@@ -169,3 +169,9 @@ entrega_cliente(EncID, ClienteID) :-
 % Identifica que estafeta entregou a encomenda
 % estafeta_entregou_encomenda: encomendaID, estafetaID -> {V,F}
 estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _).
+
+calculaMaior([], 0/0).
+calculaMaior([Zona/NEnts|T], RZona/RNEnts) :-
+    calculaMaior(T, TempZona/TempNEnts),
+    veMaior(Zona/NEnts, TempZona/TempNEnts, RZona/RNEnts)
+.

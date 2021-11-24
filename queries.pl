@@ -1,7 +1,7 @@
 
 :- include('baseConhecimento.pl').
 
-/* Falta resumir os objetivos/queries aqui
+/* TODO: Falta resumir os objetivos/queries aqui
 *
 *  Query 1
 *  Identificar o estafeta que utilizou mais vezes um meio de transporte mais ecológico;
