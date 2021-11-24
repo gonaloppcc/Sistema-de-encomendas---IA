@@ -54,3 +54,7 @@ estafeta_clientes(ID, [ID/entregas|T], Clientes) :-
 estafeta_clientes(ID, [ID2/entregas|T], Clientes) :-
     ID \= ID2,
     estafeta_clientes(ID,T,Clientes).
+
+
+
+
