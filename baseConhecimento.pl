@@ -45,6 +45,7 @@ enc([
 entr([
     entrega(o,carro,q,w,e),
     entrega(w,carro,q,s,d),
+    entrega(o,carro,q,w,e),
     entrega(d,moto,s,ad,s),
     entrega(as,bicicleta,sa,s,d),
     entrega(oeqw,bicicleta,21,qw,d)
@@ -54,24 +55,24 @@ esEnt(
 [
   1/
     [
-      entrega(o,carro,q,w,e),
-      entrega(w,carro,q,s,d),
-      entrega(as,bicicleta,sa,s,d),
-      entrega(as,bicicleta,sa,s,d)
+      entrega(1,carro,1,2,data(23,2,2021)),
+      entrega(1,carro,5,3,data(30,3,2021)),
+      entrega(1,bicicleta,7,2,data(4,4,2021)),
+      entrega(1,bicicleta,8,2,data(7,4,2021))
     ],
   2/
     [
-      entrega(d,moto,s,ad,s),
-      entrega(d,moto,s,ad,s),
-      entrega(d,moto,s,ad,s),
-      entrega(as,bicicleta,sa,s,d)
+      entrega(2,moto,2,4,s),
+      entrega(2,moto,4,4,s),
+      entrega(2,moto,6,5,s),
+      entrega(2,bicicleta,3,4,d)
     ],
   3/
     [
-      entrega(as,bicicleta,sa,s,d),
-      entrega(as,bicicleta,sa,s,d),
-      entrega(as,bicicleta,sa,s,d),
-      entrega(as,bicicleta,sa,s,d),
-      entrega(d,moto,s,ad,s)
+      entrega(3,bicicleta,sa,s,d),
+      entrega(3,bicicleta,sa,s,d),
+      entrega(3,bicicleta,sa,s,d),
+      entrega(3,bicicleta,sa,s,d),
+      entrega(3,moto,s,ad,s)
     ]
 ]).
