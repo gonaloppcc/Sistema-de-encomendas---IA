@@ -3,6 +3,7 @@
 % Todos os ids usados devem ser únicos! De forma a que a unificação só ocorra uma vez no maximo para um id.
 
 :- include('baseConhecimento.pl').
+:- include('tempo.pl').
 
 %Atribuir ratings
 estafetaEntregaSucesso(estafeta(Id, Nome, 5), estafeta(Id, Nome, 5)):- !.
@@ -56,14 +57,63 @@ decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, 
 ecologicos([bicicleta, moto, carro]).
 
 
-%Datas
-data(Dia, Mes, Ano).
-%Calcula intervalo de tempo entre duas datas
-intervaloTempo(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(DiaEntrega, MesEntrega, AnoEntrega)) :- 
-    DiaEntrega is Dia2-Dia1,
-    MesEntrega is Mes2-Mes1,
-    AnoEntrega is Ano2-Ano1.
 
+%Devolve Entregas numa dada data
+%Recebe as duas datas e entregas todas.
+%Devolve as dessas Datas
+pertencem([], _).
+pertencem([L1|R1], Tudo):-
+    membro(L1, Tudo),
+    \+ membro(L1, R1),
+    pertencem(R1, Tudo).
+
+
+
+pertencem([L1|R1], Tudo):-
+    \+ membro(L1, Tudo), !, false.
+
+membro(X, [X|_]).
+membro(X, [_|Xs]):-
+        membro(X, Xs).
+
+sublist( [], _ ).
+sublist( [X|XS], [X|XSS] ) :- sublist( XS, XSS ).
+sublist( [X|XS], [_|XSS] ) :- sublist( [X|XS], XSS ).
+
+
+entregasNC([entrega(2, carro, 1, rating, data(23,12,2), hora(18,40)), entrega(2, carro, 1, rating, data(23,12,3000), hora(18,40)), entrega(2, carro, 1, rating, data(23,12,2019), hora(18,40)), entrega(3, bicicleta, 1, rating, data(23,12,2039),hora(18,40))]).
+entregasC([entrega(2, carro, 1, rating, data(23,12,4), hora(18,40)),  entrega(2, carro, 1, rating, data(23,12,2019), hora(18,40)), entrega(3, bicicleta, 1, rating, data(23,12,2039),hora(18,40))]).
+%Para testar:
+% entregaEntreDatas(data(20, 12, 2019), data(25, 12, 2019), [entrega(2, carro, 1, rating, data(23,12,2019), hora(18,40)), entrega(3, bicicleta, 1, rating, data(23,12,2039),hora(18,40))], X).
+
+%Encomendas - fora das duas datas = EncomendasFiltradas
+
+entregaEntreDatas(D1, D2, Encomendas, EncomendasFiltradas) :- findall(X, entregaEntreDatasFindAll(D1, D2, X)).
+    %Todas as encomendas devem pertencer a EncomendasFiltradas
+    %pertencem(EncomendasFiltradas, Encomendas),
+    %entregaEntreDatasAux(D1, D2, Encomendas, EncomendasFiltradas).
+
+%
+entrega(2, carro, 1, rating, data(23,12,4), hora(18,40)).
+entregaEntreDatas2(D1, D2, EncomendasFiltradas) :- 
+    findall(Entrega, entregaEntreDatasFindAll(D1, D2, Entrega), EncomendasFiltradas).
+
+%
+entregaEntreDatasFindAll(D1, D2, entrega(_, _, _, _, Data, _)):- estaEntreDuasDatas(D1, D2, Data).
+
+%Todas as encondas filtradas tem de estar nas Encomendas.
+entregaEntreDatasAux(_, _, [], _).
+entregaEntreDatasAux(D1, D2, [entrega(X1, X2, X3, X4, Data, X5)|L], [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
+    estaEntreDuasDatas(D1, D2, Data),
+    entregaEntreDatasAux(D1, D2, L, Resto).
+
+
+
+entregaEntreDatasAux(D1, D2, [entrega(X1, X2, X3, X4, Data, X5)|L], Resto) :-
+    \+ estaEntreDuasDatas(D1, D2, Data),
+    entregaEntreDatasAux(D1, D2, L, Resto).
+
+%Não sei o que é
 
 clientes_entregues([],R,L).
 clientes_entregues([encomenda(Cliente,_,_,_,_)|T], R, L) :-

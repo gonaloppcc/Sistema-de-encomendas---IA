@@ -15,13 +15,16 @@ cliente(1, marco).
 %Vai ser atribuido a um estafeta // dataDeEncomenda -> Data em que foi efetuada a encomenda pelo cliente
 %                                   dias/horas, hora/min/dia/mes/ano
 encomenda(1, 1, 20, 25, data(1,1,1), data(4,5,1), 2).
+encomenda(2, 1, 20, 25, data(1,1,1), data(4,5,10), 1).
 
 
-%entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega -> {V,F}
-entrega(2, carro, 1, rating, data(23/12/2019,18/40)).
+%entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
+entrega(2, carro, 1, rating, data(23,12,2019), hora(18,40)).
+entrega(3, bicicleta, 1, rating, data(23,12,2039),hora(18,40)).
 
 
 %estafeta: id, nome, rating/num, cidade, nEncomendas -> {V,F}
+estafeta(3, banderas, 4/420, vilaDoConde, 1).
 estafeta(2, diogo, 4/420, povoaVarzim, 2).
 
 
