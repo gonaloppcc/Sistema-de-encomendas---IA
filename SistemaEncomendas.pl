@@ -19,7 +19,7 @@ estafetaEntregaFalhot(estafeta(Id, Nome, Rating), estafeta(Id, Nome, RatingNovo)
 
 % 5. Definição preço de entrega
 preco(encomenda(_, carro, _, _, _, _), P) :- P is Encomenda * TransporteUtilizado.
-entrega(2, carro, 1, rating, data(23,12,2), hora(18,40)).
+%entrega(2, carro, 1, rating, data(23,12,2), hora(18,40)).
 
 
 % 6. Meios de transporte
@@ -176,6 +176,17 @@ calculaMaior([Zona/NEnts|T], RZona/RNEnts) :-
     calculaMaior(T, TempZona/TempNEnts),
     veMaior(Zona/NEnts, TempZona/TempNEnts, RZona/RNEnts)
 .
+
+%Query 9    
+filtraEncomendas(D1, D2, X):-
+    encomenda(X, _, _, _, Data, _, _),
+    estaEntreDuasDatas(D1, D2, Data).
+
+quaisForamEntregues([], 0).
+quaisForamEntregues([X|R], N) :- 
+    entrega(_, _, X, _, _, _),
+    quaisForamEntregues(R, TamNew),
+    N is TamNew+1.
 
 %Query 10
 %Retorna as entregas feitas pelo Estafeta

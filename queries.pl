@@ -64,8 +64,14 @@ numeroEncomendas(Data1, Data2, Encomendas, NTotal) :-
 %Versão sem Lista
 %Falta testar, não está a dar bem não sei porquê, é no *estaEntreDuasDatas*
 numeroEncomendas(Data1, Data2, NTotal) :-
-    findall(Entrega, estaEntreDuasDatas((D1, D2), Entrega, o), EncomendasFiltradas),
+    %findall(Entrega, aux8(D1, D2, Entrega), EncomendasFiltradas),
     tamLista(EncomendasFiltradas, NTotal).
+
+%Query 9 Filtra pelo prazo
+encomendasNEntregues(D1, D2, NToal) :-
+    findall(X, filtraEncomendas(D1, D2, X), ListaEncomendas),
+    findall(XX, quaisForamEntregues(ListaEncomendas, X), EncomendasEntregues),
+    tamLista(EncomendasEntregues, NToal).
 
 
 %Query 10

@@ -15,9 +15,9 @@ cliente(1, marco).
 %Vai ser atribuido a um estafeta // dataDeEncomenda -> Data em que foi efetuada a encomenda pelo cliente
 %                                   dias/horas, hora/min/dia/mes/ano
 encomenda(1, 1, 20, 25, data(1,1,1), data(4,5,1), 2).
-encomenda(2, 1, 20, 25, data(1,1,1), data(4,5,10), 1).
-encomenda(3, 1, 20, 25, data(1,1,1), data(4,5,10), 1).
-encomenda(4, 1, 21, 25, data(1,1,1), data(4,5,10), 1).
+encomenda(2, 1, 20, 25, data(1,1,2), data(4,5,10), 1).
+encomenda(3, 1, 20, 25, data(1,1,3), data(4,5,10), 1).
+encomenda(4, 1, 21, 25, data(1,1,4), data(4,5,10), 1).
 
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
