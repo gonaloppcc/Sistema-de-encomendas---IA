@@ -19,13 +19,11 @@ encomenda(2, 1, 20, 25, data(1,1,2), data(4,5,10), 1).
 encomenda(3, 1, 20, 25, data(1,1,3), data(4,5,10), 1).
 encomenda(4, 1, 21, 25, data(1,1,4), data(4,5,10), 1).
 
-
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
 entrega(2, carro, 1, rating, data(23,12,2019), hora(18,40)).
 entrega(2, carro, 2, rating, data(23,12,2), hora(18,40)).
 entrega(2, carro, 4, rating, data(23,12,2), hora(18,40)).
 entrega(3, bicicleta, 3, rating, data(23,12,2039),hora(18,40)).
-
 
 %estafeta: id, nome, rating/num, cidade, nEncomendas -> {V,F}
 estafeta(3, banderas, 4/420, vilaDoConde, 1).
@@ -50,36 +48,36 @@ enc([
   ]).
 % Lista de entregas
 entr([
-    entrega(o,carro,q,w,e),
-    entrega(w,carro,q,s,d),
-    entrega(o,carro,q,w,e),
-    entrega(d,moto,s,ad,s),
-    entrega(as,bicicleta,sa,s,d),
-    entrega(oeqw,bicicleta,21,qw,d)
+    entrega(o,carro,1,w,1,a,b),
+    entrega(w,carro,2,s,2,a,b),
+    entrega(o,carro,1,w,1,a,b),
+    entrega(d,moto,3,ad,3,a,b),
+    entrega(as,bicicleta,2,s,2,a,b),
+    entrega(oeqw,bicicleta,1,qw,1,a,b)
     ]).
 % Lista de estafeta/entregas
 esEnt(
 [
   1/
     [
-      entrega(1,carro,1,2,data(23,2,2021)),
-      entrega(1,carro,5,3,data(30,3,2021)),
-      entrega(1,bicicleta,7,2,data(4,4,2021)),
-      entrega(1,bicicleta,8,2,data(7,4,2021))
+      entrega(1,carro,1,2,data(23,2,2021),a,3),
+      entrega(1,carro,2,3,data(30,3,2021),b,c),
+      entrega(1,bicicleta,3,2,data(4,4,2021),b,c),
+      entrega(1,bicicleta,1,2,data(7,4,2021),b,c)
     ],
   2/
     [
-      entrega(2,moto,2,4,s),
-      entrega(2,moto,4,4,s),
-      entrega(2,moto,6,5,s),
-      entrega(2,bicicleta,3,4,d)
+      entrega(2,moto,2,4,s,b,c),
+      entrega(2,moto,3,4,s,b,c),
+      entrega(2,moto,2,5,s,b,c),
+      entrega(2,bicicleta,1,4,d,b,c)
     ],
   3/
     [
-      entrega(3,bicicleta,sa,s,d),
-      entrega(3,bicicleta,sa,s,d),
-      entrega(3,bicicleta,sa,s,d),
-      entrega(3,bicicleta,sa,s,d),
-      entrega(3,moto,s,ad,s)
+      entrega(3,bicicleta,3,s,d,b,c),
+      entrega(3,bicicleta,2,s,d,b,c),
+      entrega(3,bicicleta,3,s,d,b,c),
+      entrega(3,bicicleta,1,s,d,b,c),
+      entrega(3,moto,2,ad,s,b,c)
     ]
 ]).
