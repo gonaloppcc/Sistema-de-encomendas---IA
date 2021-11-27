@@ -16,7 +16,7 @@ estaEntreDuasDatas(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(Diat, Me
     Dia1 =< Diat , Diat =<  Dia2
     .
 
-estaEntreDuasDatas(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), data(Diat, Mest, Anot)) :-
+estaEntreDuasDatas(data(_,_,Ano1), data(_,_,Ano2), data(_,_,Anot)) :-
     Ano1 < Anot,
     Anot < Ano2.
 
@@ -35,3 +35,9 @@ data(D, 10, A) :- D =< 31, D > 0,  A> 0.
 data(D, 11, A) :- D < 31, D > 0,  A> 0.
 data(D, 12, A) :- D =< 31, D > 0,  A> 0.
 
+hora(H,M) :- 
+    H < 24,
+    H >= 0,
+    M < 60,
+    M >= 0
+. 
