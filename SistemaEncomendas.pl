@@ -123,35 +123,33 @@ entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], Resto) :-
 
 
 
-/* 
-*  Conta o número de vezes que cada estafeta utilizou cada veículo retornando uma lista com esta ordem Bicicleta, Mota, Carro
+/* Verifica o estafeta que usou mais vezes cada veiculo 
 *
-*  1º: Lista de entregas do estafeta
-*  2º: Número de vezes que utilizou bicicleta
-*  3º: Número de vezes que utilizou moto
-*  4º: Número de vezes que utilizou carro
+*  1º: Lista de triplos Estafeta/Veiculo/N onde N é o número de vezes que usou o veiculo
+*  2º: Estafeta que utilizou mais a bicicleta/N
+*  3º: Estafeta que utilizou mais a moto/N
+*  4º: Estafeta que utilizou mais o carro/N
 */
-contaVeiculos([],0,0,0).
-contaVeiculos([entrega(_,bicicleta,_,_,_)|T], NovoNBicla, NMoto, NCarro) :-
-    contaVeiculos(T, NBicla, NMoto, NCarro),
-    NovoNBicla is NBicla + 1
+contaVeiculos([],0/0,0/0,0/0).
+contaVeiculos([ID/bicicleta/N|T],RID1/RN1,ID2/N2,ID3/N3) :-
+    contaVeiculos(T,ID1/N1,ID2/N2,ID3/N3),
+    veMaior(ID/N,ID1/N1,RID1/RN1)
 .
-contaVeiculos([entrega(_,moto,_,_,_)|T], NBicla, NovoNMoto, NCarro) :-
-    contaVeiculos(T, NBicla, NMoto, NCarro),
-    NovoNMoto is NMoto + 1
+contaVeiculos([ID/moto/N|T],ID1/N1,RID2/RN2,ID3/N3) :-
+    contaVeiculos(T,ID1/N1,ID2/N2,ID3/N3),
+    veMaior(ID/N,ID2/N2,RID2/RN2)
 .
-contaVeiculos([entrega(_,carro,_,_,_)|T], NBicla, NMoto, NovoNCarro) :-
-    contaVeiculos(T,NBicla,NMoto,NCarro),
-    NovoNCarro is NCarro + 1
+contaVeiculos([ID/carro/N|T],ID1/N1,ID2/N2,RID3/RN3) :-
+    contaVeiculos(T,ID1/N1,ID2/N2,ID3/N3),
+    veMaior(ID/N,ID3/N3,RID3/RN3)
 .
 
-/*
-*  Vê dos dois estafetas tem maior nº de usos e retorna o maior...
-*
-*  1º: (ID do estafeta)                                       /    (Nº de vezes que utilizou o veículo)
-*  2º: (ID do outro estafeta)                                 /    (Nº de vezes que utilizou o veículo)
-*  3º: (ID do estafeta que utilizou mais vezes o veículo)     /    (Nº de vezes que utilizou o veículo)
-*/
+/* Vê dos dois estafetas tem maior nº de usos e retorna o maior...
+ *
+ *  1º: (ID do estafeta)                                       /    (Nº de vezes que utilizou o veículo)
+ *  2º: (ID do outro estafeta)                                 /    (Nº de vezes que utilizou o veículo)
+ *  3º: (ID do estafeta que utilizou mais vezes o veículo)     /    (Nº de vezes que utilizou o veículo)
+ */
 veMaior(ID1/N1, ID2/N2, ID1/N1) :- N1 > N2.
 veMaior(ID1/N1, ID2/N2, ID2/N2) :- N2 >= N1.
 
@@ -194,47 +192,60 @@ quaisForamEntregues([X|R], N) :-
     entrega(_, _, X, _, _, _),
     quaisForamEntregues(R, TamNew),
     N is TamNew+1.
-/*
- *  Adiciona N ao counter da rua ou adiciona o par Rua/N caso a rua não exista na lista
+
+/*  Sememlhante ao maplist mas a segunda lista é passada na sua totalidade para todos os elementos da primeira lista
  *  
- *  1º: Par Rua/N que vai ser adicionado
- *  2º: Lista a que vai ser adicionado
- *  3º: Resultado
+ *  1º: Função a executar
+ *  2º: Lista com os vários elementos que serão passados à função
+ *  3º: Lista que será passada na sua totalidade para todos os elementos da primeira lista
+ *  4º: Resultado de todas as execuções da função
  */
-addCounterCidade(Rua/N, [], [Rua/N]).
-addCounterCidade(Rua/N, [Rua/N1|T], [Rua/N2|T]) :-
-    N2 is N+N1
-.
-addCounterCidade(Rua/N, [OutraRua/N1|T], [OutraRua/N1|L]) :-
-    OutraRua \= Rua,
-    addCounterCidade(Rua/N, T, L)
+aplicaLista(_,[],_,[]).
+aplicaLista(Func,[X|T],L,[R|T2]) :-
+    call(Func,X,L,R),
+    aplicaLista(Func,T,L,T2)
 .
 
-/*
- *  Semelhante a addCounterCidade mas faz para uma lista de pares Rua/N
- *  
- *  1º: Lista de pares a adicionar
- *  2º: Lista a que vai ser adicionado
- *  3º: Resultado
+/*  Encontra todos os elementos únicos de uma lista
+ * 
+ *  1º: Lista a filtrar
+ *  2º: Lista filtrada
  */
-addCounterCidadeLista([],L,L).
-addCounterCidadeLista([Rua/N|T], L, R) :-
-    addCounterCidade(Rua/N,L,NovaL),
-    addCounterCidadeLista(T, NovaL, R)
+encontraUnicos([],[]).
+encontraUnicos([X|T],[X|L]) :-
+    encontraUnicos(T,L),
+    \+ member(X,L)
+.
+encontraUnicos([X|T],L) :-
+    encontraUnicos(T,L),
+    member(X,L)
 .
 
-/*
- *  Percorre uma lista de entregas e retorna uma lista de pares Rua/Counter onde counter
- *  é o número de vezes que Rua apareceu na lista de entregas
+/*  Conta quantas vezes o elemento aparece na lista
  *
- *  1º: Lista de entregas
- *  2º: Resultado
+ *  1º: Elemento a contar
+ *  2º: Lista a procurar
+ *  3º: Par Elem/N onde N é o número de vezes que elemento aparece na lista
  */
-contaEntregasCidade([],[]).
-contaEntregasCidade([entrega(_,_,IDEnc,_,_,_,_)|T], NovaL) :-
-    contaEntregasCidade(T,L),
-    encomenda(IDEnc,_,_,_,_,_, Rua),
-    addCounterCidade(Rua/1, L, NovaL)
+contaElem(Elem,[],Elem/0).
+contaElem(Elem,[Elem|T],Elem/N) :-
+    contaElem(Elem,T,Elem/N1),
+    N is N1 + 1
+.
+contaElem(Elem,[X|T],Elem/N) :-
+    Elem \= X,
+    contaElem(Elem,T,Elem/N)
+.
+
+/*  Encontra as encomendas relacionadas com as entregas de uma lista
+ *
+ *  1º: Lista a de entregas
+ *  2º: Lista de encomendas
+ */
+encontraEncomendas([],[]).
+encontraEncomendas([X|T],[Rua|T1]) :-
+    encomenda(X,_,_,_,_,_,Rua),
+    encontraEncomendas(T,T1)
 .
 
 %Query 10
