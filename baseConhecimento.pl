@@ -11,7 +11,7 @@ distancia(vilaDoConde, povoa_Varzim, 10).
 cliente(1, marco).
 
 
-%encomenda: encomendaID, clienteID, peso, volume, prazoEntrega, dataDeEncomenda, ruaID -> {V,F}. 
+%encomenda: encomendaID, clienteID, peso, volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, ruaID -> {V,F}. 
 %Vai ser atribuido a um estafeta // dataDeEncomenda -> Data em que foi efetuada a encomenda pelo cliente
 %                                   dias/horas, hora/min/dia/mes/ano
 encomenda(1, 1, 20, 25, data(1,1,1), hora(14, 00), data(4,5,1), hora(14, 00), 2).
