@@ -1,7 +1,7 @@
 :- include('tempo.pl').
 
 :- op( 900,xfy,'::' ).
-:- dynamic encomenda/7.
+:- dynamic encomenda/9.
 :- dynamic entrega/6.
 :- dynamic estafeta/3.
 :- dynamic cliente/2.
@@ -9,16 +9,18 @@
 :- dynamic rua/3.
 :- dynamic distancia/3.
 
-+encomenda(EncID,Cliente,Peso,Volume,Prazo,DataEnc,Rua) :: 
++encomenda(EncID,Cliente,Peso,Volume,Prazo,HoraEnt,DataEnc,HoraEnc,Rua) :: 
 (    
-    findall(EncID,encomenda(EncID,_,_,_,_,_,_),R),
+    findall(EncID,encomenda(EncID,_,_,_,_,_,_,_,_),R),
     length(R,L),
     L == 1,
     cliente(Cliente,_),
     Peso > 0,
     Volume > 0,
     Prazo,
+    HoraEnt,
     DataEnc,
+    HoraEnc,
     rua(Rua,_,_) 
 ).
 
