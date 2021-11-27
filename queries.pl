@@ -55,6 +55,16 @@ clientesServidos(Estafeta,Clientes) :-
     encontraUnicos(Clientes1, Clientes)
 .
 
+
+% Query 4
+%  Calcular o valor faturado pela Green Distribution num determinado dia;
+valorFaturado(data(Dia, Mes, Ano), Encomendas) :-
+    findall(entrega(A, B, C, D, data(Dia, Mes, Ano), E), entrega(A, B, C, D, data(Dia, Mes, Ano), E), Encomendas).
+    %maplist(preco, Encomendas, Precos).
+    %foldl(plus, Precos, 0, Valor).
+
+
+
 /*
  *  Query 5
  *

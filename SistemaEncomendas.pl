@@ -41,8 +41,8 @@ decideTransporte(_, encomenda(_, Peso, _, _, _, _), transporte(carro, 100, 25)) 
 decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua), transporte(bicicleta, 5, 10)) :-
     intervaloTempo(Data1, Data2, DataEntrega),
     distanciaPorRua(Rua, Cidade, Distancia),
-    velocidadeEntrega is DataEntrega/Distancia,
-    velocidadeEntrega < 10.
+    VelocidadeEntrega is DataEntrega/Distancia,
+    VelocidadeEntrega < 10.
     
 
 %Decide meio transporte
@@ -50,8 +50,8 @@ decideTransporte(_, encomenda(_, Peso, _, _, _, _, _), transporte(carro, 100, 25
 decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua, _), transporte(bicicleta, 5, 10)) :-
     intervaloTempo(Data1, Data2, DataEntrega),
     distancia(Rua, Cidade, Distancia),
-    velocidadeEntrega is DataEntrega/Distancia,
-    velocidadeEntrega < 10.
+    VelocidadeEntrega is DataEntrega/Distancia,
+    VelocidadeEntrega < 10.
     
 % -> Vertente Ecológica dos meios de transporte pode ser descrita através de uma lista ordenada.
 % Em que o primeiro elemento da lista pode ser, por exemplo, o mais ecológico e assim em diante...
