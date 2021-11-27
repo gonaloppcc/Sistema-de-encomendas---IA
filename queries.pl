@@ -47,8 +47,9 @@ clientesServidos(Estafeta,Clientes) :-
 valorFaturado(data(Dia, Mes, Ano), Valor) :-
     findall(entrega(A, B, C, D, data(Dia, Mes, Ano), E), entrega(A, B, C, D, data(Dia, Mes, Ano), E), Encomendas),
     maplist(preco, Encomendas, Precos),
-    foldl(plus, Precos, 0, Valor).
+    foldl(plusFloat, Precos, 0, Valor).
 
+plusFloat(N1, N2, N) :- N is N1 + N2.
 
 /*
  *  Query 5

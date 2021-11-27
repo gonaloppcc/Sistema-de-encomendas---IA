@@ -18,11 +18,23 @@ estafetaEntregaFalhot(estafeta(Id, Nome, Rating), estafeta(Id, Nome, RatingNovo)
 
 
 % 5. Definição preço de entrega
-preco(entrega(_, bicicleta, _, _, _, _), P) :- P is 5.
-preco(entrega(_, mota, _, _, _, _), P) :- P is 10.
-preco(entrega(_, carro, _, _, _, _), P) :- P is 20.
-%encomenda(1, 1, 20, 25, data(1,1,1), data(4,5,1), 2).
+preco(entrega(A, bicicleta, EncID, B, Data2, C), P) :- precoEntregaAux(entrega(A, bicicleta, EncID, B, Data2, C), Coef),
+            P is 5 * Coef.
 
+preco(entrega(A, mota, EncID, B, Data2, C), P) :- precoEntregaAux(entrega(A, bicicleta, EncID, B, Data2, C), Coef),
+            P is 10 * Coef.
+
+preco(entrega(A, carro, EncID, B, Data2, C), P) :- precoEntregaAux(entrega(A, bicicleta, EncID, B, Data2, C), Coef),
+            P is 20 * Coef.
+%encomenda(1, 1, 20, 25, data(1,1,1), data(4,5,1), 2).
+%encomenda: encomendaID, clienteID, peso, volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, ruaID -> {V,F}. 
+
+% Calcula o coeficiente de entrega dado os seus atributos como o Peso, Vol e o tempo passado desde que foi encomendada.
+precoEntregaAux(entrega(_, _, EncID, _, Data2, _), Coef) :- encomenda(EncID, _, Peso, Vol, _, _, Data1, _, _),
+            intervaloTempo(Data1, Data2, data(D, M, A)),
+            PastTime is D + M + A,
+            write(PastTime + ' '),
+            Coef is Peso * Vol / PastTime.
 
 
 % 6. Meios de transporte
