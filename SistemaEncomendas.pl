@@ -41,7 +41,7 @@ distanciaPorRua(Rua, CidadeDest, Res) :-
     distancia(CidadeDest, CidadeOrigem, Res).
 
 decideTransporte(_, encomenda(_, Peso, _, _, _, _), transporte(carro, 100, 25)) :- Peso > 20.
-decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua), transporte(bicicleta, 5, 10)) :-
+decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, _, _, _, Data1, _, Data2, _, Rua), transporte(bicicleta, 5, 10)) :-
     intervaloTempo(Data1, Data2, DataEntrega),
     distanciaPorRua(Rua, Cidade, Distancia),
     VelocidadeEntrega is DataEntrega/Distancia,
@@ -50,7 +50,7 @@ decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, 
 
 %Decide meio transporte
 decideTransporte(_, encomenda(_, Peso, _, _, _, _, _), transporte(carro, 100, 25)) :- Peso > 20.
-decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, Peso, Data1, Data2, _, Rua, _), transporte(bicicleta, 5, 10)) :-
+decideTransporte(estafeta(_, _, _, Cidade), encomenda(_, _, _, _, Data1, _, Data2, _, Rua), transporte(bicicleta, 5, 10)) :-
     intervaloTempo(Data1, Data2, DataEntrega),
     distancia(Rua, Cidade, Distancia),
     VelocidadeEntrega is DataEntrega/Distancia,
@@ -77,7 +77,7 @@ membro(X, [_|Xs]):-
 
 
 tamLista([], 0).
-tamLista([X|R], N) :- 
+tamLista([_|R], N) :- 
     tamLista(R, TamNew),
     N is TamNew+1.
 
@@ -111,8 +111,8 @@ contaVeiculos([ID/carro/N|T],ID1/N1,ID2/N2,RID3/RN3) :-
  *  2º: (ID do outro estafeta)                                 /    (Nº de vezes que utilizou o veículo)
  *  3º: (ID do estafeta que utilizou mais vezes o veículo)     /    (Nº de vezes que utilizou o veículo)
  */
-veMaior(ID1/N1, ID2/N2, ID1/N1) :- N1 > N2.
-veMaior(ID1/N1, ID2/N2, ID2/N2) :- N2 >= N1.
+veMaior(ID1/N1, _/N2, ID1/N1) :- N1 > N2.
+veMaior(_/N1, _/N2, _/N2) :- N2 >= N1.
 
 % Identifica que encomendas um cliente fez.
 % encomendas_cliente: clienteID, encomendaID* -> {V, F}
@@ -122,11 +122,11 @@ encomendas_cliente(ClienteID, EncomendaID) :-
 % Identifica que cliente fez a encomenda
 % entrega_cliente: EncomendaID, ClienteID -> {V,F}
 entrega_cliente(EncID, ClienteID) :- 
-  encomenda(EncID, ClienteID, _, _, _, _, _), entrega(_, _, EncID, _, _, _).
+  encomenda(EncID, ClienteID, _, _, _, _, _, _, _), entrega(_, _, EncID, _, _, _).
 
 % Identifica que estafeta entregou a encomenda
 % estafeta_entregou_encomenda: encomendaID, estafetaID -> {V,F}
-estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _).
+estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _, _).
 
 /*
  *  Percorre uma lista de pares Rua/Counter e retorna o que tem o maior counter
@@ -220,7 +220,7 @@ adic(X, L1, [X|L1]).
 
 %Query 9    
 filtraEncomendas(D1, D2, X):-
-    encomenda(X, _, _, _, Data, _, _),
+    encomenda(X, _, _, _, Data, _, _, _, _),
     estaEntreDuasDatas(D1, D2, Data).
 
 quaisForamEntregues([],0). 
@@ -230,6 +230,7 @@ quaisForamEntregues([X|R], N) :-
     Bool >= 1,
     quaisForamEntregues(R, TamNew),
     N is TamNew+1.
+
 quaisForamEntregues([X|R], N) :- 
     findall(XX, entrega(_, _, X, _, _, _), ListaEncomendas),
     tamLista(ListaEncomendas, 0),
@@ -288,7 +289,7 @@ contaElem(Elem,[X|T],Elem/N) :-
  */
 encontraEncomendas([],[]).
 encontraEncomendas([X|T],[Rua|T1]) :-
-    encomenda(X,_,_,_,_,_,Rua),
+    encomenda(X,_,_,_,_,_,_,_,Rua),
     encontraEncomendas(T,T1)
 .
 
@@ -305,6 +306,6 @@ selecionaIdsEncomendas(X, IdEstafeta) :-
 %Está certa
 calculaPesoPorEncomendas([], 0). 
 calculaPesoPorEncomendas([ IdEncomenda|Resto], PesoTotal):- 
-    encomenda(IdEncomenda, _, Peso, _, _, _, _),
+    encomenda(IdEncomenda, _, Peso, _, _, _, _, _, _),
     calculaPesoPorEncomendas(Resto, PesoNovo),
     PesoTotal is PesoNovo + Peso.
