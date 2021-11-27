@@ -23,6 +23,8 @@ encomenda(6, 3, 21, 25, data(1,2,1), data(4,5,10), 1).
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
 entrega(1, carro, 1, rating, data(23,12,2019), hora(18,40)).
+entrega(1, bicicleta, 3, rating, data(23,12,2019), hora(19,00)).
+entrega(1, mota, 2, rating, data(23,12,2019), hora(19,20)).
 entrega(2, carro, 2, rating, data(23,12,2), hora(18,40)).
 entrega(1, moto, 3, rating, data(23,12,2), hora(18,40)).
 entrega(4, bicicleta, 4, rating, data(23,12,2039),hora(18,40)).

@@ -1,5 +1,4 @@
 
-:- include('baseConhecimento.pl').
 :- include('SistemaEncomendas.pl').
 
 /* TODO: Falta resumir os objetivos/queries aqui
@@ -58,10 +57,10 @@ clientesServidos(Estafeta,Clientes) :-
 
 % Query 4
 %  Calcular o valor faturado pela Green Distribution num determinado dia;
-valorFaturado(data(Dia, Mes, Ano), Encomendas) :-
-    findall(entrega(A, B, C, D, data(Dia, Mes, Ano), E), entrega(A, B, C, D, data(Dia, Mes, Ano), E), Encomendas).
-    %maplist(preco, Encomendas, Precos).
-    %foldl(plus, Precos, 0, Valor).
+valorFaturado(data(Dia, Mes, Ano), Valor) :-
+    findall(entrega(A, B, C, D, data(Dia, Mes, Ano), E), entrega(A, B, C, D, data(Dia, Mes, Ano), E), Encomendas),
+    maplist(preco, Encomendas, Precos),
+    foldl(plus, Precos, 0, Valor).
 
 
 

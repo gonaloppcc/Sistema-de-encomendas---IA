@@ -18,8 +18,11 @@ estafetaEntregaFalhot(estafeta(Id, Nome, Rating), estafeta(Id, Nome, RatingNovo)
 
 
 % 5. Definição preço de entrega
-preco(encomenda(_, carro, _, _, _, _), P) :- P is Encomenda * TransporteUtilizado.
-%entrega(2, carro, 1, rating, data(23,12,2), hora(18,40)).
+preco(entrega(_, bicicleta, _, _, _, _), P) :- P is 5.
+preco(entrega(_, mota, _, _, _, _), P) :- P is 10.
+preco(entrega(_, carro, _, _, _, _), P) :- P is 20.
+%encomenda(1, 1, 20, 25, data(1,1,1), data(4,5,1), 2).
+
 
 
 % 6. Meios de transporte
