@@ -8,21 +8,17 @@
 *  Identificar o estafeta que utilizou mais vezes um meio de transporte mais ecológico;
 */
 
-/* 
-*  Retorna o estafeta que utilizou mais vezes cada um dos meios de transporte junto com o número de vezes que o utilizou
-*
-*  1º: Lista de pares estafeta/entregas
-*  2º: ID do estafeta que utilizou mais vezes a bicicleta    /    nº de vezes que a utilizou
-*  3º: ID do estafeta que utilizou mais vezes a moto         /    nº de vezes que a utilizou
-*  4º: ID do estafeta que utilizou mais vezes o carro        /    nº de vezes que o utilizou
-*/
-estafetaMaisEco([], 0/0, 0/0, 0/0).
-estafetaMaisEco([ID/Entregas|T], RID1/RNBicla, RID2/RNMoto, RID3/RNCarro) :-
-    estafetaMaisEco(T, ID1/NBicla, ID2/NMoto, ID3/NCarro),
-    contaVeiculos(Entregas, NovoNBicla, NovoNMoto, NovoNCarro),
-    veMaior(ID/NovoNBicla, ID1/NBicla, RID1/RNBicla),
-    veMaior(ID/NovoNMoto, ID2/NMoto, RID2/RNMoto),
-    veMaior(ID/NovoNCarro, ID3/NCarro, RID3/RNCarro)
+/*  Retorna o estafeta que utilizou mais vezes cada um dos meios de transporte junto com o número de vezes que o utilizou
+ *
+ *  1º: ID do estafeta que utilizou mais vezes a bicicleta    /    nº de vezes que a utilizou
+ *  2º: ID do estafeta que utilizou mais vezes a moto         /    nº de vezes que a utilizou
+ *  3º: ID do estafeta que utilizou mais vezes o carro        /    nº de vezes que o utilizou
+ */
+estafetaMaisEco(ID1/N1,ID2/N2,ID3/N3) :-
+    findall(Estafeta/Veiculo, entrega(Estafeta,Veiculo,_,_,_,_), Entregas),
+    encontraUnicos(Entregas,Filtrados),
+    aplicaLista(contaElem,Filtrados,Entregas,Contados),
+    contaVeiculos(Contados,ID1/N1,ID2/N2,ID3/N3)
 .
 
 % Query 2
@@ -49,29 +45,38 @@ estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _).
 
 
 % Query 3
-estafeta_clientes(ID, [ID/entregas|T], Clientes) :-
-    clientes_entregues(entregas, Clientes)
+/*  Retorna uma lista de clientes servidos pelo estafeta dado
+ *
+ *  1º: Estafeta a procurar
+ *  2º: Lista de clientes servidos pelo estafeta
+ */
+clientesServidos(Estafeta,Clientes) :-
+    findall(Cliente, (entrega(Estafeta,_,EncID,_,_,_),encomenda(EncID,Cliente,_,_,_,_,_)), Clientes1),
+    encontraUnicos(Clientes1, Clientes)
 .
-estafeta_clientes(ID, [ID2/entregas|T], Clientes) :-
-    ID \= ID2,
-    estafeta_clientes(ID,T,Clientes).
 
 /*
  *  Query 5
  *
- *  Retorna uma lista com todos os pares ruas/(vezes que foi entregue)
+ *  Percorre uma lista de entregas e retorna uma lista de pares Rua/Counter onde counter
+ *  é o número de vezes que Rua apareceu na lista de entregas
  *
- *  1º: Lista com pares estafeta/entregas
+ *  1º: Lista de entregas
  *  2º: Resultado
- *
- * TODO: Corrigir o facto de ao precionar ";" a função continua a vomitar valores
- *       apesar de serem sempre iguais.
  */
-ruaMaisEntregue([], []).
-ruaMaisEntregue([_/Entregas|T], NovaL) :-
-    ruaMaisEntregue(T, L),
-    contaEntregasCidade(Entregas, Contadas),
-    addCounterCidadeLista(Contadas,L, NovaL)
+/* TODO: Pôr esta versão direito e apagar a outra
+entregasEmCadaRua(R) :-
+    findall(Rua, (entrega(_,_,EncID,_,_,_),encomenda(EncID,_,_,_,_,_,Rua)), Ruas),
+    encontraUnicos(Ruas,Filtrados),
+    aplicaLista(contaElem,Filtrados,Ruas,R)
+.
+*/
+entregasEmCadaRua(R) :-
+    findall(EncID, entrega(_,_,EncID,_,_,_),IDs),
+    encontraEncomendas(IDs,Ruas),
+    encontraUnicos(Ruas,Filtrados),
+    aplicaLista(contaElem,Filtrados,Ruas,R),
+    !
 .
 
 %Query 8
