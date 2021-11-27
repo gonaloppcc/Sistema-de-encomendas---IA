@@ -79,6 +79,19 @@ entregasEmCadaRua(R) :-
     !
 .
 
+% Query 6
+/*  Calcula a média de rating de todas as entregas de um determinado estafeta
+ *  
+ *  1º: Estafeta a procurar
+ *  2º: Média de ratings
+ */
+satisfacClienteParaEstafeta(Estafeta,N) :-
+    findall(Rating, entrega(Estafeta,_,EncID,Rating,_,_), Ratings),
+    sum(Ratings,Sum),
+    length(Ratings, NRatings),
+    N is Sum/NRatings
+.
+
 %Query 8
 numeroEncomendas(Data1, Data2, Encomendas, NTotal) :-
     entregaEntreDatas(Data1, Data2, Encomendas, EncomendasFiltradas),

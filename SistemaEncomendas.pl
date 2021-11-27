@@ -289,6 +289,17 @@ encontraEncomendas([X|T],[Rua|T1]) :-
     encontraEncomendas(T,T1)
 .
 
+/*  Soma todos os elementos de uma lista
+ * 
+ *  1º: Lista a somar
+ *  2º: Soma de todos os elementos
+ */
+sum([],0).
+sum([X|T],N) :-
+    sum(T,N1),
+    N is N1+X
+.
+
 %Query 10
 %Retorna as entregas feitas pelo Estafeta
 entregasDoEstafeta(IdEstafeta, IdsEnTregasFeitas):-
