@@ -1,5 +1,4 @@
 
-:- include('baseConhecimento.pl').
 :- include('SistemaEncomendas.pl').
 
 /* TODO: Falta resumir os objetivos/queries aqui
@@ -29,19 +28,6 @@ estafetas_clientes(EstafetasID, EncomendasID, ClienteID) :-
   EncID = EncomendasID,
   maplist(estafeta_entregou_encomenda, EncID, EstafetasID).
 
-%
-% encomendas_cliente: clienteID, encomendaID* -> {V, F}
-encomendas_cliente(ClienteID, EncomendaID) :- 
-  findall(EncID, entrega_cliente(EncID, ClienteID), EncomendaID).
-
-% entrega_cliente: EncomendaID, ClienteID -> {V,F}
-entrega_cliente(EncID, ClienteID) :- 
-  encomenda(EncID, ClienteID, _, _, _, _, _), entrega(_, _, EncID, _, _).
-
-% 
-% estafeta_entregou_encomenda: encomendaID, estafetaID -> {V,F}
-estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _).
-
 
 
 % Query 3
@@ -51,9 +37,19 @@ estafeta_entregou_encomenda(EncID, EstID) :- entrega(EstID, _, EncID,  _, _).
  *  2º: Lista de clientes servidos pelo estafeta
  */
 clientesServidos(Estafeta,Clientes) :-
-    findall(Cliente, (entrega(Estafeta,_,EncID,_,_,_),encomenda(EncID,Cliente,_,_,_,_,_)), Clientes1),
+    findall(Cliente, (entrega(Estafeta,_,EncID,_,_,_),encomenda(EncID,Cliente,_,_,_,_,_,_,_)), Clientes1),
     encontraUnicos(Clientes1, Clientes)
 .
+
+
+% Query 4
+%  Calcular o valor faturado pela Green Distribution num determinado dia;
+valorFaturado(data(Dia, Mes, Ano), Valor) :-
+    findall(entrega(A, B, C, D, data(Dia, Mes, Ano), E), entrega(A, B, C, D, data(Dia, Mes, Ano), E), Encomendas),
+    maplist(preco, Encomendas, Precos),
+    foldl(plusFloat, Precos, 0, Valor).
+
+plusFloat(N1, N2, N) :- N is N1 + N2.
 
 /*
  *  Query 5
