@@ -1,3 +1,84 @@
+:- include('tempo.pl').
+
+:- op( 900,xfy,'::' ).
+:- dynamic encomenda/9.
+:- dynamic entrega/6.
+:- dynamic estafeta/3.
+:- dynamic cliente/2.
+:- dynamic transporte/3.
+:- dynamic rua/3.
+:- dynamic distancia/3.
+
++encomenda(EncID,Cliente,Peso,Volume,Prazo,HoraEnt,DataEnc,HoraEnc,Rua) :: 
+(    
+    findall(EncID,encomenda(EncID,_,_,_,_,_,_,_,_),R),
+    length(R,L),
+    L == 1,
+    cliente(Cliente,_),
+    Peso > 0,
+    Volume > 0,
+    Prazo,
+    HoraEnt,
+    DataEnc,
+    HoraEnc,
+    rua(Rua,_,_) 
+).
+
++entrega(IDEstafeta,Veiculo,EncID,Data,Hora,Rua) ::
+(
+    findall(EncID,entrega(_,_,EncID,_,_,_),R),
+    length(R,L),
+    L == 1,
+    estafeta(IDEstafeta,_,_,_,_),
+    encomenda(EncID,_,_,_,_,_,_),
+    transporte(Veiculo,_,_),
+    Data,
+    Hora,
+    rua(Rua,_,_)
+).
+
++estafeta(ID,_,_) ::
+(
+    findall(ID,estafeta(ID,_,_),R),
+    length(R,L),
+    L == 1
+).
+
++transporte(Veiculo,Carga,Velocidade) ::
+(
+    findall(Veiculo,transporte(Veiculo,_,_),R),
+    length(R,L),
+    L == 1,
+    Carga > 0,
+    Velocidade > 0
+).
+
++cliente(ID,_) ::
+(
+    findall(ID,cliente(ID,_),R),
+    length(R,L),
+    L == 1
+). 
+
++rua(ID,_,_) ::
+(
+    findall(ID, rua(ID,_,_),R),
+    length(R,L),
+    L == 1
+).
+
+evolucao( Termo ) :- 
+    findall(Invariante,+Termo::Invariante,Lista),
+    insercao(Termo),
+    teste(Lista)
+.
+
+insercao(Termo) :- assert(Termo).
+insercao(Termo) :- retract(Termo),!,fail.
+
+teste([]).
+teste([H|T]) :- H, teste(T).
+
 %rua: id, freguesia, nome -> {V,F}
 rua(1, vilaDoConde, rua1). 
 rua(2, povoaVarzim, rua1). 
@@ -22,16 +103,19 @@ encomenda(5, 3, 21, 25, data(1,2,3), hora(14, 00), data(4,5,10), hora(14, 00), 1
 encomenda(6, 3, 21, 25, data(1,2,1), hora(14, 00), data(4,5,10), hora(14, 00), 1).
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
-entrega(1, carro, 1, rating, data(23,12,2019), hora(18,40)).
+entrega(1, carro, 1, 2, data(23,12,2019), hora(18,40)).
 entrega(1, bicicleta, 3, rating, data(23,12,2019), hora(19,00)).
-entrega(1, mota, 2, rating, data(23,12,2019), hora(19,20)).
-entrega(4, bicicleta, 4, rating, data(23,12,2039),hora(18,40)).
-entrega(2, bicicleta, 5, rating, data(23,12,2),hora(18,40)).
+entrega(3, mota, 2, 4, data(23,12,2019), hora(19,20)).
+entrega(2, carro, 3, 4, data(23,12,2), hora(18,40)).
+entrega(1, moto, 4, 5, data(23,12,2), hora(18,40)).
+entrega(4, bicicleta, 5, 5, data(23,12,2039),hora(18,40)).
+entrega(2, bicicleta, 6, 1, data(23,12,2),hora(18,40)).
 
-%estafeta: id, nome, rating/num, cidade, nEncomendas -> {V,F}
-estafeta(3, banderas, 4/420, vilaDoConde, 1).
-estafeta(2, diogo, 4/420, povoaVarzim, 2).
-
+%estafeta: id, nome, cidade -> {V,F}
+estafeta(1, marco, trofa).
+estafeta(2, diogo, povoaVarzim).
+estafeta(3, banderas, vilaDoConde).
+estafeta(4, goncalo, lisboa).
 
 %transporte: nome, pesoMaximo, velMax -> {V,F}
 transporte(bicicleta, 5, 10).
