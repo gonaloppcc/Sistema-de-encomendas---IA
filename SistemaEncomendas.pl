@@ -18,7 +18,20 @@ estafetaEntregaFalhot(estafeta(Id, Nome, Rating), estafeta(Id, Nome, RatingNovo)
 
 
 % 5. Definição preço de entrega
+
+calculaLucroPorEncomendas([], 0).
+calculaLucroPorEncomendas([Enc1|Resto], V) :-
+    preco(Enc1, EsteValor),
+    calculaLucroPorEncomendas(Resto, NV),
+    V is NV + EsteValor
+    .
+
+
 preco(encomenda(_, carro, _, _, _, _), P) :- P is Encomenda * TransporteUtilizado.
+preco(IdEncomenda, P) :-
+    encomenda(IdEncomenda, _, P, Volume, PrazoEntrega, DataEncomenda, Rua ),
+    P is Encomenda * TransporteUtilizado.
+%encomenda: encomendaID, clienteID, peso, volume, prazoEntrega, dataDeEncomenda, ruaID -> {V,F}. 
 %entrega(2, carro, 1, rating, data(23,12,2), hora(18,40)).
 
 
