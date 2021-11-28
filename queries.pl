@@ -1,5 +1,9 @@
 
 :- include('SistemaEncomendas.pl').
+:- include('entregaEncomendas.pl').
+
+:- dynamic encomenda/9.
+:- dynamic entrega/6.
 
 /* TODO: Falta resumir os objetivos/queries aqui
 *
