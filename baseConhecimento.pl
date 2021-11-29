@@ -101,11 +101,7 @@ encomenda(3, 2, 20, 25, data(1,1,3), hora(14, 00), data(4,5,10), hora(14, 00), 3
 encomenda(4, 3, 21, 25, data(1,1,4), hora(14, 00), data(4,5,10), hora(14, 00), 1).
 encomenda(5, 3, 21, 25, data(1,2,3), hora(14, 00), data(4,5,10), hora(14, 00), 1).
 encomenda(6, 3, 21, 25, data(1,2,1), hora(14, 00), data(4,5,10), hora(14, 00), 1).
-<<<<<<< HEAD
-encomenda(7, 3, 21, 25, data(1,2,1), hora(14, 00), data(4,5,10), hora(14, 00), 1).
-=======
-encomenda(7, 2, 10, 5, data(12,3,2020), hora(15,40), data(5,2,2020), hora(9:10),2).
->>>>>>> 4beecec9f4c63fb43ff3f3e469f756fda3d0bdf2
+encomenda(7, 2, 10, 5, data(12,3,2020), hora(15,40), data(5,2,2020), hora(9,10), 2).
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
 %Não foram entregues 1
