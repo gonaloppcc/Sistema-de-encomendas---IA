@@ -5,7 +5,7 @@
 :- dynamic entrega/6.
 :- dynamic estafeta/3.
 :- dynamic cliente/2.
-:- dynamic transporte/3.
+:- dynamic transporte/4.
 :- dynamic rua/3.
 :- dynamic distancia/3.
 
@@ -44,13 +44,14 @@
     L == 1
 ).
 
-+transporte(Veiculo,Carga,Velocidade) ::
++transporte(Veiculo,Carga,Velocidade,Preco) ::
 (
     findall(Veiculo,transporte(Veiculo,_,_),R),
     length(R,L),
     L == 1,
     Carga > 0,
-    Velocidade > 0
+    Velocidade > 0,
+    Preco > 0
 ).
 
 +cliente(ID,_) ::
@@ -118,7 +119,7 @@ estafeta(3, banderas, vilaDoConde).
 estafeta(4, goncalo, lisboa).
 
 %transporte: nome, pesoMaximo, velMax -> {V,F}
-transporte(bicicleta, 5, 10).
-transporte(moto, 20, 35).
-transporte(carro, 100, 25).
+transporte(bicicleta, 5, 10, 5).
+transporte(moto, 20, 35, 10).
+transporte(carro, 100, 25, 20).
 
