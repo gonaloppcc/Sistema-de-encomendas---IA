@@ -99,6 +99,11 @@ satisfacClienteParaEstafeta(Estafeta,N) :-
     length(Ratings, NRatings),
     N is Sum/NRatings
 .
+%Query 7
+
+entregasPorMeioTransporte(Data1, Data2, ListaRes) :-
+    findall(X, filtraEntregas(D1, D2, X), ListaVeiculos),
+    contaPares(ListaVeiculos, ListaRes).
 
 %Query 8
 numeroEncomendas(Data1, Data2, Encomendas, NTotal) :-
@@ -113,9 +118,9 @@ numeroEncomendas(Data1, Data2, RespostaPares) :-
     %tamLista(EncomendasFiltradas, NTotal).
 
 %Query 9 Filtra pelo prazo
-encomendasNEntregues(D1, D2, NToal) :-
+encomendasNEntregues(D1, D2, NToal, NTotalNEntregues) :-
     findall(X, filtraEncomendas(D1, D2, X), ListaEncomendas),
-    quaisForamEntregues(ListaEncomendas, NToal).
+    quaisForamEntregues(ListaEncomendas, NToal, NTotalNEntregues).
 
 
 %Query 10

@@ -154,59 +154,26 @@ calculaMaior([Zona/NEnts|T], RZona/RNEnts) :-
     calculaMaior(T, TempZona/TempNEnts),
     veMaior(Zona/NEnts, TempZona/TempNEnts, RZona/RNEnts)
 .
+%query 7
+
+filtraEntregas(D1, D2, Veiculo):-
+    entrega(_, Veiculo, _, _, Data, _),
+    estaEntreDuasDatas(D1, D2, Data).
 %Query 8
-%Encomendas - fora das duas datas = EncomendasFiltradas
-
-%entregaEntreDatas(D1, D2, Encomendas, EncomendasFiltradas) :- %findall(X, entregaEntreDatasFindAll(D1, D2, X)).
-%    %Todas as encomendas devem pertencer a EncomendasFiltradas
-%    %%pertencem(EncomendasFiltradas, Encomendas),
-%    entregaEntreDatasAux(D1, D2, Encomendas, Encomendas, EncomendasFiltradas).
-%
-%%Versão que não recebe encomendas
-%entregaEntreDatas(D1, D2, EncomendasFiltradas) :- %findall(X, entregaEntreDatasFindAll(D1, D2, X)).
-%    entregaEntreDatasAux(D1, D2, EncomendasFiltradas).
-%%
-%%entrega(2, carro, 1, rating, data(23,12,4), hora(18,40)).
-%%entregaEntreDatas2(D1, D2, EncomendasFiltradas) :- 
-%%    findall(Entrega, entregaEntreDatasFindAll(D1, D2, Entrega), EncomendasFiltradas).
-%
-%%
-%%entregaEntreDatasFindAll(D1, D2, entrega(_, _, _, _, Data, _)):- estaEntreDuasDatas(D1, D2, Data).
-%
-%%Todas as encondas filtradas tem de estar nas Encomendas.
-%entregaEntreDatasAux(_, _, X, [], Filtrada) :- pertencem(Filtrada, X).
-%entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
-%    estaEntreDuasDatas(D1, D2, Data),
-%    entregaEntreDatasAux(D1, D2, X, L, Resto).
-%
-%%Versão sem receber listas
-%
-%entregaEntreDatasAux(_, _, []).
-%entregaEntreDatasAux(D1, D2, [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
-%    estaEntreDuasDatas(D1, D2, Data),
-%    entregaEntreDatasAux(D1, D2, Resto).
-%
-%
-%entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
-%    estaEntreDuasDatas(D1, D2, Data),
-%    entregaEntreDatasAux(D1, D2, X, L, Resto).
-%
-%entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], Resto) :-
-%    \+ estaEntreDuasDatas(D1, D2, Data),
-%    entregaEntreDatasAux(D1, D2, X, L, Resto).
-
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
 entregaEntreDatas(D1, D2, IdEstafeta) :- 
     entrega(IdEstafeta, _, _, _, Data, _),
     estaEntreDuasDatas(D1, D2, Data).
 
-contaPares([], _). 
+contaPares([], []). 
 contaPares([IdEst|Resto], RespostaPares) :-
     contaEelimina([IdEst|Resto], (IdEst, NEntregas), ListaLimpa),
     contaPares(ListaLimpa, Juntas),
+    write("OOO"),
     adic((IdEst, NEntregas), RespostaPares, Juntas)
     .
+
 contaEelimina([], (1000, 0), []).
 contaEelimina(Lista, (IdEst, NEntregas), ListaLimpa) :-
     count(IdEst, Lista, NEntregas),
@@ -235,18 +202,20 @@ filtraEncomendas(D1, D2, X):-
     encomenda(X, _, _, _, Data, _, _, _, _),
     estaEntreDuasDatas(D1, D2, Data).
 
-quaisForamEntregues([],0). 
-quaisForamEntregues([X|R], N) :- 
-    findall(XX, entrega(_, _, X, _, _, _), ListaEncomendas),
+%O findall vai dar os estafetas
+quaisForamEntregues([],0, 0). 
+quaisForamEntregues([X|R], N, NNentregues) :- 
+    findall(XX, entrega(XX, _, X, _, _, _), ListaEncomendas),
     tamLista(ListaEncomendas, Bool),
     Bool >= 1,
-    quaisForamEntregues(R, TamNew),
+    quaisForamEntregues(R, TamNew, NNentregues),
     N is TamNew+1.
 
-quaisForamEntregues([X|R], N) :- 
-    findall(XX, entrega(_, _, X, _, _, _), ListaEncomendas),
+quaisForamEntregues([X|R], N, NNentregues) :- 
+    findall(XX, entrega(XX, _, X, _, _, _), ListaEncomendas),
     tamLista(ListaEncomendas, 0),
-    quaisForamEntregues(R, N).
+    quaisForamEntregues(R, N, NNnovo),
+    NNentregues is NNnovo+1.
 
 auxQ9([], 0).
 auxQ9([H|T], H).
