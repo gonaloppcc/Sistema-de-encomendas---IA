@@ -154,6 +154,11 @@ calculaMaior([Zona/NEnts|T], RZona/RNEnts) :-
     calculaMaior(T, TempZona/TempNEnts),
     veMaior(Zona/NEnts, TempZona/TempNEnts, RZona/RNEnts)
 .
+%query 7
+
+filtraEntregas(D1, D2, Veiculo):-
+    entrega(_, Veiculo, _, _, Data, _),
+    estaEntreDuasDatas(D1, D2, Data).
 %Query 8
 %Encomendas - fora das duas datas = EncomendasFiltradas
 
@@ -201,12 +206,14 @@ entregaEntreDatas(D1, D2, IdEstafeta) :-
     entrega(IdEstafeta, _, _, _, Data, _),
     estaEntreDuasDatas(D1, D2, Data).
 
-contaPares([], _). 
+contaPares([], []). 
 contaPares([IdEst|Resto], RespostaPares) :-
     contaEelimina([IdEst|Resto], (IdEst, NEntregas), ListaLimpa),
     contaPares(ListaLimpa, Juntas),
+    write("OOO"),
     adic((IdEst, NEntregas), RespostaPares, Juntas)
     .
+
 contaEelimina([], (1000, 0), []).
 contaEelimina(Lista, (IdEst, NEntregas), ListaLimpa) :-
     count(IdEst, Lista, NEntregas),
@@ -235,18 +242,20 @@ filtraEncomendas(D1, D2, X):-
     encomenda(X, _, _, _, Data, _, _, _, _),
     estaEntreDuasDatas(D1, D2, Data).
 
-quaisForamEntregues([],0). 
-quaisForamEntregues([X|R], N) :- 
-    findall(XX, entrega(_, _, X, _, _, _), ListaEncomendas),
+%O findall vai dar os estafetas
+quaisForamEntregues([],0, 0). 
+quaisForamEntregues([X|R], N, NNentregues) :- 
+    findall(XX, entrega(XX, _, X, _, _, _), ListaEncomendas),
     tamLista(ListaEncomendas, Bool),
     Bool >= 1,
-    quaisForamEntregues(R, TamNew),
+    quaisForamEntregues(R, TamNew, NNentregues),
     N is TamNew+1.
 
-quaisForamEntregues([X|R], N) :- 
-    findall(XX, entrega(_, _, X, _, _, _), ListaEncomendas),
+quaisForamEntregues([X|R], N, NNentregues) :- 
+    findall(XX, entrega(XX, _, X, _, _, _), ListaEncomendas),
     tamLista(ListaEncomendas, 0),
-    quaisForamEntregues(R, N).
+    quaisForamEntregues(R, N, NNnovo),
+    NNentregues is NNnovo+1.
 
 auxQ9([], 0).
 auxQ9([H|T], H).
