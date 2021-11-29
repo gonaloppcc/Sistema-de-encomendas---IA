@@ -160,46 +160,6 @@ filtraEntregas(D1, D2, Veiculo):-
     entrega(_, Veiculo, _, _, Data, _),
     estaEntreDuasDatas(D1, D2, Data).
 %Query 8
-%Encomendas - fora das duas datas = EncomendasFiltradas
-
-%entregaEntreDatas(D1, D2, Encomendas, EncomendasFiltradas) :- %findall(X, entregaEntreDatasFindAll(D1, D2, X)).
-%    %Todas as encomendas devem pertencer a EncomendasFiltradas
-%    %%pertencem(EncomendasFiltradas, Encomendas),
-%    entregaEntreDatasAux(D1, D2, Encomendas, Encomendas, EncomendasFiltradas).
-%
-%%Versão que não recebe encomendas
-%entregaEntreDatas(D1, D2, EncomendasFiltradas) :- %findall(X, entregaEntreDatasFindAll(D1, D2, X)).
-%    entregaEntreDatasAux(D1, D2, EncomendasFiltradas).
-%%
-%%entrega(2, carro, 1, rating, data(23,12,4), hora(18,40)).
-%%entregaEntreDatas2(D1, D2, EncomendasFiltradas) :- 
-%%    findall(Entrega, entregaEntreDatasFindAll(D1, D2, Entrega), EncomendasFiltradas).
-%
-%%
-%%entregaEntreDatasFindAll(D1, D2, entrega(_, _, _, _, Data, _)):- estaEntreDuasDatas(D1, D2, Data).
-%
-%%Todas as encondas filtradas tem de estar nas Encomendas.
-%entregaEntreDatasAux(_, _, X, [], Filtrada) :- pertencem(Filtrada, X).
-%entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
-%    estaEntreDuasDatas(D1, D2, Data),
-%    entregaEntreDatasAux(D1, D2, X, L, Resto).
-%
-%%Versão sem receber listas
-%
-%entregaEntreDatasAux(_, _, []).
-%entregaEntreDatasAux(D1, D2, [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
-%    estaEntreDuasDatas(D1, D2, Data),
-%    entregaEntreDatasAux(D1, D2, Resto).
-%
-%
-%entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], [entrega(X1, X2, X3, X4, Data, X5)|Resto]) :-
-%    estaEntreDuasDatas(D1, D2, Data),
-%    entregaEntreDatasAux(D1, D2, X, L, Resto).
-%
-%entregaEntreDatasAux(D1, D2, X, [entrega(X1, X2, X3, X4, Data, X5)|L], Resto) :-
-%    \+ estaEntreDuasDatas(D1, D2, Data),
-%    entregaEntreDatasAux(D1, D2, X, L, Resto).
-
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
 entregaEntreDatas(D1, D2, IdEstafeta) :- 

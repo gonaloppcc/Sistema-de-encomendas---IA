@@ -102,6 +102,7 @@ encomenda(3, 2, 20, 25, data(1,1,3), hora(14, 00), data(4,5,10), hora(14, 00), 3
 encomenda(4, 3, 21, 25, data(1,1,4), hora(14, 00), data(4,5,10), hora(14, 00), 1).
 encomenda(5, 3, 21, 25, data(1,2,3), hora(14, 00), data(4,5,10), hora(14, 00), 1).
 encomenda(6, 3, 21, 25, data(1,2,1), hora(14, 00), data(4,5,10), hora(14, 00), 1).
+encomenda(7, 3, 21, 25, data(1,2,1), hora(14, 00), data(4,5,10), hora(14, 00), 1).
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
 %Não foram entregues 1

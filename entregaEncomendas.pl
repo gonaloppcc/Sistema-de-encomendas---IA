@@ -13,5 +13,5 @@ entregaEncomenda(encomenda(EncomendaID, ClienteID , Peso, Volume, PrazoEntrega, 
     random(0, 5, Rating),
     DataEntrega = data(27, 11, 2021),
     HoraEntrega = hora(23, 40),
-    evolucao(entrega(EstafetaID, carro, EncomendaID, Rating, DataEntrega, HoraEntrega)).
-    %assert(entrega(EstafetaID, carro, EncomendaID, Rating, DataEntrega, HoraEntrega)).
+    %evolucao(entrega(EstafetaID, carro, EncomendaID, Rating, DataEntrega, HoraEntrega)).
+    assert(entrega(EstafetaID, carro, EncomendaID, Rating, DataEntrega, HoraEntrega)).
