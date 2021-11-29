@@ -24,18 +24,17 @@
     rua(Rua,_,_) 
 ).
 
-+entrega(IDEstafeta,Veiculo,EncID,Data,Hora,Rua) ::
-(
-    findall(EncID,entrega(_,_,EncID,_,_,_),R),
-    length(R,L),
-    L == 1,
-    estafeta(IDEstafeta,_,_),
-    encomenda(EncID,_,_,_,_,_,_,_,_),
-    transporte(Veiculo,_,_,_),
-    Data,
-    Hora,
-    rua(Rua,_,_)
-).
++entrega(IDEstafeta,Veiculo,EncID,Rating,Data,Hora) :: (findall(EncID,(entrega(_,_,EncID,_,_,_)),R),
+                  length( R,N ),
+				  N == 1,
+                  estafeta(IDEstafeta,_,_),
+                  encomenda(EncID,_,_,_,_,_,_,_,_),
+                  transporte(Veiculo,_,_,_),
+                  Rating >= 0,
+                  Rating =< 5,
+                  Data,
+                  Hora
+                  ).
 
 +estafeta(ID,_,_) ::
 (
