@@ -170,7 +170,7 @@ contaPares([], []).
 contaPares([IdEst|Resto], RespostaPares) :-
     contaEelimina([IdEst|Resto], (IdEst, NEntregas), ListaLimpa),
     contaPares(ListaLimpa, Juntas),
-    write("OOO"),
+    %write("OOO"),
     adic((IdEst, NEntregas), RespostaPares, Juntas)
     .
 
