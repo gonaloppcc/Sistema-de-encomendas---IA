@@ -72,20 +72,11 @@ plusFloat(N1, N2, N) :- N is N1 + N2.
  *  1º: Lista de entregas
  *  2º: Resultado
  */
-/* TODO: Pôr esta versão direito e apagar a outra
 entregasEmCadaRua(R) :-
-    findall(Rua, (entrega(_,_,EncID,_,_,_),encomenda(EncID,_,_,_,_,_,Rua)), Ruas),
+    findall(Rua, (entrega(_,_,EncID,_,_,_),encomenda(EncID,_,_,_,_,_,_,_,Rua)), Ruas),
     encontraUnicos(Ruas,Filtrados),
     aplicaLista(contaElem,Filtrados,Ruas,R)
-.
-*/
-entregasEmCadaRua(R) :-
-    findall(EncID, entrega(_,_,EncID,_,_,_),IDs),
-    encontraEncomendas(IDs,Ruas),
-    encontraUnicos(Ruas,Filtrados),
-    aplicaLista(contaElem,Filtrados,Ruas,R),
-    !
-.
+. 
 
 % Query 6
 /*  Calcula a média de rating de todas as entregas de um determinado estafeta
