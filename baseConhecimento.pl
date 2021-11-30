@@ -8,6 +8,7 @@
 :- dynamic transporte/4.
 :- dynamic rua/3.
 :- dynamic distancia/3.
+:- dynamic atribuido/2.
 
 +encomenda(EncID,Cliente,Peso,Volume,Prazo,HoraEnt,DataEnc,HoraEnc,Rua) :: 
 (    
@@ -65,6 +66,15 @@
     findall(ID, rua(ID,_,_),R),
     length(R,L),
     L == 1
+).
+
++atribuido(Estafeta, EncID) ::
+(
+    findall(EncID, atribuido(_,EncID), R),
+    length(R,N),
+    N == 1,
+    estafeta(Estafeta,_,_),
+    encomenda(EncID,_,_,_,_,_,_,_,_)
 ).
 
 evolucao( Termo ) :- 
