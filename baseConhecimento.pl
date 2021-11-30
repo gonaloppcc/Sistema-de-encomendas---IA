@@ -34,7 +34,7 @@
     estafeta(IDEstafeta,_,_),
     encomenda(EncID,_,_,_,_,_,_,_,_),
     transporte(Veiculo,_,_,_),
-    atribuido(EstafetaID,EncID),
+    atribuido(IDEstafeta,EncID),
     Rating >= 0,
     Rating =< 5,
     Data,
