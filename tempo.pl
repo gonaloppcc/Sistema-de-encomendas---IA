@@ -52,3 +52,8 @@ hora(H,M) :-
     M < 60,
     M >= 0
 . 
+
+%Funções
+%Compara duas datas
+comparaDatas(data(D1, M1, A1), data(D1, M1, A1)).
+comparaDatas(data(D1, M1, A1), (data(D1, M1, A1), _)).

@@ -102,18 +102,13 @@ satisfacClienteParaEstafeta(Estafeta,N) :-
 %Query 7
 
 entregasPorMeioTransporte(Data1, Data2, ListaRes) :-
-    findall(X, filtraEntregas(D1, D2, X), ListaVeiculos),
+    findall(X, filtraEntregas(Data1, Data2, X), ListaVeiculos),
     contaPares(ListaVeiculos, ListaRes).
 
 %Query 8
-numeroEncomendas(Data1, Data2, Encomendas, NTotal) :-
-    entregaEntreDatas(Data1, Data2, Encomendas, EncomendasFiltradas),
-    tamLista(EncomendasFiltradas, NTotal).
 
-%Versão sem Lista
-%Falta testar, não está a dar bem não sei porquê, é no *estaEntreDuasDatas*
 numeroEncomendas(Data1, Data2, RespostaPares) :-
-    findall(IdEstafeta, entregaEntreDatas(D1, D2, IdEstafeta), Pares),
+    findall(IdEstafeta, entregaEntreDatas(Data1, Data2, IdEstafeta), Pares),
     contaPares(Pares, RespostaPares).
     %tamLista(EncomendasFiltradas, NTotal).
 

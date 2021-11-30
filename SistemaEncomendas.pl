@@ -169,12 +169,12 @@ entregaEntreDatas(D1, D2, IdEstafeta) :-
 contaPares([], []). 
 contaPares([IdEst|Resto], RespostaPares) :-
     contaEelimina([IdEst|Resto], (IdEst, NEntregas), ListaLimpa),
-    contaPares(ListaLimpa, Juntas),
+    adic((IdEst, NEntregas), Juntas, RespostaPares),
+    contaPares(ListaLimpa, Juntas)
     %write("OOO"),
-    adic((IdEst, NEntregas), RespostaPares, Juntas)
     .
 
-contaEelimina([], (1000, 0), []).
+%contaEelimina([], (1000, 0), []).
 contaEelimina(Lista, (IdEst, NEntregas), ListaLimpa) :-
     count(IdEst, Lista, NEntregas),
     apagaT(IdEst, Lista, ListaLimpa).
@@ -194,7 +194,7 @@ apagaT(X, [X|T], L) :- apagaT(X, T, L).
 apagaT(X, [H|T], [H|T1]) :- X \= H, apagaT(X, T, T1).
 
 %Adiciona um elemento à lista
-adic(X, [], [X]):- !.
+%adic(X, [], [X]).
 adic(X, L1, [X|L1]).
 
 %Query 9    
