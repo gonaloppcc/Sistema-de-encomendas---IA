@@ -1,21 +1,20 @@
 % Objetivo: Entregar todas as encomendas que ainda foram entregues.
 
 % Entrega todas as encomendas que não tenham sido entregues
-entregaEncomendas(Encs) :- 
+entregaEncomendas(Entregas) :- 
     findall(encomenda(Id, ClienteID , Peso, Volume, PrazoEntrega, HorasPrazoEntrega, DataDeEncomenda, HorasDataEncomenda, Rua), 
     (encomenda(Id, ClienteID , Peso, Volume, PrazoEntrega, HorasPrazoEntrega, DataDeEncomenda, HorasDataEncomenda, Rua), \+ entrega(_, _, Id, _, _, _)),
     Encs), % Todas as encomendas não entregues.
-    maplist(entregaEncomenda, Encs, V).
+    maplist(entregaEncomenda, Encs, Entregas).
 
-entregaEncomenda(encomenda(EncomendaID, ClienteID , Peso, Volume, PrazoEntrega, HorasPrazoEntrega, DataDeEncomenda, HorasDataEncomenda, Rua), V) :-
-    atribuido(IdEstafeta, EncomendaID),
-    %random(0, 4, EstafetaID),
+entregaEncomenda(encomenda(EncomendaID, ClienteID , Peso, Volume, PrazoEntrega, HorasPrazoEntrega, DataDeEncomenda, HorasDataEncomenda, Rua), Entrega) :-
+    atribuido(EstafetaId, EncomendaID),
     Veiculo = carro,
     random(0, 5, Rating),
-    DataEntrega = data(27, 11, 2021),
-    HoraEntrega = hora(23, 40),
-    evolucao(entrega(EstafetaID, carro, EncomendaID, Rating, DataEntrega, HoraEntrega)).
-    %assert(entrega(EstafetaID, carro, EncomendaID, Rating, DataEntrega, HoraEntrega)).
+    DataEntrega = PrazoEntrega,
+    HoraEntrega = HorasPrazoEntrega,
+    Entrega = entrega(EstafetaId, carro, EncomendaID, Rating, DataEntrega, HoraEntrega),
+    evolucao(Entrega).
 
 /**
 Diz quais os estafetas que podem entregar a partir do ID da Encomenda. Se a encomenda sair da Póvoa de Varzim, retorna os estafetas sediados nessa cidade.
