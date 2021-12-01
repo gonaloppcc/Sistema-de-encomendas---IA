@@ -39,7 +39,8 @@ estafetaLivre(EstafetaId, Data) :-
     verificaListaEncomendasQuantasNumDia(ListaEncomendas, Data, PesoNumDia),
     PesoNumDia =< 80.
 
-%getDataFromEncomenda(EncomendaId, DataDessaEncomenda) :- encomenda(EncomendaId, _, _, _, DataDessaEncomenda, _, _, _, _ ).
+
+getDataFromEncomenda(EncomendaId, DataDessaEncomenda) :- encomenda(EncomendaId, _, _, _, DataDessaEncomenda, _, _, _, _ ).
 /*
 Diz quantas encomendas estão planeadas para ser entregues num dado dia - data(dia, mes, ano).
 A linha do maplist converte Id's de encomendas em datas.
@@ -61,3 +62,43 @@ sumPair([], 0).
 sumPair([(_, Peso)|T], Res) :- 
     sumPair(T, ResNew),
     Res is ResNew+Peso.
+
+/*
+Gera atribuições a encomendas que não as tenham.
+Processo:
+Cria uma lista de ID's de encomendas que não tenham atribuições.
+Para cada ID de uma encomenda, procura quais os estafetas que a podem entregar.
+Verifica se o primeiro estafeta pode entregar. Pára no último estafeta.
+Se for o último estafeta, pára e atribui-lhe.
+Se sim, gera atribuição com esse par.
+Se não, procura no elemento seguinte.
+*/
+
+gerarAtribuicoes() :-
+    listaEncomendasNAtribuida(Lista).
+    gerarAtribuicoesLista(Lista).
+
+listaEncomendasNAtribuida(Res) :-
+    findall(EncId, encomenda(EncId, _, _, _, _, _, _, _, _), ListaIDs ),
+    findall(EncE, atribuido(_, EncE), ListaAtribuidas ),
+    removeOneList(ListaIDs, ListaAtribuidas, Res).
+
+gerarAtribuicoesLista([]).
+gerarAtribuicoesLista([EncID|T]) :- geraUmaAtribuicao(EncID), gerarAtribuicoesLista(T).
+
+geraUmaAtribuicao(EncId) :-
+    filtraCidadeEncomenda(EncID, ListaEstafetas),
+    getDataFromEncomenda(EncID, Data),
+    procuraEstafetaLivreEnc(EncId, Data, ListaEstafetas).
+
+%Podiamos usar ! aqui para tirar os \+
+procuraEstafetaLivreEnc(EncId, _, []):- write("0").
+procuraEstafetaLivreEnc(EncId, _, [Est1|T]) :-  tamLista(T, 0), write("1"),evolucao(atribuido(Est1, EncId)).
+procuraEstafetaLivreEnc(EncId, Data, [Est1|T]) :- \+ tamLista(T, 0), estafetaLivre(Est1, Data), write("2"),evolucao(atribuido(Est1, EncId)).
+procuraEstafetaLivreEnc(EncId, Data, [Est1|T]) :- \+ tamLista(T, 0), \+ estafetaLivre(Est1, Data), write("3"),procuraEstafetaLivreEnc(EncID, Data, T).
+
+
+
+removeOneList([], _, []).
+removeOneList([X|T], L2, Result):- member(X, L2), !, removeOneList(T, L2, Result). 
+removeOneList([X|T], L2, [X|Result]):- removeOneList(T, L2, Result).
