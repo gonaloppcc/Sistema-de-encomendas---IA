@@ -107,13 +107,17 @@ distancia(vilaDoConde, povoa_Varzim, 10).
 
 %cliente: id, nome -> {V,F} 
 cliente(1, marco).
+cliente(2, rita2).
+cliente(3, rita3).
+cliente(4, rita4).
+cliente(5, rita5).
 
 
 %encomenda: encomendaID, clienteID, peso, volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, ruaID -> {V,F}. 
 %Vai ser atribuido a um estafeta // dataDeEncomenda -> Data em que foi efetuada a encomenda pelo cliente
 %                                   dias/horas, hora/min/dia/mes/ano
-encomenda(1, 1, 20, 25, data(23,12,2019),     hora(14, 00), data(4,5,1),    hora(14, 00), 2).
-encomenda(2, 2, 20, 25, data(23,12,2019),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
+encomenda(1, 1, 20, 25, data(23,12,2019),     hora(14, 00), data(29,11, 2019),    hora(14, 00), 2).
+encomenda(2, 2, 20, 25, data(23,12,2019),     hora(14, 00), data(29,11, 2019),   hora(14, 00), 1).
 encomenda(3, 2, 20, 25, data(1,1,3),     hora(14, 00), data(4,5,10),   hora(14, 00), 3).
 encomenda(4, 3, 21, 25, data(1,1,4),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
 encomenda(5, 3, 21, 25, data(1,2,3),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
@@ -148,7 +152,7 @@ atribuido(1, 9).
 estafeta(1, marco,      trofa).
 estafeta(2, diogo,      povoaVarzim).
 estafeta(5, banderitas, povoaVarzim).
-estafeta(6, gonçalo2,   povoaVarzim).
+estafeta(6, goncalo2,   povoaVarzim).
 estafeta(3, banderas,   vilaDoConde).
 estafeta(4, goncalo,    lisboa).
 
