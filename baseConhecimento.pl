@@ -39,9 +39,10 @@
     length( R,N ),
 	N == 1,
     estafeta(IDEstafeta,_,_),
-    encomenda(EncID,_,_,_,_,_,_,_,_),
-    transporte(Veiculo,_,_,_),
+    encomenda(EncID,_,Peso,_,_,_,_,_,_),
+    transporte(Veiculo,Carga,_,_),
     atribuido(IDEstafeta,EncID),
+    Peso =< Carga,
     Rating >= 0,
     Rating =< 5,
     Data,
@@ -201,5 +202,5 @@ estafeta(4, goncalo,    lisboa).
 transporte(bicicleta, 5,   10, 5).
 transporte(moto,      20,  35, 10).
 transporte(carro,     100, 25, 20).
-transporte(barco,20,21,41).
+transporte(barco,     20,  21, 41).
 
