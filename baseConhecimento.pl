@@ -112,8 +112,8 @@ cliente(1, marco).
 %encomenda: encomendaID, clienteID, peso, volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, ruaID -> {V,F}. 
 %Vai ser atribuido a um estafeta // dataDeEncomenda -> Data em que foi efetuada a encomenda pelo cliente
 %                                   dias/horas, hora/min/dia/mes/ano
-encomenda(1, 1, 20, 25, data(1,1,1),     hora(14, 00), data(4,5,1),    hora(14, 00), 2).
-encomenda(2, 2, 20, 25, data(1,1,2),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
+encomenda(1, 1, 20, 25, data(23,12,2019),     hora(14, 00), data(4,5,1),    hora(14, 00), 2).
+encomenda(2, 2, 20, 25, data(23,12,2019),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
 encomenda(3, 2, 20, 25, data(1,1,3),     hora(14, 00), data(4,5,10),   hora(14, 00), 3).
 encomenda(4, 3, 21, 25, data(1,1,4),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
 encomenda(5, 3, 21, 25, data(1,2,3),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
@@ -124,11 +124,11 @@ encomenda(9, 2, 70, 5,  data(12,3,2020), hora(15,40),  data(5,2,2020), hora(9,10
 
 %entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
 %Não foram entregues 1
-entrega(1, carro,     1, 2, data(23,12,2019), hora(18,40)).
+entrega(1, bicicleta,     1, 2, data(23,12,2019), hora(18,40)).
 entrega(1, bicicleta, 2, 5, data(23,12,2019), hora(19,00)).
 entrega(3, mota,      3, 4, data(23,12,2019), hora(19,20)).
 entrega(2, carro,     4, 4, data(23,12,2),    hora(18,40)).
-entrega(1, moto,      4, 5, data(23,12,2),    hora(18,40)).
+%entrega(1, moto,      4, 5, data(23,12,2),    hora(18,40)).
 entrega(4, bicicleta, 6, 5, data(23,12,2039), hora(18,40)).
 entrega(2, bicicleta, 7, 1, data(23,12,2),    hora(18,40)).
 

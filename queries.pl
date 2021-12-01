@@ -88,8 +88,10 @@ satisfacClienteParaEstafeta(Estafeta,N) :-
     findall(Rating, entrega(Estafeta,_,EncID,Rating,_,_), Ratings),
     sum(Ratings,Sum),
     length(Ratings, NRatings),
-    N is Sum/NRatings
+    NRatings > 0, N is Sum/NRatings, !
 .
+satisfacClienteParaEstafeta(_,0).
+
 %Query 7
 
 entregasPorMeioTransporte(Data1, Data2, ListaRes) :-

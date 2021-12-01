@@ -8,7 +8,8 @@ entregaEncomendas(Encs) :-
     maplist(entregaEncomenda, Encs, V).
 
 entregaEncomenda(encomenda(EncomendaID, ClienteID , Peso, Volume, PrazoEntrega, HorasPrazoEntrega, DataDeEncomenda, HorasDataEncomenda, Rua), V) :-
-    random(0, 4, EstafetaID),
+    atribuido(IdEstafeta, EncomendaID),
+    %random(0, 4, EstafetaID),
     Veiculo = carro,
     random(0, 5, Rating),
     DataEntrega = data(27, 11, 2021),
