@@ -99,6 +99,7 @@ teste([H|T]) :- H, teste(T).
 rua(1, vilaDoConde, rua1). 
 rua(2, povoaVarzim, rua1). 
 rua(3, trofa,       avenida). 
+rua(4, lisboa, praca). 
 
 
 %distancia: rua1, rua2 -> {V,F}
@@ -112,8 +113,8 @@ cliente(1, marco).
 %encomenda: encomendaID, clienteID, peso, volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, ruaID -> {V,F}. 
 %Vai ser atribuido a um estafeta // dataDeEncomenda -> Data em que foi efetuada a encomenda pelo cliente
 %                                   dias/horas, hora/min/dia/mes/ano
-encomenda(1, 1, 20, 25, data(23,12,2019),     hora(14, 00), data(4,5,1),    hora(14, 00), 2).
-encomenda(2, 2, 20, 25, data(23,12,2019),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
+encomenda(1, 1, 20, 25, data(23,12,2019),     hora(14, 00), data(4,5,1),    hora(14, 00), 4).
+encomenda(2, 2, 20, 25, data(23,12,2019),     hora(14, 00), data(4,5,10),   hora(14, 00), 3).
 encomenda(3, 2, 20, 25, data(1,1,3),     hora(14, 00), data(4,5,10),   hora(14, 00), 3).
 encomenda(4, 3, 21, 25, data(1,1,4),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
 encomenda(5, 3, 21, 25, data(1,2,3),     hora(14, 00), data(4,5,10),   hora(14, 00), 1).
@@ -129,6 +130,7 @@ entrega(1, bicicleta, 2, 5, data(23,12,2019), hora(19,00)).
 entrega(3, mota,      3, 4, data(23,12,2019), hora(19,20)).
 entrega(2, carro,     4, 4, data(23,12,2),    hora(18,40)).
 %entrega(1, moto,      4, 5, data(23,12,2),    hora(18,40)).
+entrega(4, bicicleta, 50, 5, data(23,12,2039), hora(18,40)).
 entrega(4, bicicleta, 6, 5, data(23,12,2039), hora(18,40)).
 entrega(2, bicicleta, 7, 1, data(23,12,2),    hora(18,40)).
 
@@ -136,10 +138,10 @@ entrega(2, bicicleta, 7, 1, data(23,12,2),    hora(18,40)).
 atribuido(1, 1).
 atribuido(1, 3).
 %atribuido(3, 2).
-atribuido(2, 3).
 atribuido(1, 4).
 atribuido(4, 5).
-atribuido(2, 6).
+atribuido(4, 6).
+atribuido(4, 7).
 atribuido(1, 7).
 atribuido(1, 8).
 atribuido(1, 9).

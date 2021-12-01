@@ -153,54 +153,49 @@ calculaMaior([Zona/NEnts|T], RZona/RNEnts) :-
     veMaior(Zona/NEnts, TempZona/TempNEnts, RZona/RNEnts)
 .
 %query 7
-
+%Função utilizada num findall.
 filtraEntregas(D1, D2, Veiculo):-
     entrega(_, Veiculo, _, _, Data, _),
     estaEntreDuasDatas(D1, D2, Data).
 %Query 8
-
-%entrega: estafetaID, veiculo, encomendaID, rating, dataEntrega, Hora -> {V,F}
+%Predicado que verifica se uma entrega foi realizada entre duas datas.
 entregaEntreDatas(D1, D2, IdEstafeta) :- 
     entrega(IdEstafeta, _, _, _, Data, _),
     estaEntreDuasDatas(D1, D2, Data).
 
+/*
+Função que converte uma lista de elementos em pares. 
+Nesses pares, o primeiro elemento é o elemento, e o segundo é o número de vezes que ele aparece.
+Por exemplo:
+
+?- contaPares([1,1,1,1], X).
+X = [(1, 4)]
+*/
 contaPares([], []). 
 contaPares([IdEst|Resto], RespostaPares) :-
     contaEelimina([IdEst|Resto], (IdEst, NEntregas), ListaLimpa),
     adic((IdEst, NEntregas), Juntas, RespostaPares),
     contaPares(ListaLimpa, Juntas)
-    %write("OOO"),
     .
 
-%contaEelimina([], (1000, 0), []).
 contaEelimina(Lista, (IdEst, NEntregas), ListaLimpa) :-
     count(IdEst, Lista, NEntregas),
     apagaT(IdEst, Lista, ListaLimpa).
 
-%Funções sobre listas
-%Conta quandos elementos tem essa lista
-count(_, [], 0).
-count(X, [X | T], N) :-
-  !, count(X, T, N1),
-  N is N1 + 1.
-count(X, [_ | T], N) :-
-  count(X, T, N).
 
-%Apaga os elementos iguais a X nessa lista
-apagaT(_, [], []).
-apagaT(X, [X|T], L) :- apagaT(X, T, L).
-apagaT(X, [H|T], [H|T1]) :- X \= H, apagaT(X, T, T1).
-
-%Adiciona um elemento à lista
-%adic(X, [], [X]).
-adic(X, L1, [X|L1]).
 
 %Query 9    
+%Retorna em X o ID da encomenda, se ela tiver o prazo contido entre as duas datas.
 filtraEncomendas(D1, D2, X):-
     encomenda(X, _, _, _, Data, _, _, _, _),
     estaEntreDuasDatas(D1, D2, Data).
 
 %O findall vai dar os estafetas
+/*
+O findall procura o id da encomenda, e verifica se ela foi entregue.
+Se for entregue, o tamanho da lista "ListaEncomendas" é 1 e incrementa o N (encomendas entregues).
+Se não foi entregue, incrementa o NNentregues (encomendas não entregues).
+*/
 quaisForamEntregues([],0, 0). 
 quaisForamEntregues([X|R], N, NNentregues) :- 
     findall(XX, entrega(XX, _, X, _, _, _), ListaEncomendas),
@@ -217,6 +212,7 @@ quaisForamEntregues([X|R], N, NNentregues) :-
 
 auxQ9([], 0).
 auxQ9([H|T], H).
+
 /*  Sememlhante ao maplist mas a segunda lista é passada na sua totalidade para todos os elementos da primeira lista
  *  
  *  1º: Função a executar
@@ -272,23 +268,12 @@ encontraEncomendas([X|T],[Rua|T1]) :-
     encontraEncomendas(T,T1)
 .
 
-/*  Soma todos os elementos de uma lista
- * 
- *  1º: Lista a somar
- *  2º: Soma de todos os elementos
- */
-sum([],0).
-sum([X|T],N) :-
-    sum(T,N1),
-    N is N1+X
-.
-
 %Query 10
 %Retorna as entregas feitas pelo Estafeta
 entregasDoEstafeta(IdEstafeta, IdsEnTregasFeitas):-
   findall(X, selecionaIdsEncomendas(X, IdEstafeta), IdsEnTregasFeitas).
     
-    
+
 selecionaIdsEncomendas(X, IdEstafeta) :- 
   entrega(IdEstafeta, _, X, _, _, _).
 
@@ -299,3 +284,53 @@ calculaPesoPorEncomendas([ IdEncomenda|Resto], PesoTotal):-
     encomenda(IdEncomenda, _, Peso, _, _, _, _, _, _),
     calculaPesoPorEncomendas(Resto, PesoNovo),
     PesoTotal is PesoNovo + Peso.
+
+/**
+Precicado que calcula o rating de um dado estafeta. Para isso, faz a diferença entre o número de entregas e o número de atribuições. 
+A diferença é a quantidade de encomendas não entregue. O rating está limitado entre 0 e 5
+Se a diferença for 0, quer dizer que entregou todas as encomendas que lhe foram atribuídas, logo tem rating 5.
+*/
+ratingEstafeta(EstId, Rating) :-
+    findall(EncIds, atribuido(EstId, EncIds), ListaAtribuidas),
+    findall(EntregasIds, selecionaIdsEncomendas(EntregasIds, EstId), EncomendasEntregues),
+    removeOneList( ListaAtribuidas, EncomendasEntregues, EncomendasNEntregues),
+    tamLista(EncomendasNEntregues, Tam),
+    verificaValorRating(Tam, NaoEntreguesEntre0e5),
+    Rating is 5-NaoEntreguesEntre0e5.
+/**
+Verifica se o valor é válido, positivo e menor ou igual a 5.
+*/
+verificaValorRating(Rating, Rating) :- Rating >= 0, Rating =< 5. 
+verificaValorRating(Rating, 0) :- Rating < 0. 
+verificaValorRating(Rating, 5) :- Rating > 5. 
+
+/*
+Funções sobre listas
+*/
+%Conta quandos elementos tem essa lista
+count(_, [], 0).
+count(X, [X | T], N) :-
+  !, count(X, T, N1),
+  N is N1 + 1.
+count(X, [_ | T], N) :-
+  count(X, T, N).
+
+%Apaga os elementos iguais a X nessa lista
+apagaT(_, [], []).
+apagaT(X, [X|T], L) :- apagaT(X, T, L).
+apagaT(X, [H|T], [H|T1]) :- X \= H, apagaT(X, T, T1).
+
+%Adiciona um elemento ao início da lista
+%adic(X, [], [X]).
+adic(X, L1, [X|L1]).
+
+/*  Soma todos os elementos de uma lista
+ * 
+ *  1º: Lista a somar
+ *  2º: Soma de todos os elementos
+ */
+sum([],0).
+sum([X|T],N) :-
+    sum(T,N1),
+    N is N1+X
+.

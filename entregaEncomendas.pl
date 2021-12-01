@@ -18,7 +18,8 @@ entregaEncomenda(encomenda(EncomendaID, ClienteID , Peso, Volume, PrazoEntrega, 
     %assert(entrega(EstafetaID, carro, EncomendaID, Rating, DataEntrega, HoraEntrega)).
 
 /**
-Diz quais os estafetas que podem entregar a partir do ID da Encomenda. Se a encomenda sair da Póvoa de Varzim, retorna os estafetas sediados nessa cidade.
+Diz quais os estafetas que podem entregar uma encomenda a partir do ID. 
+Se a encomenda sair da Póvoa de Varzim, retorna os estafetas sediados nessa cidade.
 */
 filtraCidadeEncomenda(EncomendaID, ListaEstafetas) :-
     encomenda(EncomendaID, ClienteID, Peso, V, Pra, Hor, DataEnc, HoraEnc, RuaId),
@@ -26,25 +27,22 @@ filtraCidadeEncomenda(EncomendaID, ListaEstafetas) :-
     findall(IdsEstafetas, estafeta(IdsEstafetas, _, City), ListaEstafetas). 
 
 /*
-Verifica se um dado estafeta está livre nesse dia
-Fiz em função das atribuições, e da data de entrega da encomenda. A melhor versão desta função verificaria os dias de intervalo entre a data de encomenda e a data de entrega.
-E veria se ele está livre num desses dias.
-
-
-Coisas que a função faz:
-Procuras todas as encomendas atribuídas a esse estafeta.
-Guarda as datas de entregas dessas encomendas, e filtra (com o include) quais as que coincidem com esse dia.
+Verifica se um dado estafeta está livre nesse dia em função do peso máximo que pode transportar nesse dia.
+Atualmente o peso máximo é 100, que pode levar num carro.
+O predicado procura todas as encomendas de um estafeta, filtra pelo dia, e calcula a soma dos pesos das encomendas.
 */
 estafetaLivre(EstafetaId, Data) :-
     findall(IdsEncomendas, atribuido(EstafetaID, IdsEncomendas), ListaEncomendas),
     verificaListaEncomendasQuantasNumDia(ListaEncomendas, Data, PesoNumDia),
-    PesoNumDia =< 80.
+    PesoNumDia =< 100.
 
 
 getDataFromEncomenda(EncomendaId, DataDessaEncomenda) :- encomenda(EncomendaId, _, _, _, DataDessaEncomenda, _, _, _, _ ).
+
 /*
 Diz quantas encomendas estão planeadas para ser entregues num dado dia - data(dia, mes, ano).
 A linha do maplist converte Id's de encomendas em datas.
+O include filtra as encomendas pela data dada.
 */
 verificaListaEncomendasQuantasNumDia(Lista, Data, PesoNumDia) :-
     fazParesDataPeso_DeIdsEncomendas(Lista, ListaPares),

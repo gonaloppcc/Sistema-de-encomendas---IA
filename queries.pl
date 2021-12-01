@@ -93,27 +93,44 @@ satisfacClienteParaEstafeta(Estafeta,N) :-
 satisfacClienteParaEstafeta(_,0).
 
 %Query 7
-
+/*
+Identifica o número total de entregas pelos diferentes meios de transporte, num determinado intervalo de tempo.
+O findall procura as entregas entre as duas datas, e guarda o veículo utilizado.
+O predicado contaPares conta os elementos da lista num par. 
+Nesse par, o primeiro elemento é o elemento contado, e o segundo é o número de vezes que aparece.
+*/
 entregasPorMeioTransporte(Data1, Data2, ListaRes) :-
     findall(X, filtraEntregas(Data1, Data2, X), ListaVeiculos),
     contaPares(ListaVeiculos, ListaRes).
 
 %Query 8
-
+/*
+Identifica  o  número  total  de  entregas  pelos  estafetas,  num  determinado intervalo de tempo.
+O findall procura as entregas entre as duas datas, e guarda o ID do estafeta.
+O predicado contaPares está descrito na query anterior.
+*/
 numeroEncomendas(Data1, Data2, RespostaPares) :-
     findall(IdEstafeta, entregaEntreDatas(Data1, Data2, IdEstafeta), Pares),
     contaPares(Pares, RespostaPares).
-    %tamLista(EncomendasFiltradas, NTotal).
 
-%Query 9 Filtra pelo prazo
-encomendasNEntregues(D1, D2, NToal, NTotalNEntregues) :-
+%Query 9 
+/*
+Calcula o número de encomendas entregues e não entregues pela Green Distribution, num determinado período de tempo.
+O findall procura as entregas entre as duas datas, e guarda o ID da encomenda.
+O predicado "quaisForamEntregues" verifica quais dessas encomendas foram ou não entregues. 
+O predicado retorna em NTotal o número de encomendas entregues, e em NTotalNEntregues as não entregues.
+*/
+encomendasNEntregues(D1, D2, NTotal, NTotalNEntregues) :-
     findall(X, filtraEncomendas(D1, D2, X), ListaEncomendas),
-    quaisForamEntregues(ListaEncomendas, NToal, NTotalNEntregues).
+    quaisForamEntregues(ListaEncomendas, NTotal, NTotalNEntregues).
 
 
 %Query 10
-%Mas ele duplica uma entrega do estafeta 2, não sei se o problema é da baseConhecimento, mas não parece.
-%Mas está na entregasDoEstafeta
+/*
+Calcula o peso total transportado por estafeta num determinado dia. 
+O predicado "entregasDoEstafeta" procura quais as entregas feitas por um estafeta, guardando os ids das entregas.
+O predicado "calculaPesoPorEncomendas" calcula o peso total dessas encomendas.
+*/
 totalPesoEstafeta(IdEstafeta, PesoTotal) :-
   entregasDoEstafeta(IdEstafeta, IdsEnTregasFeitas),
   calculaPesoPorEncomendas(IdsEnTregasFeitas, PesoTotal).
