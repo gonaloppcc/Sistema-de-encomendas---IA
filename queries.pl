@@ -17,11 +17,11 @@
  *  2º: ID do estafeta que utilizou mais vezes a moto         /    nº de vezes que a utilizou
  *  3º: ID do estafeta que utilizou mais vezes o carro        /    nº de vezes que o utilizou
  */
-estafetaMaisEco(ID1/N1,ID2/N2,ID3/N3) :-
+estafetaMaisEco(R) :-
     findall(Estafeta/Veiculo, entrega(Estafeta,Veiculo,_,_,_,_), Entregas),
     encontraUnicos(Entregas,Filtrados),
     aplicaLista(contaElem,Filtrados,Entregas,Contados),
-    contaVeiculos(Contados,ID1/N1,ID2/N2,ID3/N3)
+    contaVeiculos(Contados,R)
 .
 
 % Query 2

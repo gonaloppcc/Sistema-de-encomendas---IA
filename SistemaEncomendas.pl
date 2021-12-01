@@ -94,25 +94,28 @@ tamLista([_|R], N) :-
 
 
 
-/* Verifica o estafeta que usou mais vezes cada veiculo 
-*
-*  1º: Lista de triplos Estafeta/Veiculo/N onde N é o número de vezes que usou o veiculo
-*  2º: Estafeta que utilizou mais a bicicleta/N
-*  3º: Estafeta que utilizou mais a moto/N
-*  4º: Estafeta que utilizou mais o carro/N
+/* Adiciona o triplo ID/Veiculo/N à lista caso o Veiculo não exista
+ * ou N seja maior que o já existente, removendo o antigo.
+ * 
 */
-contaVeiculos([],0/0,0/0,0/0).
-contaVeiculos([ID/bicicleta/N|T],RID1/RN1,ID2/N2,ID3/N3) :-
-    contaVeiculos(T,ID1/N1,ID2/N2,ID3/N3),
-    veMaior(ID/N,ID1/N1,RID1/RN1)
+adicionaVeiculoAux(ID/Veiculo/N,[],[ID/Veiculo/N]).
+adicionaVeiculoAux(ID/Veiculo/N,[ID2/Veiculo/N2|T],[RID/Veiculo/RN|T]) :-
+    veMaior(ID/Veiculo/N, ID2/Veiculo/N2, RID/Veiculo/RN), !
 .
-contaVeiculos([ID/moto/N|T],ID1/N1,RID2/RN2,ID3/N3) :-
-    contaVeiculos(T,ID1/N1,ID2/N2,ID3/N3),
-    veMaior(ID/N,ID2/N2,RID2/RN2)
+adicionaVeiculoAux(ID/Veiculo/N, [ID2/Veiculo2/N2|T],[ID2/Veiculo2/N2|RT]) :-
+    Veiculo \== Veiculo2,
+    adicionaVeiculoAux(ID/Veiculo/N, T, RT)
 .
-contaVeiculos([ID/carro/N|T],ID1/N1,ID2/N2,RID3/RN3) :-
-    contaVeiculos(T,ID1/N1,ID2/N2,ID3/N3),
-    veMaior(ID/N,ID3/N3,RID3/RN3)
+
+/* Verifica o estafeta que usou mais vezes cada veiculo 
+ *
+ *  1º: Lista de triplos Estafeta/Veiculo/N onde N é o número de vezes que usou o veiculo
+ *  3º: Resultado
+ */
+contaVeiculos([],[]).
+contaVeiculos([V|T],R) :-
+    contaVeiculos(T,L),
+    adicionaVeiculoAux(V,L,R)
 .
 
 /* Vê dos dois estafetas tem maior nº de usos e retorna o maior...
@@ -122,7 +125,7 @@ contaVeiculos([ID/carro/N|T],ID1/N1,ID2/N2,RID3/RN3) :-
  *  3º: (ID do estafeta que utilizou mais vezes o veículo)     /    (Nº de vezes que utilizou o veículo)
  */
 veMaior(ID1/N1, _/N2, ID1/N1) :- N1 > N2.
-veMaior(_/N1, _/N2, _/N2) :- N2 >= N1.
+veMaior(_/N1, ID2/N2, ID2/N2) :- N2 >= N1.
 
 % Identifica que encomendas um cliente fez.
 % encomendas_cliente: clienteID, encomendaID* -> {V, F}
