@@ -178,6 +178,7 @@ entrega(2, carro,     4, 4, data(23,12,2),    hora(18,40)).
 %entrega(1, moto,      4, 5, data(23,12,2),    hora(18,40)).
 entrega(4, bicicleta, 6, 5, data(23,12,2039), hora(18,40)).
 entrega(2, bicicleta, 7, 1, data(23,12,2),    hora(18,40)).
+entrega(3, barco,     8, 3, data(30,10,2020), hora(23,10)).
 
 %atribuidos IdEstafeta, IdEncomenda
 atribuido(1, 1).
