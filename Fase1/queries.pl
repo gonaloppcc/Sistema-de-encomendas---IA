@@ -44,15 +44,6 @@ clientesServidos(Estafeta,Clientes) :-
     findall(Cliente, (entrega(Estafeta,_,EncID,_,_,_),encomenda(EncID,Cliente,_,_,_,_,_,_,_)), Clientes1),
     encontraUnicos(Clientes1, Clientes)
 .
-%Query 4
-/*
-Calcular o valor faturado pela Green Distribution num determinado dia.
-*/
-lucroUmDia(dia(D1, M1, A1), Valor) :-
-  findall(Encomenda, entrega(_, _, Encomenda, _, data(D1, M1, A1), _), ListaEncomendas),
-  calculaLucroPorEncomendas(ListaEncomendas, Valor).
-
-
 
 % Query 4
 %  Calcular o valor faturado pela Green Distribution num determinado dia;
