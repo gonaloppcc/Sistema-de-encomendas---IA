@@ -75,7 +75,7 @@ Se não, procura no elemento seguinte.
 */
 
 gerarAtribuicoes() :-
-    listaEncomendasNAtribuida(Lista).
+    listaEncomendasNAtribuida(Lista),
     gerarAtribuicoesLista(Lista).
 
 listaEncomendasNAtribuida(Res) :-

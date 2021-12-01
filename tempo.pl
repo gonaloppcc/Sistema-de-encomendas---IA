@@ -33,24 +33,26 @@ estaEntreDuasDatas(data(_,_,Ano1), data(_,_,Ano2), data(_,_,Anot)) :-
     Anot =< Ano2, !.
 
 %Validação das datas
-data(D, 1, A) :- D =< 31, D > 0,  A> 0.
-data(D, 2, A) :- D < 30, D > 0,  A> 0.
-data(D, 3, A) :- D =< 31, D > 0, A> 0.
-data(D, 4, A) :- D < 31, D > 0, A> 0.
-data(D, 5, A) :- D =< 31, D > 0, A> 0.
-data(D, 6, A) :- D < 31, D > 0,  A> 0.
-data(D, 7, A) :- D =< 31, D > 0,  A> 0.
-data(D, 8, A) :- D =< 31, D > 0,  A> 0.
-data(D, 9, A) :- D < 31, D > 0,  A> 0.
-data(D, 10, A) :- D =< 31, D > 0,  A> 0.
-data(D, 11, A) :- D < 31, D > 0,  A> 0.
-data(D, 12, A) :- D =< 31, D > 0,  A> 0.
+data(D, 1, A) :- D =< 31, D > 0,  A> 0,!.
+data(D, 2, A) :- D < 30, D > 0,  A> 0,!.
+data(D, 3, A) :- D =< 31, D > 0, A> 0,!.
+data(D, 4, A) :- D < 31, D > 0, A> 0,!.
+data(D, 5, A) :- D =< 31, D > 0, A> 0,!.
+data(D, 6, A) :- D < 31, D > 0,  A> 0,!.
+data(D, 7, A) :- D =< 31, D > 0,  A> 0,!.
+data(D, 8, A) :- D =< 31, D > 0,  A> 0,!.
+data(D, 9, A) :- D < 31, D > 0,  A> 0,!.
+data(D, 10, A) :- D =< 31, D > 0,  A> 0,!.
+data(D, 11, A) :- D < 31, D > 0,  A> 0,!.
+data(D, 12, A) :- D =< 31, D > 0,  A> 0,!.
+
 
 hora(H,M) :- 
     H < 24,
     H >= 0,
     M < 60,
-    M >= 0
+    M >= 0,
+    !
 . 
 
 %Funções
