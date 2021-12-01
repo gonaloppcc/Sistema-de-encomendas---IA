@@ -11,6 +11,7 @@
 :- dynamic atribuido/2.
 
 % Invariantes -------------------------------------------------------------
+% Encomenda ---------------------------------------------------------------
 +encomenda(EncID,Cliente,Peso,Volume,Prazo,HoraEnt,DataEnc,HoraEnc,Rua) :: 
 (    
     findall(EncID,encomenda(EncID,_,_,_,_,_,_,_,_),R),
@@ -31,6 +32,7 @@
     \+ atribuido(_,EncID)
 ).
 
+% Entrega -----------------------------------------------------------------
 +entrega(IDEstafeta,Veiculo,EncID,Rating,Data,Hora) :: 
 (
     findall(EncID,(entrega(_,_,EncID,_,_,_)),R),
@@ -45,8 +47,9 @@
     Data,
     Hora
 ).
--entrega(_,_,_,_,_,_) :: (true).
+-entrega(_,_,_,_,_,_) :: (true). % Como não há outro facto que dependa deste podemos remove-lo sempre
 
+% Estafeta ----------------------------------------------------------------
 +estafeta(ID,_,_) ::
 (
     findall(ID,estafeta(ID,_,_),R),
@@ -59,6 +62,7 @@
     \+ atribuido(ID,_)
 ).
 
+% Transporte --------------------------------------------------------------
 +transporte(Veiculo,Carga,Velocidade,Preco) ::
 (
     findall(Veiculo,transporte(Veiculo,_,_),R),
@@ -73,6 +77,7 @@
     \+ entrega(_,Veiculo,_,_,_,_)
 ).
 
+% Cliente -----------------------------------------------------------------
 +cliente(ID,_) ::
 (
     findall(ID,cliente(ID,_),R),
@@ -84,6 +89,7 @@
     \+ encomenda(_,ID,_,_,_,_,_,_,_)
 ).
 
+% Rua ---------------------------------------------------------------------
 +rua(ID,_,_) ::
 (
     findall(ID, rua(ID,_,_),R),
@@ -95,6 +101,7 @@
     \+ encomenda(_,_,_,_,_,_,_,_,ID)
 ).
 
+% Atribuido ---------------------------------------------------------------
 +atribuido(Estafeta, EncID) ::
 (
     findall(EncID, atribuido(_,EncID), R),
@@ -108,6 +115,7 @@
     \+ entrega(_,_,EncID,_,_,_)
 ).
 
+% Predicados de adição/remoção de conhecimento ----------------------------
 evolucao( Termo ) :- 
     findall(Invariante,+Termo::Invariante,Lista),
     insercao(Termo),
@@ -129,7 +137,6 @@ teste([]).
 teste([H|T]) :- H, teste(T).
 
 % Conhecimento ------------------------------------------------------------
-
 %rua: id, freguesia, nome -> {V,F}
 rua(1, vilaDoConde, rua1). 
 rua(2, povoaVarzim, rua1). 
