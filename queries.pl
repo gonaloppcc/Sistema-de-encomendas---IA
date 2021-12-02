@@ -85,7 +85,7 @@ entregasEmCadaRua(R) :-
  *  2º: Média de ratings
  */
 satisfacClienteParaEstafeta(Estafeta,N) :-
-    findall(Rating, entrega(Estafeta,_,EncID,Rating,_,_), Ratings),
+    findall(Rating, entrega(Estafeta,_,_,Rating,_,_), Ratings),
     sum(Ratings,Sum),
     length(Ratings, NRatings),
     NRatings > 0, N is Sum/NRatings, !
@@ -128,9 +128,9 @@ encomendasNEntregues(D1, D2, NTotal, NTotalNEntregues) :-
 %Query 10
 /*
 Calcula o peso total transportado por estafeta num determinado dia. 
-O predicado "entregasDoEstafeta" procura quais as entregas feitas por um estafeta, guardando os ids das entregas.
+O predicado "entregasDoEstafeta" procura quais as entregas feitas por um estafeta, num dia, guardando os ids das entregas.
 O predicado "calculaPesoPorEncomendas" calcula o peso total dessas encomendas.
 */
-totalPesoEstafeta(IdEstafeta, PesoTotal) :-
-  entregasDoEstafeta(IdEstafeta, IdsEnTregasFeitas),
+totalPesoEstafeta(IdEstafeta, Data, PesoTotal) :-
+  entregasDoEstafeta(IdEstafeta, Data, IdsEnTregasFeitas),
   calculaPesoPorEncomendas(IdsEnTregasFeitas, PesoTotal).
