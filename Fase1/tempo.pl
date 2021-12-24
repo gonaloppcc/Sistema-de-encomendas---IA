@@ -14,7 +14,8 @@ intervaloTempo(data(Dia1, Mes1, Ano1), hora(H1, M1), data(Dia2, Mes2, Ano2), hor
     MesEntrega is Mes2-Mes1,
     AnoEntrega is Ano2-Ano1,
     DiasRes is DiaEntrega+MesEntrega*30+AnoEntrega*365,
-    Minutos is H2*60+M2-H1*60-M1 
+    Minutos is H2*60+M2-H1*60-M1,
+    !
     .
 intervaloTempo(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), DiasRes) :- 
     DiaEntrega is Dia2-Dia1,
