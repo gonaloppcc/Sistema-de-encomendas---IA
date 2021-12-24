@@ -1,4 +1,3 @@
-:- include('tempo.pl').
 
 :- op( 900,xfy,'::' ).
 :- dynamic encomenda/9.
@@ -111,7 +110,7 @@
     estafeta(Estafeta,_,_),
     encomenda(EncID,_,_,_,_,_,_,_,_)
 ).
--atribuido(Estafeta,EncID) ::
+-atribuido(_,EncID) ::
 (
     \+ entrega(_,_,EncID,_,_,_)
 ).
@@ -183,10 +182,10 @@ entrega(3, barco,     8, 3, data(30,10,2020), hora(23,10)).
 
 %atribuidos IdEstafeta, IdEncomenda
 atribuido(1, 1).
-atribuido(3, 2).
-atribuido(1, 3).
+%atribuido(3, 2).
+%atribuido(1, 3).
 atribuido(1, 4).
-atribuido(4, 6).
+atribuido(4, 5).
 atribuido(2, 6).
 atribuido(1, 7).
 atribuido(1, 8).

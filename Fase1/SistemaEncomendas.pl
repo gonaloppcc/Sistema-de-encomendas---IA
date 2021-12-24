@@ -78,7 +78,7 @@ pertencem([L1|R1], Tudo):-
     \+ membro(L1, R1),
     pertencem(R1, Tudo).
 
-pertencem([L1|R1], Tudo):-
+pertencem([L1|_], Tudo):-
     \+ membro(L1, Tudo), !, false.
 
 membro(X, [X|_]).
@@ -214,7 +214,7 @@ quaisForamEntregues([X|R], N, NNentregues) :-
     NNentregues is NNnovo+1.
 
 auxQ9([], 0).
-auxQ9([H|T], H).
+auxQ9([H|_], H).
 
 /*  Sememlhante ao maplist mas a segunda lista é passada na sua totalidade para todos os elementos da primeira lista
  *  
@@ -273,12 +273,13 @@ encontraEncomendas([X|T],[Rua|T1]) :-
 
 %Query 10
 %Retorna as entregas feitas pelo Estafeta
-entregasDoEstafeta(IdEstafeta, IdsEnTregasFeitas):-
-  findall(X, selecionaIdsEncomendas(X, IdEstafeta), IdsEnTregasFeitas).
+entregasDoEstafeta(IdEstafeta, Data, IdsEnTregasFeitas):-
+  findall(X, selecionaIdsEncomendas(X, IdEstafeta, Data), IdsEnTregasFeitas).
+
     
 
-selecionaIdsEncomendas(X, IdEstafeta) :- 
-  entrega(IdEstafeta, _, X, _, _, _).
+selecionaIdsEncomendas(X, IdEstafeta, Data) :- 
+  entrega(IdEstafeta, _, X, _, Data, _).
 
 %Recebe as entregas, procura as encomendas e soma pesos
 %Está certa

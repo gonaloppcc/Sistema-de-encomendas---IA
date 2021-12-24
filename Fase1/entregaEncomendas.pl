@@ -7,7 +7,7 @@ entregaEncomendas(Entregas) :-
     Encs), % Todas as encomendas não entregues.
     maplist(entregaEncomenda, Encs, Entregas).
 
-entregaEncomenda(encomenda(EncomendaID, ClienteID , Peso, Volume, PrazoEntrega, HorasPrazoEntrega, DataDeEncomenda, HorasDataEncomenda, Rua), Entrega) :-
+entregaEncomenda(encomenda(EncomendaID, _ , _, _, PrazoEntrega, HorasPrazoEntrega, _, _, _), Entrega) :-
     atribuido(EstafetaId, EncomendaID),
     Veiculo = carro,
     random(0, 5, Rating),
@@ -21,9 +21,9 @@ Diz quais os estafetas que podem entregar uma encomenda a partir do ID.
 Se a encomenda sair da Póvoa de Varzim, retorna os estafetas sediados nessa cidade.
 */
 filtraCidadeEncomenda(EncomendaID, ListaEstafetas) :-
-    encomenda(EncomendaID, ClienteID, Peso, V, Pra, Hor, DataEnc, HoraEnc, RuaId),
+    encomenda(EncomendaID, _, _, _, _, _, _, _, RuaId),
     rua(RuaId, City, _),
-    findall(IdsEstafetas, estafeta(IdsEstafetas, _, City), ListaEstafetas). 
+    findall(X, estafeta(X, _, City), ListaEstafetas). 
 
 /*
 Verifica se um dado estafeta está livre nesse dia em função do peso máximo que pode transportar nesse dia.
@@ -31,13 +31,12 @@ Atualmente o peso máximo é 100, que pode levar num carro.
 O predicado procura todas as encomendas de um estafeta, filtra pelo dia, e calcula a soma dos pesos das encomendas.
 */
 estafetaLivre(EstafetaId, Data) :-
-    findall(IdsEncomendas, atribuido(EstafetaID, IdsEncomendas), ListaEncomendas),
+    findall(IdsEncomendas, atribuido(EstafetaId, IdsEncomendas), ListaEncomendas),
     verificaListaEncomendasQuantasNumDia(ListaEncomendas, Data, PesoNumDia),
     PesoNumDia =< 100.
 
 
 getDataFromEncomenda(EncomendaId, DataDessaEncomenda) :- encomenda(EncomendaId, _, _, _, DataDessaEncomenda, _, _, _, _ ).
-
 /*
 Diz quantas encomendas estão planeadas para ser entregues num dado dia - data(dia, mes, ano).
 A linha do maplist converte Id's de encomendas em datas.
@@ -52,7 +51,7 @@ verificaListaEncomendasQuantasNumDia(Lista, Data, PesoNumDia) :-
 
 fazParesDataPeso_DeIdsEncomendas([], []).
 fazParesDataPeso_DeIdsEncomendas([IdEncomenda|Resto], Pares) :-
-    encomenda(IdEncomenda, _, Peso, V, Data, _, DataEnc, _, _),
+    encomenda(IdEncomenda, _, Peso, _, Data, _, _, _, _),
     adic((Data, Peso), ResRecursivo, Pares),
     fazParesDataPeso_DeIdsEncomendas(Resto, ResRecursivo).
 
@@ -85,16 +84,15 @@ gerarAtribuicoesLista([]).
 gerarAtribuicoesLista([EncID|T]) :- geraUmaAtribuicao(EncID), gerarAtribuicoesLista(T).
 
 geraUmaAtribuicao(EncId) :-
-    filtraCidadeEncomenda(EncID, ListaEstafetas),
-    getDataFromEncomenda(EncID, Data),
+    filtraCidadeEncomenda(EncId, ListaEstafetas),
+    getDataFromEncomenda(EncId, Data),
     procuraEstafetaLivreEnc(EncId, Data, ListaEstafetas).
 
 %Podiamos usar ! aqui para tirar os \+
-procuraEstafetaLivreEnc(EncId, _, []):- write("0").
-procuraEstafetaLivreEnc(EncId, _, [Est1|T]) :-  tamLista(T, 0), write("1"),evolucao(atribuido(Est1, EncId)).
-procuraEstafetaLivreEnc(EncId, Data, [Est1|T]) :- \+ tamLista(T, 0), estafetaLivre(Est1, Data), write("2"),evolucao(atribuido(Est1, EncId)).
-procuraEstafetaLivreEnc(EncId, Data, [Est1|T]) :- \+ tamLista(T, 0), \+ estafetaLivre(Est1, Data), write("3"),procuraEstafetaLivreEnc(EncID, Data, T).
-
+procuraEstafetaLivreEnc(_, _, []).
+procuraEstafetaLivreEnc(EncId, _, [Est1|T]) :-  tamLista(T, 0),evolucao(atribuido(Est1, EncId)).
+procuraEstafetaLivreEnc(EncId, Data, [Est1|T]) :- \+ tamLista(T, 0), estafetaLivre(Est1, Data),evolucao(atribuido(Est1, EncId)).
+procuraEstafetaLivreEnc(EncId, Data, [Est1|T]) :- \+ tamLista(T, 0), \+ estafetaLivre(Est1, Data),procuraEstafetaLivreEnc(EncId, Data, T).
 
 
 removeOneList([], _, []).

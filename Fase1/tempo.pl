@@ -9,6 +9,7 @@ As horas são outro tipo de conhecimento.
 /*
 Este predicado é utilizado de várias formas, por isso pode retornar dias e minutos, ou apenas dias.
 */
+
 intervaloTempo(data(Dia1, Mes1, Ano1), hora(H1, M1), data(Dia2, Mes2, Ano2), hora(H2, M2), DiasRes, Minutos) :- 
     DiaEntrega is Dia2-Dia1,
     MesEntrega is Mes2-Mes1,
@@ -22,7 +23,7 @@ intervaloTempo(data(Dia1, Mes1, Ano1), data(Dia2, Mes2, Ano2), DiasRes) :-
     MesEntrega is Mes2-Mes1,
     AnoEntrega is Ano2-Ano1,
     DiasRes is DiaEntrega+MesEntrega*30+AnoEntrega*365, 
-    DiasRes > 0, !
+    DiasRes > 0, !    
     .
 
 /*
