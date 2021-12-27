@@ -1,5 +1,5 @@
 # Conhecimento ------------------------------------------------------------
-
+#Base de conhecimento, o import não está a dar
 class Rua:
     def __init__(self, id, freguesia, nome):
         self.id = id
@@ -7,18 +7,18 @@ class Rua:
         self.nome = nome
 
 
-#Ruas
+#Ruas ID + Cidade + Nome da rua
 ruaTP1_1 = Rua(2, "povoaVarzim", "rua1")
 ruaTP1_2 = Rua(1, "vilaDoConde", "rua1")
 ruaTP1_3 = Rua(3, "trofa", "avenida")
 ruaTP1_4 = Rua(4, "lisboa", "praca")
 
-ruaTP2_1 = Rua(1, "grafo", "rua1")
-ruaTP2_2 = Rua(2, "grafo", "rua2")
-ruaTP2_3 = Rua(3, "grafo", "rua3")
-ruaTP2_4 = Rua(4, "grafo", "rua4")
-ruaTP2_5 = Rua(5, "grafo", "rua5")
-ruaTP2_6 = Rua(6, "grafo", "rua6")
+ruaTP2_1 = Rua(1, "grafo", "ruaTP2_1" )
+ruaTP2_2 = Rua(2, "grafo", "ruaTP2_2" )
+ruaTP2_3 = Rua(3, "grafo", "ruaTP2_3" )
+ruaTP2_4 = Rua(4, "grafo", "ruaTP2_4" )
+ruaTP2_5 = Rua(5, "grafo", "ruaTP2_5" )
+ruaTP2_6 = Rua(6, "grafo", "ruaTP2_6" )
 #Guarda as cidades de cada rua
 #id , cidade/freguesia, nome
 ruasCidades = { ruaTP1_1, ruaTP1_2, 
@@ -37,11 +37,14 @@ distancias = {
     ruaTP2_2 : [(ruaTP2_3, 2), (ruaTP2_4, 2), (ruaTP2_5, 1)],
     ruaTP2_3 : [(ruaTP2_5, 2)],
     ruaTP2_4 : [(ruaTP2_5, 3), (ruaTP2_6, 1)],
-    ruaTP2_5 : [(ruaTP2_6, 2)]
+    ruaTP2_5 : [(ruaTP2_6, 2)],
+    ruaTP2_6 : []
 }
 
 #Constantes
 origem = ruaTP2_1
+
+
 """
 1-> 2 (1), 3 (5)
 2 -> 3 (2), 4 (2), 5 (1)
@@ -54,6 +57,32 @@ origem = ruaTP2_1
    3  >  5
 
 """
+#class Transporte:
+ #Transportes e velocidade, temos tudo em Km/h
+class Transporte:
+    def __init__(self, nome, pesoMaximo, velocidadeMax, coeficienteKgVelocidade):
+        self.nome = nome
+        self.pesoMaximo = pesoMaximo
+        self.velocidadeMax = velocidadeMax
+        self.coeficienteKgVelocidade = coeficienteKgVelocidade
+   
+    def calculaVelocidade(self, pesoEncomenda):
+        if pesoEncomenda > self.pesoMaximo: 
+            return 0
+        penalizaçãoPeso = self.coeficienteKgVelocidade * pesoEncomenda
+        return self.velocidadeMax - penalizaçãoPeso
+#transporte: nome, pesoMaximo, velMax -> {V,F}
+#nós na fase 1 metemos 4 parâmetros, mas não sei o que é o último
+# Nome, peso Máximo possível transportar, velocidade máxima, coeficiente peso/velocidade
+bicicleta = Transporte("bicicleta", 5, 10, 0.7)
+moto = Transporte("moto", 20, 35, 0.5)
+carro = Transporte("carro", 100, 25, 0.1)
+barco = Transporte("barco", 20, 21, 0.6)
+
+   
+
+
+
 """
 
 #TP1

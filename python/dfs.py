@@ -1,55 +1,10 @@
-#import baseConhecimento
+import baseConhecimento
 
-#Base de conhecimento, o import não está a dar
-class Rua:
-    def __init__(self, id, freguesia, nome):
-        self.id = id
-        self.freguesia = freguesia
-        self.nome = nome
-
-
-#Ruas
-ruaTP1_1 = Rua(2, "povoaVarzim", "rua1")
-ruaTP1_2 = Rua(1, "vilaDoConde", "rua1")
-ruaTP1_3 = Rua(3, "trofa", "avenida")
-ruaTP1_4 = Rua(4, "lisboa", "praca")
-
-ruaTP2_1 = Rua(1, "grafo", "ruaTP2_1" )
-ruaTP2_2 = Rua(2, "grafo", "ruaTP2_2" )
-ruaTP2_3 = Rua(3, "grafo", "ruaTP2_3" )
-ruaTP2_4 = Rua(4, "grafo", "ruaTP2_4" )
-ruaTP2_5 = Rua(5, "grafo", "ruaTP2_5" )
-ruaTP2_6 = Rua(6, "grafo", "ruaTP2_6" )
-#Guarda as cidades de cada rua
-#id , cidade/freguesia, nome
-ruasCidades = { ruaTP1_1, ruaTP1_2, 
-                ruaTP1_3, ruaTP1_4, 
-
-                ruaTP2_1, ruaTP2_2, ruaTP2_3, 
-                ruaTP2_4, ruaTP2_5, ruaTP2_6
-              }
-
-#Guarda as distâncias em função do id da rua
-# Key é o id da rua, outro lado temos id's de outras ruas, mais distâncias
-#https://www.gatevidyalay.com/wp-content/uploads/2018/03/Dijkstra-Algorithm-Problem-01.png
-
-distancias = {
-    ruaTP2_1 : [(ruaTP2_2, 1), (ruaTP2_3, 5)],
-    ruaTP2_2 : [(ruaTP2_3, 2), (ruaTP2_4, 2), (ruaTP2_5, 1)],
-    ruaTP2_3 : [(ruaTP2_5, 2)],
-    ruaTP2_4 : [(ruaTP2_5, 3), (ruaTP2_6, 1)],
-    ruaTP2_5 : [(ruaTP2_6, 2)],
-    ruaTP2_6 : []
-}
-
-#Constantes
-origem = ruaTP2_1
-
-#Funções
+#Funções para descobrir caminhos
 #dfs, utilizando os slides PL(8) das aulas
 def conectados(procurar):
     lista = []
-    adjacentes = distancias.get(procurar)
+    adjacentes = baseConhecimento.distancias.get(procurar)
     for (rua, dist) in adjacentes:
         lista.append(rua)
     return lista
@@ -59,7 +14,7 @@ def dfs2(origem, destino, listaAtual):
     if origem == destino:
         return listaAtual
     #Caso seja um dead-end
-    if origem not in distancias:
+    if origem not in baseConhecimento.distancias:
         return None
     ligados = conectados(origem)
     #Vamos guardar todos os caminhos não nulos
@@ -92,7 +47,7 @@ def bfs(origem, destino):
     queue = [(origem,[origem])]
     #Inicializamos todos os nodos como não visitados, num Map
     visitados = {}
-    ruas = distancias.keys()
+    ruas = baseConhecimento.distancias.keys()
     for umaKey in ruas:
         visitados[umaKey] = False
 
@@ -161,7 +116,7 @@ def calculaDistancia(listaNodos):
     print(listaNodos)
     total = 0
     for i in range(len(listaNodos)-1):
-        listaNodosConnectados = distancias[listaNodos[i]]
+        listaNodosConnectados = baseConhecimento.distancias[listaNodos[i]]
         for nome, dist in listaNodosConnectados:
             print("Só nome e outro ",nome.nome, " ", listaNodos[i+1].nome )
         for nome, dist in listaNodosConnectados:
@@ -170,8 +125,8 @@ def calculaDistancia(listaNodos):
                 total+=dist
     return total
 
-ori = ruaTP2_1
-dest = ruaTP2_6
+ori = baseConhecimento.ruaTP2_1
+dest = baseConhecimento.ruaTP2_6
 #Obtem um caminho em função da função utilizada
 cam = dfs(ori,dest)
 #Recebe um caminho, conjunto de nós, e calcula o custo total
@@ -187,6 +142,29 @@ for nodo in cam:
 distancia = calculaDistancia(cam)
 print("O custo é: ", distancia)
         
+
+#Calcular tempos e velocidades a partir de entregas
+
+def calculaTempoTransporte(meioTransporte, pesoEncomenda, distância):
+    velocidadeTransporte = meioTransporte.calculaVelocidade(pesoEncomenda)
+    if velocidadeTransporte == 0: 
+        raise Exception("O meio de transporte não consegue levar a encomenda")
+    return distância / velocidadeTransporte
+
+peso = 0
+meioTransporte = baseConhecimento.bicicleta    
+print("Tempo de transporte do caminho com ", distancia, " é: ")
+print(calculaTempoTransporte(meioTransporte, peso, distancia))
+
+
+
+
+
+
+
+
+
+
 #Só para aprender, não funciona bem
 def distancia(ruaDest):
     lista = distancias.get(origem)
