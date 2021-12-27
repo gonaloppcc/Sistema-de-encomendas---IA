@@ -118,10 +118,7 @@ def calculaDistancia(listaNodos):
     for i in range(len(listaNodos)-1):
         listaNodosConnectados = baseConhecimento.distancias[listaNodos[i]]
         for nome, dist in listaNodosConnectados:
-            print("Só nome e outro ",nome.nome, " ", listaNodos[i+1].nome )
-        for nome, dist in listaNodosConnectados:
             if nome.nome==listaNodos[i+1].nome: 
-                print("Segundo print: ", nome.nome)
                 total+=dist
     return total
 
