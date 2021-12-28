@@ -1,5 +1,5 @@
 import baseConhecimento
-from algoritmosProcura.common import conectados
+from algoritmosProcura.common import conectados, print_caminho
 
 
 def dfs2(origem, destino, listaAtual):
@@ -32,7 +32,9 @@ def dfs2(origem, destino, listaAtual):
 
 
 def dfs(origem, destino):
-    return dfs2(origem, destino, [origem])
+    cam = dfs2(origem, destino, [origem])
+    cam.reverse()
+    return cam
 
 
 # bfs
@@ -105,4 +107,5 @@ def dfsLimited(origem, destino):
         # Se a lista contiver algo, sai do ciclo
         lista = dfsLimited2(origem, destino, [origem], nivelAtual)
         nivelAtual += 1
-    return lista.reverse()
+    lista.reverse()
+    return lista

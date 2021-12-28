@@ -1,7 +1,10 @@
 import baseConhecimento
-from algoritmosProcura.common import calculaDistancia, calculaTempoTransporte
+from algoritmosProcura.common import calcula_distancia, calcula_tempo_transporte, print_caminho
 from algoritmosProcura.dfs import dfs
+from geraEntregas import gerar_entregas
 
+#Desobrir caminho por algoritmo
+"""
 ori = baseConhecimento.local5
 dest = baseConhecimento.local10
 
@@ -21,15 +24,18 @@ print(" - ")
 
 cam.reverse()
 
-for nodo in cam:
-    print("Reverso: ", nodo.nome)
-
+print_caminho(cam)
+#Custo do caminho
 distancia = calculaDistancia(cam)
 
 print("O custo é: ", distancia)
 
-
-peso = 0
+#Velocidades, quanto maior o peso, maior o tempo
+peso = 3
 meioTransporte = baseConhecimento.bicicleta
 print("Tempo de transporte do caminho com ", distancia, " é: ")
 print(calculaTempoTransporte(meioTransporte, peso, distancia))
+"""
+
+#Gerar entregas
+gerar_entregas()
