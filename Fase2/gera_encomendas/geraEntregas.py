@@ -61,9 +61,9 @@ def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do c
 # Mas a outra pesa muito para a mota, logo é o carro que leva
 
 # Gera todas as atribuições
-def gerar_entregas():
+def gerar_entregas(algoritmo):
     for atribuicao in atribuicoes:
-        entrega = gerar_entrega(atribuicao)
+        entrega = gerar_entrega(atribuicao, algoritmo)
         if entrega is not None:
             entregas.append(entrega)
             entrega.imprime_entrega()
