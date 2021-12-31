@@ -1,9 +1,8 @@
 import logging
 
-from gera_encomendas.Entrega import Entrega
 from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
-from algoritmos_procura.dfs import dfs, bfs
 from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, locais, origens, transportes
+from gera_encomendas.Entrega import Entrega
 
 # TODO: Passar isto para metodos de instancia da classe Entrega?
 
@@ -25,9 +24,8 @@ def escolhe_veiculo(cam, encomenda):
         for veiculo in transportes:
             try:
                 tempo_veiculo = calcula_tempo_transporte(veiculo, encomenda.peso, distancia_caminho)
-                logging.info("Passa pelo veiculo: ", veiculo.nome)
-                logging.info("Com tempo de entrega: ", tempo_veiculo)
-                print('ola')
+                logging.info(f"escolhe_veiculo: Veiculo: {veiculo.nome}")
+                logging.info(f"escolhe_veiculo: Tempo: {tempo_veiculo:.3f}")
                 if tempo_veiculo < tempo_transporte:
                     tempo_transporte = tempo_veiculo
                     melhor_veiculo = veiculo
@@ -47,9 +45,8 @@ def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do c
         raise Exception("Cidades não coincidem")
     local_entrega = locais.get(encomenda.id_local_entrega)
 
-    # Para mudar o algoritmo é aqui
-
     cam = algoritmo(origens.get(estafeta.cidade), local_entrega)
+
     veiculo = escolhe_veiculo(cam, encomenda)
 
     return Entrega(atribuicao.encomenda_id, atribuicao.estafeta_id, 0, veiculo, cam)
@@ -67,4 +64,4 @@ def gerar_entregas(algoritmo):
         if entrega is not None:
             entregas.append(entrega)
             entrega.imprime_entrega()
-            print("<------------------>")
+            logging.info("<------------------>")

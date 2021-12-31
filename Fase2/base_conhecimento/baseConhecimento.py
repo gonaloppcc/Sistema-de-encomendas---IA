@@ -14,17 +14,17 @@ from base_conhecimento.Transporte import Transporte
 # Locais da primeira fase
 
 local1 = Local(1, "povoaVarzim", "local1")
-local2 = Local(2, "vilaDoConde", "local1")
+local2 = Local(2, "vilaDoConde", "local2")
 local3 = Local(3, "trofa", "avenida")
 local4 = Local(4, "lisboa", "praca")
 
 # Locais da segunda fase
-local5 = Local(5, "grafo", "localTP2_1")
-local6 = Local(6, "grafo", "localTP2_2")
-local7 = Local(7, "grafo", "localTP2_3")
-local8 = Local(8, "grafo", "localTP2_4")
-local9 = Local(9, "grafo", "localTP2_5")
-local10 = Local(10, "grafo", "localTP2_6")
+local5 = Local(5, "grafo", "local5")
+local6 = Local(6, "grafo", "local6")
+local7 = Local(7, "grafo", "local7")
+local8 = Local(8, "grafo", "local8")
+local9 = Local(9, "grafo", "local9")
+local10 = Local(10, "grafo", "local10")
 
 # Map onde guardamos todas as ruas, por ‘id’.
 locais = {
@@ -76,10 +76,10 @@ origens = {
 """
 
 # Transporte: Nome, peso Máximo possível transportar, velocidade máxima, descrescimento de velocidade, preço por km
-bicicleta = Transporte("bicicleta", 5, 10, 0.7, 5)
-moto = Transporte("moto", 20, 35, 0.5, 10)
-carro = Transporte("carro", 100, 25, 0.1, 20)
-barco = Transporte("barco", 20, 21, 0.6, 41)
+bicicleta = Transporte("Bicicleta", 5, 10, 0.7, 5)
+moto = Transporte("Moto", 20, 35, 0.5, 10)
+carro = Transporte("Carro", 100, 25, 0.1, 20)
+barco = Transporte("Barco", 20, 21, 0.6, 41)
 
 transportes = [bicicleta, moto, carro, barco]
 

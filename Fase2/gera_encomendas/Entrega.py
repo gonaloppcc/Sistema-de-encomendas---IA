@@ -1,4 +1,6 @@
-from algoritmos_procura.common import print_caminho
+import logging
+
+from algoritmos_procura.common import caminho_to_string
 from base_conhecimento.baseConhecimento import Transporte
 
 
@@ -16,9 +18,8 @@ class Entrega:
         self.caminho = caminho
 
     def imprime_entrega(self):
-        print("Id da encomenda: ", self.encomenda_id)
-        print("Id da estafeta: ", self.estafeta_id)
-        print("Data entrega: ", self.data_entrega)
-        print("Transporte: ", self.transporte.nome)
-        print("Caminho feito: ")
-        print_caminho(self.caminho)
+        logging.info(f"Id da encomenda: {self.encomenda_id}")
+        logging.info(f"Id da estafeta: {self.estafeta_id}")
+        logging.info(f"Data entrega: {self.data_entrega}")
+        logging.info(f"Transporte: {self.transporte.nome}")
+        logging.info(caminho_to_string(self.caminho))

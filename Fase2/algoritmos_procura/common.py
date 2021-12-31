@@ -1,6 +1,7 @@
 # Funções para descobrir caminhos
 # dfs, utilizando os diapositivos PL(8) das aulas
-from base_conhecimento import baseConhecimento
+from base_conhecimento import baseConhecimento, Local
+
 
 def conectados(procurar):
     lista = []
@@ -29,9 +30,9 @@ def calcula_tempo_transporte(meio_transporte, peso_encomenda, distancia):
     return distancia / velocidade_transporte
 
 
-def print_caminho(cam):
-    print("Caminho: ", end="")
+def caminho_to_string(cam: [Local]):
+    caminho = "Caminho feito: "
     for nodo in cam:
-        print(nodo.nome, end=" ")
+        caminho = caminho + f"{nodo.nome} "
 
-    print()
+    return caminho
