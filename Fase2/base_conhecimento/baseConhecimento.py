@@ -94,16 +94,18 @@ encomendas = {
 }
 
 estafeta1 = Estafeta(1, "marco", "grafo")
-
+estafeta2 = Estafeta(2, "diogo", "grafo")
 # Map onde guardamos todos os estafetas, por id.
 estafetas = {
-    1: estafeta1
+    1: estafeta1,
+    2: estafeta2
 }
 
 # Nós aqui podemos dar o objeto inteiro, mas assim é mais limpo
 atribuicao1 = Atribuicao(1, 1)
 atribuicao2 = Atribuicao(1, 2)
+atribuicao3 = Atribuicao(2, 2) #Volta a entregar a mesma
 
 # Lista onde guardamos todas as atribuições.
 # Como só as consultamos sequencialmente, para gerar entregas, podem estar numa lista.
-atribuicoes = [atribuicao1, atribuicao2]
+atribuicoes = [atribuicao1, atribuicao2, atribuicao3]

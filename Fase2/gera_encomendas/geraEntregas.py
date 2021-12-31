@@ -14,7 +14,9 @@ entregas_feitas = []
 # Se for verdadeira, tem de ser o mais ecológico ← Falta implementar
 flag_ecologico_ou_rapido = False
 
-
+#Escolhe o veículo que pode entregar uma encomenda.
+#Recebe o caminho e a encomenda, e a partir do peso vê qual o melhor veículo para a entregar.
+#Para já, só vê em função da velocidade, falta ver um critério para o ser "verde".
 def escolhe_veiculo(cam, encomenda):
     distancia_caminho = calcula_distancia(cam)
     if not flag_ecologico_ou_rapido:
@@ -54,6 +56,30 @@ def gerar_entrega(atribuicao):
     entrega_feita = Entrega(encomenda_id, estafeta_id, 0, veiculo, cam)
     return entrega_feita
 
+#Descobre todas as encomendas que um dado estafeta deve fazer
+def entregas_do_estafeta(estafeta):
+    list_encomendas = []
+    for atribuicao1 in atribuicoes:
+        if atribuicao1.estafeta_id == estafeta:
+            list_encomendas.append(atribuicao1.encomenda_id)
+    return list_encomendas
+
+
+"""
+Esta função recebe qual é o estefeta que vamos analisar, e devolve uma lista de listas com as possíveis entregas que ele pode fazer.
+Por exemplo, se o estafeta 1 tiver que entregas a encomenda A, B e C, ele vai devolver a seguinte lista:
+[
+[[A], [B], [C]], 
+[[A, B], [C]],
+[[A], [B, C]],
+[[A, B, C]],
+]
+Como cada estefeta só entrega na sua cidade, vamos procurar todos os possíveis percursos, independentemente do custo.
+"""
+def descobre_possiveis_caminhos(encomendasID):
+    locais_entrega = map(lambda encomendaID: encomendas.get(encomendaID).id_local_entrega, encomendasID)
+    
+
 
 # Coisas sobre este teste
 # Realmente, a mota é mais rápida que o carro, mas não pode levar tanto peso
@@ -62,9 +88,26 @@ def gerar_entrega(atribuicao):
 
 # Gera todas as atribuições
 def gerar_entregas():
+    lista_estafetas = {atribuicao.estafeta_id for atribuicao in atribuicoes}
+
+    for estafeta in lista_estafetas:
+        print("Vamos analisar o estafeta nr.: ", estafeta)
+        encomendasID = entregas_do_estafeta(estafeta)
+        print("ID's das encomendas que tem para entregar: ", encomendasID)
+
+        possiveis_percursos = descobre_possiveis_caminhos(encomendasID)
+
+
+        entrega = gerar_entrega(atribuicao)
+        if entrega is not None:
+            entregas_feitas.append(entrega)
+            entrega.imprime_entrega()
+            print("<------------------>")
+""" Versão ANTIGA
     for atribuicao in atribuicoes:
         entrega = gerar_entrega(atribuicao)
         if entrega is not None:
             entregas_feitas.append(entrega)
             entrega.imprime_entrega()
             print("<------------------>")
+            """
