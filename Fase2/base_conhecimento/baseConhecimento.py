@@ -43,7 +43,7 @@ locais = {
 # Guarda as distâncias em função do ‘id’ da local
 # Key é o ‘id’ da local, doutro lado temos ‘id’'s de outras locals, mais distâncias
 # https://www.gatevidyalay.com/wp-content/uploads/2018/03/Dijkstra-Algorithm-Problem-01.png
-distancias = {
+grafo1 = {
     local5: [(local6, 1), (local7, 5)],
     local6: [(local7, 2), (local8, 2), (local9, 1)],
     local7: [(local9, 2)],

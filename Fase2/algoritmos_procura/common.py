@@ -2,10 +2,9 @@
 # dfs, utilizando os diapositivos PL(8) das aulas
 from base_conhecimento import baseConhecimento
 
-
 def conectados(procurar):
     lista = []
-    adjacentes = baseConhecimento.distancias.get(procurar)
+    adjacentes = baseConhecimento.grafo1.get(procurar)
     for (local, dist) in adjacentes:
         lista.append(local)
     return lista
@@ -15,7 +14,7 @@ def conectados(procurar):
 def calcula_distancia(nodos):
     total = 0
     for i in range(len(nodos) - 1):
-        nodos_connectados = baseConhecimento.distancias[nodos[i]]
+        nodos_connectados = baseConhecimento.grafo1[nodos[i]]
         for nome, dist in nodos_connectados:
             if nome.nome == nodos[i + 1].nome:
                 total += dist

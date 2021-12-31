@@ -1,6 +1,8 @@
+import logging
+
 from gera_encomendas.Entrega import Entrega
 from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
-from algoritmos_procura.dfs import dfs
+from algoritmos_procura.dfs import dfs, bfs
 from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, locais, origens, transportes
 
 # TODO: Passar isto para metodos de instancia da classe Entrega?
@@ -8,23 +10,24 @@ from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomenda
 # Variáveis globais
 
 # Entregas realizadas
-entregas_feitas = []
+entregas = []
 
 # Se for falsa, queremos o mais rápido, logo é carro
 # Se for verdadeira, tem de ser o mais ecológico ← Falta implementar
-flag_ecologico_ou_rapido = False
+ecologico = False
 
 
 def escolhe_veiculo(cam, encomenda):
     distancia_caminho = calcula_distancia(cam)
-    if not flag_ecologico_ou_rapido:
-        tempo_transporte = 100000000
+    if not ecologico:
+        tempo_transporte = float('inf')
         melhor_veiculo = transportes[0]
         for veiculo in transportes:
             try:
                 tempo_veiculo = calcula_tempo_transporte(veiculo, encomenda.peso, distancia_caminho)
-                # print("Passa pelo veiculo: ", veiculo.nome)
-                # print("Com tempo de entrega: ", tempo_veiculo)
+                logging.info("Passa pelo veiculo: ", veiculo.nome)
+                logging.info("Com tempo de entrega: ", tempo_veiculo)
+                print('ola')
                 if tempo_veiculo < tempo_transporte:
                     tempo_transporte = tempo_veiculo
                     melhor_veiculo = veiculo
@@ -34,25 +37,22 @@ def escolhe_veiculo(cam, encomenda):
 
 
 # Gera uma entrega a partir da atribuição
-def gerar_entrega(atribuicao):
-    estafeta_id = atribuicao.estafeta_id
-    encomenda_id = atribuicao.encomenda_id
-    # Dá para juntar as duas linhas de cima com as de baixo
-    estafeta = estafetas.get(estafeta_id)
-    encomenda = encomendas.get(encomenda_id)
-    cidade_estafeta = estafeta.cidade
+def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do caminho
+    estafeta = estafetas.get(atribuicao.estafeta_id)
+    encomenda = encomendas.get(atribuicao.encomenda_id)
     cidade_encomenda = locais.get(encomenda.id_local_entrega).freguesia
-    if cidade_estafeta is not cidade_encomenda:
-        print("As cidades de encomenda e de estafetas não coincidem")
+
+    if estafeta.cidade is not cidade_encomenda:
+        logging.error("As cidades de encomenda e de estafetas não coincidem")
         raise Exception("Cidades não coincidem")
     local_entrega = locais.get(encomenda.id_local_entrega)
 
     # Para mudar o algoritmo é aqui
 
-    cam = dfs(origens.get(cidade_estafeta), local_entrega)
+    cam = algoritmo(origens.get(estafeta.cidade), local_entrega)
     veiculo = escolhe_veiculo(cam, encomenda)
-    entrega_feita = Entrega(encomenda_id, estafeta_id, 0, veiculo, cam)
-    return entrega_feita
+
+    return Entrega(atribuicao.encomenda_id, atribuicao.estafeta_id, 0, veiculo, cam)
 
 
 # Coisas sobre este teste
@@ -65,6 +65,6 @@ def gerar_entregas():
     for atribuicao in atribuicoes:
         entrega = gerar_entrega(atribuicao)
         if entrega is not None:
-            entregas_feitas.append(entrega)
+            entregas.append(entrega)
             entrega.imprime_entrega()
             print("<------------------>")

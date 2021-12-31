@@ -1,4 +1,4 @@
-from base_conhecimento import baseConhecimento
+from base_conhecimento import baseConhecimento, Local
 from algoritmos_procura.common import conectados
 
 
@@ -7,7 +7,7 @@ def dfs2(origem, destino, lista_atual):
     if origem == destino:
         return lista_atual
     # Caso seja um dead-end
-    if origem not in baseConhecimento.distancias:
+    if origem not in baseConhecimento.grafo1:
         return None
     ligados = conectados(origem)
     # Vamos guardar todos os caminhos não nulos
@@ -31,7 +31,7 @@ def dfs2(origem, destino, lista_atual):
                 lista_atual = lista_antes_alterar
 
 
-def dfs(origem, destino):
+def dfs(origem: Local, destino: Local):
     cam = dfs2(origem, destino, [origem])
     cam.reverse()
     return cam
@@ -44,7 +44,7 @@ def bfs(origem, destino):
     queue = [(origem, [origem])]
     # Inicializamos todos os nodos como não visitados, num Map
     visitados = {}
-    locais = baseConhecimento.distancias.keys()
+    locais = baseConhecimento.grafo1.keys()
     for umaKey in locais:
         visitados[umaKey] = False
 
@@ -73,7 +73,7 @@ def dfs_limited2(origem, destino, lista_atual, nivel_atual):
     if origem == destino:
         return lista_atual
     # Caso seja um dead-end
-    if origem not in baseConhecimento.distancias:
+    if origem not in baseConhecimento.grafo1:
         return None
     # Nós adjacentes ao atual (origem)
     ligados = conectados(origem)
