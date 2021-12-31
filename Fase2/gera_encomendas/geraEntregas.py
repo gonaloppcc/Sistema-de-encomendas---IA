@@ -78,7 +78,7 @@ Como cada estefeta só entrega na sua cidade, vamos procurar todos os possíveis
 """
 def descobre_possiveis_caminhos(encomendasID):
     locais_entrega = map(lambda encomendaID: encomendas.get(encomendaID).id_local_entrega, encomendasID)
-    
+
 
 
 # Coisas sobre este teste
