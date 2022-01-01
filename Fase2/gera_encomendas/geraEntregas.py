@@ -25,9 +25,11 @@ def gerar_entrega(estafeta, encomenda):
     # Para mudar o algoritmo é aqui
 
     # cam = dfs(origens.get(cidade_estafeta), local_entrega)
-   # veiculo = escolhe_veiculo(cam, encomenda)
-   # entrega_feita = Entrega(encomenda.encomenda_id, estafeta.estafeta_id, 0, veiculo, cam)
-   # return entrega_feita
+
+
+# veiculo = escolhe_veiculo(cam, encomenda)
+# entrega_feita = Entrega(encomenda.encomenda_id, estafeta.estafeta_id, 0, veiculo, cam)
+# return entrega_feita
 
 
 # Descobre todas as encomendas que um dado estafeta deve fazer, pelas atribuições
@@ -39,10 +41,9 @@ def entregas_do_estafeta(estafeta):
     return list_encomendas
 
 
-
-#Descobre os ids das encomendas que são entregues num dado percurso.
-#Necessário para ver se é possível entregar todas as encomendas associadas a esse nodo
-#E na parte final de gerar as entregas
+# Descobre os ids das encomendas que são entregues num dado percurso.
+# Necessário para ver se é possível entregar todas as encomendas associadas a esse nodo
+# E na parte final de gerar as entregas
 def encomendas_nesse_percurso(percurso, encomendas_id):
     encomendas_id_local = []
     for id in encomendas_id:
@@ -50,21 +51,23 @@ def encomendas_nesse_percurso(percurso, encomendas_id):
             encomendas_id_local.append(id)
     return encomendas_id_local
 
-#Verifica se é possível fazer o percurso associado a uma lista de destinos
+
+# Verifica se é possível fazer o percurso associado a uma lista de destinos
 # Um caminho possível é do tipo: [[A, B, C], [D]]
 def possivel_por_pesos(um_caminho_possivel, encomendas_id):
     maximo_possivel = maximo_peso_uma_viagem()
-    #Um exemplo dum subcaminho: [A, B, C]
+    # Um exemplo dum subcaminho: [A, B, C]
     for sub_caminho in um_caminho_possivel:
-        #Ids das encomendas entregues neste percurso
+        # Ids das encomendas entregues neste percurso
         encomendas_no_percurso = encomendas_nesse_percurso(sub_caminho, encomendas_id)
-        #Vai buscar o peso de cada encomenda
+        # Vai buscar o peso de cada encomenda
         pesos_no_percurso = map(lambda id_encomenda: encomendas.get(id_encomenda).peso, encomendas_no_percurso)
         peso_no_sub_caminho = sum(pesos_no_percurso)
         if peso_no_sub_caminho > maximo_possivel:
             print("[geraEntregas] Um caminho foi descartado: ", peso_no_sub_caminho, " > ", maximo_possivel)
             return False
     return True
+
 
 # Gera as entregas de um dado estafeta. Recebe o algoritmo usado para o cálculo dos caminhos
 def gera_entrega_um_estafeta(estafeta_id, algoritmo):
@@ -79,11 +82,11 @@ def gera_entrega_um_estafeta(estafeta_id, algoritmo):
 
     # Guardam as melhores distâncias e caminhos
     melhor_distancia = float(inf)
-    #Guarda os caminhos do melhor
+    # Guarda os caminhos do melhor
     melhor_caminho = []
-    #um caminho possível = [[A, B, C], [D]]
+    # um caminho possível = [[A, B, C], [D]]
     for um_caminho_possivel in possiveis_percursos:
-        #Verificamos se é possível fazer este percurso com as paragens atuais
+        # Verificamos se é possível fazer este percurso com as paragens atuais
         if possivel_por_pesos(um_caminho_possivel, encomendas_id):
 
             total_este_caminho = 0
@@ -144,8 +147,7 @@ def gera_entrega_um_estafeta(estafeta_id, algoritmo):
             entrega_feita.imprime_entrega()
 
         print("E o caminho de voltar")
-        print_caminho(melhor_caminho[len(melhor_caminho)-1])
-
+        print_caminho(melhor_caminho[len(melhor_caminho) - 1])
 
 
 # Coisas sobre este teste
@@ -161,4 +163,3 @@ def gerar_entregas(algoritmo):
         gera_entrega_um_estafeta(estafeta, algoritmo)
 
         print("<------------------>")
-

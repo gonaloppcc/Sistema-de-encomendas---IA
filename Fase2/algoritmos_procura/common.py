@@ -38,7 +38,8 @@ def print_caminho(cam):
 
     print()
 
-#Calcual o máximo de peso que podemos levar numa dada viagem, a partir do máximo que os veículos podem transportar
+
+# Calcual o máximo de peso que podemos levar numa dada viagem, a partir do máximo que os veículos podem transportar
 def maximo_peso_uma_viagem():
     max = 0
     for veiculo in transportes:
