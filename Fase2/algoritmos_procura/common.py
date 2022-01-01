@@ -1,6 +1,12 @@
 # Funções para descobrir caminhos
 # dfs, utilizando os diapositivos PL(8) das aulas
 from base_conhecimento import baseConhecimento, Local
+from math import sqrt
+
+
+# Calcula a distância entre dois nodos através das suas coordenadas
+def calcula_norma(nodo1, nodo2):
+    return sqrt(pow((nodo2.x - nodo1.x), 2) + pow((nodo2.y - nodo1.y), 2))
 
 
 def conectados(procurar):
