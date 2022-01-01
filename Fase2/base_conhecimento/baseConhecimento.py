@@ -84,10 +84,10 @@ barco = Transporte("barco", 20, 21, 0.6, 41)
 transportes = [bicicleta, moto, carro, barco]
 
 # Definição de uma encomenda
-encomenda1 = Encomenda(1, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local10)
-encomenda2 = Encomenda(2, 1, 70, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local9)
-encomenda3 = Encomenda(2, 1, 70, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local6)
-encomenda4 = Encomenda(2, 1, 80, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local8)
+encomenda1 = Encomenda(1, 1, 100, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local10)
+encomenda2 = Encomenda(2, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local9)
+encomenda3 = Encomenda(2, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local6)
+encomenda4 = Encomenda(2, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local8)
 
 # Map onde guardamos todas as encomendas, por id.
 encomendas = {
@@ -108,11 +108,12 @@ estafetas = {
 # Nós aqui podemos dar o objeto inteiro, mas assim é mais limpo
 atribuicao1 = Atribuicao(1, 1)
 atribuicao2 = Atribuicao(1, 2)
-"""
+
 atribuicao3 = Atribuicao(1, 3)
+"""
 atribuicao4 = Atribuicao(1, 4)
 atribuicao5 = Atribuicao(2, 2) #Voltsa a entregar a mesma
 """
 # Lista onde guardamos todas as atribuições.
 # Como só as consultamos sequencialmente, para gerar entregas, podem estar numa lista.
-atribuicoes = [atribuicao1, atribuicao2]
+atribuicoes = [atribuicao3, atribuicao1, atribuicao2]
