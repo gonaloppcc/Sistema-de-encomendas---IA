@@ -11,6 +11,12 @@ vemos uma flag que diz se queremos ser rápidos ou ecológicos.
 Adicionar aos circuitos efetuados, e criar ‘id’ da entrega.
 """
 
-circuitosEfetuados = {
+"""
+Temos de guardar o estafeta
+As encomendas entregues
+
+"""
+# Circuitos efetuados
+circuitos = {
 
 }

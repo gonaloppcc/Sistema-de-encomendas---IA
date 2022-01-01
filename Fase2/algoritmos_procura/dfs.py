@@ -7,6 +7,7 @@ def dfs2(origem, destino, lista_atual):
     if origem == destino:
         return lista_atual
     # Caso seja um dead-end
+
     if origem not in baseConhecimento.distancias:
         return None
     ligados = conectados(origem)
@@ -33,7 +34,11 @@ def dfs2(origem, destino, lista_atual):
 
 def dfs(origem, destino):
     cam = dfs2(origem, destino, [origem])
-    cam.reverse()
+    if cam is None:
+        print("[dfs] Não há caminho")
+        print("[dfs] De: ", origem, " para ", destino)
+    else:
+        cam.reverse()
     return cam
 
 

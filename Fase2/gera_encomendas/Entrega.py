@@ -8,7 +8,7 @@ from base_conhecimento.baseConhecimento import Transporte
 
 
 class Entrega:
-    def __init__(self, encomenda_id: int, estafeta_id: int, data_entrega, transporte: Transporte, caminho):
+    def __init__(self, encomenda_id, estafeta_id: int, data_entrega, transporte: Transporte, caminho):
         self.encomenda_id = encomenda_id
         self.estafeta_id = estafeta_id
         self.data_entrega = data_entrega
@@ -22,3 +22,4 @@ class Entrega:
         print("Transporte: ", self.transporte.nome)
         print("Caminho feito: ")
         print_caminho(self.caminho)
+

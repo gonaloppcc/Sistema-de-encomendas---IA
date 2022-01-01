@@ -1,6 +1,7 @@
 # Funções para descobrir caminhos
 # dfs, utilizando os diapositivos PL(8) das aulas
 from base_conhecimento import baseConhecimento
+from base_conhecimento.baseConhecimento import transportes
 
 
 def conectados(procurar):
@@ -36,3 +37,11 @@ def print_caminho(cam):
         print(nodo.nome, end=" ")
 
     print()
+
+#Calcual o máximo de peso que podemos levar numa dada viagem, a partir do máximo que os veículos podem transportar
+def maximo_peso_uma_viagem():
+    max = 0
+    for veiculo in transportes:
+        if veiculo.peso_maximo >= max:
+            max = veiculo.peso_maximo
+    return max

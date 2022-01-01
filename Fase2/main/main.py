@@ -1,3 +1,5 @@
+from algoritmos_procura.dfs import dfs
+from base_conhecimento.baseConhecimento import local5, local10
 from gera_encomendas.geraEntregas import gerar_entregas
 
 # Descobrir caminho por algoritmo
@@ -35,4 +37,4 @@ print(calculaTempoTransporte(meioTransporte, peso, distancia))
 """
 
 # Gerar entregas
-gerar_entregas()
+gerar_entregas(dfs)

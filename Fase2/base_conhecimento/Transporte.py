@@ -1,5 +1,7 @@
 # Class Transporte:
 # Transportes e velocidade, temos tudo em km/h
+
+
 class Transporte:
     def __init__(self, nome, peso_maximo, velocidade_max, coeficiente_kg_velocidade, preco_km):
         self.nome = nome
@@ -13,3 +15,4 @@ class Transporte:
             return 0
         penalizacao_peso = self.coeficiente_kg_velocidade * peso_encomenda
         return self.velocidade_max - penalizacao_peso
+
