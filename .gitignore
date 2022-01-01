@@ -1,2 +1,4 @@
 *.bak*
 *test*
+# Python cache
+*.pyc
