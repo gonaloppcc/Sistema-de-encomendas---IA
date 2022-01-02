@@ -112,8 +112,8 @@ atribuicao2 = Atribuicao(1, 2)
 atribuicao3 = Atribuicao(1, 3)
 """
 atribuicao4 = Atribuicao(1, 4)
-atribuicao5 = Atribuicao(2, 2) #Voltsa a entregar a mesma
+atribuicao5 = Atribuicao(2, 2) #Volta a entregar a mesma
 """
 # Lista onde guardamos todas as atribuições.
 # Como só as consultamos sequencialmente, para gerar entregas, podem estar numa lista.
-atribuicoes = [atribuicao3, atribuicao1, atribuicao2]
+atribuicoes = [atribuicao1, atribuicao2, atribuicao3]

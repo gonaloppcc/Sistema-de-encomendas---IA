@@ -14,9 +14,10 @@ Adicionar aos circuitos efetuados, e criar ‘id’ da entrega.
 """
 Temos de guardar o estafeta
 As encomendas entregues
-
 """
 # Circuitos efetuados
 circuitos = {
-
+    # Caminho : [ [ID's das entregas num percurso] ].
+    # A -> B -> C : [ [1,2], [3]] , num percurso foi entregue 1 e 2, no outro 3. Dois percursos foram feitos, 3 entregas
+    # ([1,2], 2)
 }
