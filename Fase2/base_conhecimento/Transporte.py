@@ -13,3 +13,6 @@ class Transporte:
             return 0
         penalizacao_peso = self.coeficiente_kg_velocidade * peso_encomenda
         return self.velocidade_max - penalizacao_peso
+
+    def __str__(self):
+        return self.nome

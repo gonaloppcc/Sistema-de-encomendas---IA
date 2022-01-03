@@ -18,8 +18,7 @@ class Entrega:
         self.caminho = caminho
 
     def imprime_entrega(self):
-        logging.info(f"Id da encomenda: {self.encomenda_id}")
-        logging.info(f"Id da estafeta: {self.estafeta_id}")
-        logging.info(f"Data entrega: {self.data_entrega}")
-        logging.info(f"Transporte: {self.transporte.nome}")
+        logging.info(
+            f"Id da encomenda: {self.encomenda_id}, Id da estafeta: {self.estafeta_id}, Data entrega: {self.data_entrega}, Transporte: {self.transporte.nome}")
         logging.info(caminho_to_string(self.caminho))
+        logging.info("")
