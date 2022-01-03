@@ -1,6 +1,6 @@
 from algoritmos_procura.common import print_caminho
 from base_conhecimento.Local import Local
-from base_conhecimento.baseConhecimento import Transporte
+from base_conhecimento.baseConhecimento import Transporte, entregas
 
 
 # Entrega
@@ -38,3 +38,13 @@ class Entrega:
         descricao += (f"Transporte: {self.transporte.nome}\n")
         descricao += print_caminho(self.caminho)
         return descricao
+
+    def encomenda_entregue(encomenda_id: int) -> bool:
+        """
+        Função que verifica se uma encomenda já foi entregue, pelo seu id,
+        @return: Se a encomenda já foi entregue.
+        """
+        for entrega in entregas:
+            if entrega.encomenda_id == encomenda_id:
+                return True
+        return False

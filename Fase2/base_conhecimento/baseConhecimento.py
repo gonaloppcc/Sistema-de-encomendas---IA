@@ -106,6 +106,7 @@ estafetas = {
 }
 
 # Nós aqui podemos dar o objeto inteiro, mas assim é mais limpo
+# Estafeta id, encomenda id.
 atribuicao1 = Atribuicao(1, 1)
 atribuicao2 = Atribuicao(1, 2)
 

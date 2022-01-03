@@ -4,6 +4,7 @@ from algoritmos_procura.common import calcula_distancia, maximo_peso_uma_viagem,
 from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, origens
 from base_conhecimento.circuitos import adiciona_circuito
 # Entregas realizadas
+from gera_encomendas.Entrega import Entrega
 from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
 
 
@@ -13,13 +14,17 @@ from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
 def entregas_do_estafeta(estafeta):
     """
     Descobre todas as encomendas que um dado estafeta deve fazer, pelas atribuições da base de conhecimento.
+    No entanto,verificamos se a encomenda não foi já entregue.
     @param estafeta: Id do estafeta
     @return: Id's das encomendas que o estafeta deve entregar.
     """
     list_encomendas = []
-    for atribuicao1 in atribuicoes:
-        if atribuicao1.estafeta_id == estafeta:
-            list_encomendas.append(atribuicao1.encomenda_id)
+
+    for atribuicao in atribuicoes:
+        estafeta_id = atribuicao.estafeta_id
+        encomenda_id = atribuicao.encomenda_id
+        if estafeta_id == estafeta and (not Entrega.encomenda_entregue(encomenda_id)):
+            list_encomendas.append(encomenda_id)
     return list_encomendas
 
 
