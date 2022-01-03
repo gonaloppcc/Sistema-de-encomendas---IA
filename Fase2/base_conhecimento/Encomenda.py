@@ -1,7 +1,21 @@
 # Encomendas Usamos o tipo de dados Data de pyhton, juntando dias e horas encomenda: encomendaID, clienteID, peso,
 # volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, localID -> {V,F}.
+from base_conhecimento.Local import Local
+
+
 class Encomenda:
-    def __init__(self, encomenda_id, cliente_id, peso, volume, prazo, data_encomenda, id_local_entrega):
+    def __init__(self, encomenda_id: int, cliente_id: int, peso: int, volume: int, prazo: object,
+                 data_encomenda: object, id_local_entrega: Local):
+        """
+        Construtor do tipo encomenda.
+        @param encomenda_id: Id da encomenda.
+        @param cliente_id: Id do cliente.
+        @param peso: Peso da encomenda, us.ado para calcular a velocidade de transporte.
+        @param volume: Volume da encomenda.
+        @param prazo:
+        @param data_encomenda:
+        @param id_local_entrega: Local onde a encomenda será entregue.
+        """
         self.encomenda_id = encomenda_id
         self.cliente_id = cliente_id
         self.peso = peso

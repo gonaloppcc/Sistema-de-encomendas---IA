@@ -39,8 +39,23 @@ def print_caminho(cam):
     print()
 
 
+# Imprime pares que contêm o caminho e o id da encomenda que é entregue nessa encomenda.
+# No caso de ser -1, é para voltar à base.
+def print_caminho_pares(par, cidade_origem):
+    cam, enc_id = par
+    print("Cidade original: ", cidade_origem.id)
+    print("Caminho para entregar encomenda: ", enc_id)
+    for nodo in cam:
+        print(nodo.nome)
+    print()
+
+
 # Calcual o máximo de peso que podemos levar numa dada viagem, a partir do máximo que os veículos podem transportar
 def maximo_peso_uma_viagem():
+    """
+    Descobre qual o peso máximo que conseguimos transportar num circuito.
+    @return: Peso máximo, em Kgs.
+    """
     max = 0
     for veiculo in transportes:
         if veiculo.peso_maximo >= max:

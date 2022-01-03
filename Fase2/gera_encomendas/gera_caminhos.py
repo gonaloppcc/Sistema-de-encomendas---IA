@@ -16,42 +16,63 @@ from itertools import combinations, permutations
 from base_conhecimento.baseConhecimento import encomendas
 
 
-def pertence(elem, lista_de_listas):
+def pertence(elem, lista_de_listas) -> bool:
+    """
+    Função que verifica se um elemento pertence a uma conjunto de listas. 
+    @return: Se o elemento pertence ou não.
+    """
     for lista in lista_de_listas:
         if elem in lista:
             return True
     return False
 
 
-# A um conjunto de paragens, adiciona as outras todas juntas.
-# Por exemplo, se tivermos as paragens A, B e C, e recebermos a lista [A, B], ele retorna:
-# [A , B], [C]
-def adiciona_todas_paragens(uma_possibilidade, locais_entrega):
-    lista_atual = [list(uma_possibilidade)]
-    for uma_paragem in locais_entrega:
+#
+def adiciona_todas_paragens(circuitos_incompletos, todas_as_paragens):
+    """
+    A um conjunto de circuitos incompletos, adiciona as restantes encomendas que é necessário entregar.
+    Por exemplo, se tivermos as paragens A, B e C, e recebermos a lista [A, B], ele retorna:
+    [A , B], [C]. As paragens A e B são feitas ao mesmo tempo, e a C é feita numa viagem à parte.
+    @param circuitos_incompletos: Percursos avaliados até agora.
+    @param todas_as_paragens: Todas as paragens
+    @return: Circuito completo que passa por todos os locais de entregas das encomendas.
+    """
+    lista_atual = [list(circuitos_incompletos)]
+    for uma_paragem in todas_as_paragens:
+        # Se uma paragem não pertence ao circuito atual, adiciona-se.
         if not pertence(uma_paragem, lista_atual):
             lista_atual.append([uma_paragem])
     return lista_atual
 
 
-# Adiciona as paragens individualmente. Não usamos o subset para não ter paragens repetidas
-# [A, B, C] -> [[A], [B], [C]]
 def paragens_individuais(locais_entrega):
+    """
+    Adiciona as paragens individualmente. Por exemplo, se tivermos de passar pelos locais A, B e C, geramos a seguinte lista:
+    [A, B, C] -> [[A], [B], [C]]
+    @param locais_entrega: Locais por onde temos de passar.
+    @return: Lista dos locais individualmente.
+    """
     lista_individuais = []
     for um_local in locais_entrega:
         lista_individuais.append([um_local])
     return lista_individuais
 
 
-# Esta função gera todos os caminhos possíveis para entregar uma encomenda.
-# Por exemplo, se tiver de passar por três locais, pode entregar uma encomenda por viagem, duas ou até três.
-# Para isso, ela procura todos os locais de entrega que um estafeta tem de passar, a partir dos ids das encomendas.
-# Depois faz combinações desses locais. Por exemplo: [A, B, C] fica A | B | C | A, B | A, C | B, C | A, B, C
-# Mas excluímos os casos da lista separada, que são acrescentados no fim
-# A seguir, guardamos em listas os percursos, usando o exemplo de à bocado: se passa em A e B, tem de haver uma viagem só para C
+#
 def descobre_possiveis_caminhos(encomendasID):
+    """
+    Esta função gera todos os caminhos possíveis para entregar uma encomenda.
+    Por exemplo, se tiver de passar por três locais, pode entregar uma encomenda por viagem, duas ou até três.
+    Para isso, ela procura todos os locais de entrega que um estafeta tem de passar, a partir dos ids das encomendas.
+    Depois faz combinações desses locais. Por exemplo: [A, B, C] fica A | B | C | A, B | A, C | B, C | A, B, C
+    Mas excluímos os casos da lista separada, que são acrescentados no fim
+    A seguir, guardamos em listas os percursos, usando o exemplo de à bocado: se passa em A e B, tem de haver uma viagem só para C
+    @param encomendasID: Encomendas para as quais temos de gerar os percursos possíveis.
+    @return: As possibilidades de percurso.
+    """
     # Guardamos em set para não termos locais repetidos
-    locais_entrega = set(map(lambda encomendaID: encomendas.get(encomendaID).id_local_entrega, encomendasID))
+    locais_entrega = set(
+        map(lambda encomendaID: (encomendas.get(encomendaID).id_local_entrega, encomendaID), encomendasID))
     # Já temos todos os locais de entrega
 
     # Obter todos os subcaminhos, com 2 paragens
@@ -76,4 +97,21 @@ def descobre_possiveis_caminhos(encomendasID):
 
     # Adiciona o caso em que fazemos uma viagem por encomenda
     lista_final.append(paragens_individuais(locais_entrega))
+    print("[gera_caminhos] Lista final da gera_caminhos")
+    # Uma possibilidade é um conjunto de caminhos.
+    # Essa possibilidade entrega todas as encomendas previstas.
+    # É do tipo:
+    # [ [ (local1, Encomenda1),(local2, Encomenda2)] ] (tudo num caminho) ou
+    # [ [(local1, Encomenda1)],[(local2, Encomenda2)] ] (dois caminhos)
+    for possibilidade in lista_final:
+        # Temos um percurso inteiro. Por exemplo:
+        # [(local1, Encomenda1), (local2, Encomenda2)]
+        for caminho in possibilidade:
+            print("[gera_caminhos] Um caminho: ")
+            # Cada paragem do percurso
+            for (local, encID) in caminho:
+                print(" ", local.nome, " | ", encID, end='')
+            print(" ")
+        print(" ")
+
     return lista_final
