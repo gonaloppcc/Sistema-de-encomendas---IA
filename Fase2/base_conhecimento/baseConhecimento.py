@@ -29,29 +29,33 @@ local10 = Local(10, "grafo", "local10", 16, 98)
 
 # Map onde guardamos todas as ruas, por ‘id’.
 locais = {
-    1: local1,
-    2: local2,
-    3: local3,
-    4: local4,
-    5: local5,
-    6: local6,
-    7: local7,
-    8: local8,
-    9: local9,
-    10: local10,
 }
+"""
+1: local1,
+2: local2,
+3: local3,
+4: local4,
+5: local5,
+6: local6,
+7: local7,
+8: local8,
+9: local9,
+10: local10,
+"""
 
 # Guarda as distâncias em função do ‘id’ da local
 # Key é o ‘id’ da local, doutro lado temos ‘id’'s de outras locals, mais distâncias
 # https://www.gatevidyalay.com/wp-content/uploads/2018/03/Dijkstra-Algorithm-Problem-01.png
 grafo1 = {
-    local5: [(local6, 1), (local7, 5)],
-    local6: [(local7, 2), (local8, 2), (local9, 1)],
-    local7: [(local9, 2)],
-    local8: [(local9, 3), (local10, 1)],
-    local9: [(local10, 2)],
-    local10: []
 }
+"""
+local5: [(local6, 1), (local7, 5)],
+local6: [(local7, 2), (local8, 2), (local9, 1)],
+local7: [(local9, 2)],
+local8: [(local9, 3), (local10, 1)],
+local9: [(local10, 2)],
+local10: []
+"""
 
 # Constantes
 # Map onde guardamos todas as origens em função das cidades, por nome.
@@ -60,8 +64,10 @@ grafo1 = {
 # E os estafetas saiem daí
 
 origens = {
-    "grafo": local5,
 }
+"""
+"grafo": local5,
+"""
 
 """
 1-> 2 (1), 3 (5)
