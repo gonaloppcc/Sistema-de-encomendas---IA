@@ -1,4 +1,5 @@
-
+use warnings FATAL => 'all';
+use strict;
 :- op( 900,xfy,'::' ).
 :- dynamic encomenda/9.
 :- dynamic entrega/6.
