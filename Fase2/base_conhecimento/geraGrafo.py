@@ -55,6 +55,7 @@ def gera_grafo(nome_grafo, num_nodos):
     # Aqui usamos o alguritmo depth-first porque não nos interessa que o
     # caminho encontrado seja o mais rápido. Interessa-nos só que exista
     # um caminho.
+    # Caso o caminho não exista, criamos uma ligação direta entre estes.
     for nodo in nodos:
         if not dfs(origem, nodo) is not None:
             distancia = calcula_norma(origem[0], nodo[0])
