@@ -1,39 +1,22 @@
-from algoritmos_procura.bfs import bfs
+import logging
+
+from algoritmos_procura.dfs import dfs
 from gera_encomendas.geraEntregas import gerar_entregas
 
-# Descobrir caminho por algoritmo
-"""
-ori = baseConhecimento.local5
-dest = baseConhecimento.local10
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
-# Obtem um caminho em função da função utilizada
-cam = dfs(ori, dest)
 
-# Recebe um caminho, conjunto de nós, e calcula o custo total
-print(ori.nome, " ", dest.nome)
+def main():
+    algoritmo1 = dfs
 
-if cam is not None:
-    for nodo in cam:
-        print("Caminho: ", nodo.nome)
-else:
-    print("Não há caminho")
+    logging.basicConfig(filename='fase2.log', level=logging.INFO)
+    logging.debug('Começou')
 
-print(" - ")
+    logging.info(f"-> Algoritmo da {algoritmo1.__name__}")
+    gerar_entregas(algoritmo1)
+    logging.info("")
+    logging.debug('Acabou')
 
-cam.reverse()
 
-print_caminho(cam)
-#Custo do caminho
-distancia = calculaDistancia(cam)
-
-print("O custo é: ", distancia)
-
-#Velocidades, quanto maior o peso, maior o tempo
-peso = 3
-meioTransporte = baseConhecimento.bicicleta
-print("Tempo de transporte do caminho com ", distancia, " é: ")
-print(calculaTempoTransporte(meioTransporte, peso, distancia))
-"""
-
-# Gerar entregas
-gerar_entregas(bfs)
+if __name__ == '__main__':
+    main()

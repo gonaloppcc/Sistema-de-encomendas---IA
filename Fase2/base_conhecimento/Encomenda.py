@@ -10,7 +10,7 @@ class Encomenda:
         Construtor do tipo encomenda.
         @param encomenda_id: Id da encomenda.
         @param cliente_id: Id do cliente.
-        @param peso: Peso da encomenda, us.ado para calcular a velocidade de transporte.
+        @param peso: Peso da encomenda, usado para calcular a velocidade de transporte.
         @param volume: Volume da encomenda.
         @param prazo:
         @param data_encomenda:

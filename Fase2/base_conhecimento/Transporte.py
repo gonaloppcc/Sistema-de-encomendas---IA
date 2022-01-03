@@ -4,20 +4,23 @@
 
 class Transporte:
     def __init__(self, nome: object, peso_maximo: int, velocidade_max: int, coeficiente_kg_velocidade: float,
-                 preco_km: int):
+                 preco_km: int, coeficiente_poluicao: float):
         """
         Construtor do tipo transporte.
         @param nome: Nome do transporte.
         @param peso_maximo: Peso máximo que o transporte pode transportar.
         @param velocidade_max: Velocidade máxima que o veículo pode ter.
         @param coeficiente_kg_velocidade: Coeficiente que descreve quão afetada é a velocidade em função do peso transportado.
-        @param preco_km:
+        @param preco_km: ?????
+        @param coeficiente_poluicao: Indica quão poluente é o veículo. É utilizado para calcular os circuitos mais ecológicos.
+
         """
         self.nome = nome
         self.peso_maximo = peso_maximo
         self.velocidade_max = velocidade_max
         self.coeficiente_kg_velocidade = coeficiente_kg_velocidade
         self.preco_km = preco_km
+        self.coeficiente_poluicao = coeficiente_poluicao
 
     def calcula_velocidade(self, peso_encomenda: int) -> int:
         """

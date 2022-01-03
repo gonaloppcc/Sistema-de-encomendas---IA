@@ -1,3 +1,5 @@
+import logging
+
 from algoritmos_procura.common import conectados
 from base_conhecimento import baseConhecimento
 
@@ -35,8 +37,7 @@ def dfs2(origem, destino, lista_atual):
 def dfs(origem, destino):
     cam = dfs2(origem, destino, [origem])
     if cam is None:
-        print("[dfs] Não há caminho")
-        print("[dfs] De: ", origem, " para ", destino)
+        logging.debug(" Não há caminho\n De: {origem} para {destino}")
     else:
         cam.reverse()
     return cam

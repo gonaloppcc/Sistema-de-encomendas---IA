@@ -1,22 +1,23 @@
-"""
-Este ficheiro gera os vários percursos que podem ser realizados por um estafeta para entregar todas as encomendas que tem atribuídas.
-Por isso, devolvemos uma lista com conjuntos de percursos. Esse conjunto de percursos tem de incluir todas as encomendas.
-Aqui, um percursos é um conjunto de paragens, associadas ao ID da encomenda que será entregue.
+"""Este ficheiro gera os vários percursos que podem ser realizados por um estafeta para entregar todas as encomendas
+que tem atribuídas. Por isso, devolvemos uma lista com conjuntos de percursos. Esse conjunto de percursos tem de
+incluir todas as encomendas entregues por esse estafeta. Aqui, um percurso é um conjunto de paragens, associadas ao ID da encomenda que será
+entregue.
 
 Ignorando os id's das entregas, teremos algo deste género para as paragens A, B e C:
 [
-([A], [B], [C]),  <- três percursos, com cada um a entregar uma encomenda.
-[[A, B], [C]),    <- dois percursos, um entrega duas encomendas, outro entrega só uma.
-[[B, A], [C]),    <- Igual ao anterior, mas troca a ordem.
+[[A], [B], [C]],  <- três percursos, com cada um a entregar uma encomenda.
+[[A, B], [C]],    <- dois percursos, um entrega duas encomendas, outro entrega só uma.
+[[B, A], [C]],    <- Igual ao anterior, mas troca a ordem.
 [[A], [B, C]],    <- dois percursos, um entrega duas encomendas, outro entrega só uma.
 [[A], [C, B]],    <- Igual ao anterior, mas troca a ordem
 [[A, B, C]],      <- um percursos, A entregar todas as encomendas.
 [[A, C, B]]       <- Um exemplo de uma permutação. Acrescentamos todas as hipóteses possíveis de entregar.
 ]
-Como cada estefeta só entrega na sua cidade, vamos procurar todos os possíveis percursos, independentemente do custo.
+Como cada estafeta só entrega na sua cidade, vamos procurar todos os possíveis percursos, independentemente do custo.
 """
 
 # Função simples para ver se uma paragem pertence a uma lista ou sublista
+import logging
 from itertools import combinations, permutations
 
 from base_conhecimento.baseConhecimento import encomendas
@@ -103,21 +104,21 @@ def descobre_possiveis_caminhos(encomendasID):
 
     # Adiciona o caso em que fazemos uma viagem por encomenda
     lista_final.append(paragens_individuais(locais_entrega))
-    print("[gera_caminhos] Lista final da gera_caminhos")
+    logging.debug('[gera_caminhos] Lista final da gera_caminhos')
     # Uma possibilidade é um conjunto de caminhos.
     # Essa possibilidade entrega todas as encomendas previstas.
     # É do tipo:
     # [ [ (local1, Encomenda1),(local2, Encomenda2)] ] (tudo num caminho) ou
     # [ [(local1, Encomenda1)],[(local2, Encomenda2)] ] (dois caminhos)
     for possibilidade in lista_final:
+        logging.debug(" Novo percurso ")
         # Temos um percurso inteiro. Por exemplo:
         # [(local1, Encomenda1), (local2, Encomenda2)]
         for caminho in possibilidade:
-            print("[gera_caminhos] Um caminho: ")
+            logging.debug("[gera_caminhos] Um caminho: ")
             # Cada paragem do percurso
             for (local, encID) in caminho:
-                print(" ", local.nome, " | ", encID, end='')
-            print(" ")
-        print(" ")
+                logging.debug(f" {local.nome} |  {encID}")
+            logging.debug(" ")
 
     return lista_final

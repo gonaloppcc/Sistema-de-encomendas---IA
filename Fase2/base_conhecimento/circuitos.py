@@ -1,12 +1,13 @@
+import logging
+
 from base_conhecimento import baseConhecimento
-
-# TODO: Criar um dicionário para armazenar as entregas de um percurso
-
 # Gerar entregas
 from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import entregas
 from gera_encomendas.Entrega import Entrega
 from gera_encomendas.gera_veiculos import escolhe_veiculo
+
+# TODO: Criar um dicionário para armazenar as entregas de um percurso
 
 """
 1. Procuramos atribuições
@@ -98,7 +99,7 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
     @param encomendas_entregues: Id's das encomendas entregues nesse circuito.
     @param estafeta_id: Estafeta que realizou o circuito.
     """
-    print("<------ Gera um circuito novo --------> ")
+    logging.info("<-- Gera um circuito novo --> ")
     # Gerar entrega
     veiculo_escolhido = escolhe_veiculo((caminhos, encomendas_entregues))
     for encomenda_id in encomendas_entregues:
@@ -114,6 +115,11 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
         if caminho != ultima_passagem:
             caminhos_juntos += caminho.nome + ";"
             ultima_passagem = caminho
-    print("Key do circuito: ", caminhos_juntos)
+    for encomenda in encomendas_entregues:
+        logging.info(f"Encomenda entregue: {encomenda}")
+    logging.info(f"Key do circuito: {caminhos_juntos}")
+    logging.info(f"Veículo utilizado: {veiculo_escolhido.nome}")
+
+    logging.info(" ")
 
     add_circuito_aux(caminhos_juntos, encomendas_entregues)
