@@ -45,7 +45,7 @@ def calcula_tempo_transporte(meio_transporte, peso_encomenda, distancia):
 
 
 def caminho_to_string(cam: [Local]):
-    caminho = "Caminho feito: "
+    caminho = "Caminho: "
     for nodo in cam:
         caminho = caminho + f"{nodo.nome} "
 
