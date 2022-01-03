@@ -33,7 +33,8 @@ def dfs2(origem, destino, lista_atual):
 
 def dfs(origem: Local, destino: Local):
     cam = dfs2(origem, destino, [origem])
-    cam.reverse()
+    if cam is not None:
+        cam.reverse()
     return cam
 
 
