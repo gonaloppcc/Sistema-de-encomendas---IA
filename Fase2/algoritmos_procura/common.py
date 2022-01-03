@@ -3,6 +3,10 @@
 from base_conhecimento import baseConhecimento, Local
 
 
+def get_freguesia(grafo):
+    return list(grafo.keys())[0].freguesia
+
+
 def conectados(procurar):
     lista = []
     adjacentes = baseConhecimento.grafo1.get(procurar)
