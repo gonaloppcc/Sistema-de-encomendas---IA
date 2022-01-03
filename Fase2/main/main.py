@@ -1,4 +1,5 @@
 from algoritmos_procura.bfs import bfs
+from base_conhecimento.baseConhecimento import entregas
 from gera_encomendas.geraEntregas import gerar_entregas
 
 # Descobrir caminho por algoritmo
@@ -37,3 +38,5 @@ print(calculaTempoTransporte(meioTransporte, peso, distancia))
 
 # Gerar entregas
 gerar_entregas(bfs)
+for x in entregas:
+    print(str(x))

@@ -1,11 +1,17 @@
 """
-Esta função recebe qual é o estefeta que vamos analisar, e devolve uma lista de listas com as possíveis entregas que ele pode fazer.
-Por exemplo, se o estafeta 1 tiver que entregas a encomenda A, B e C, ele vai devolver a seguinte lista:
+Este ficheiro gera os vários percursos que podem ser realizados por um estafeta para entregar todas as encomendas que tem atribuídas.
+Por isso, devolvemos uma lista com conjuntos de percursos. Esse conjunto de percursos tem de incluir todas as encomendas.
+Aqui, um percursos é um conjunto de paragens, associadas ao ID da encomenda que será entregue.
+
+Ignorando os id's das entregas, teremos algo deste género para as paragens A, B e C:
 [
-([A], [B], [C]),
-[[A, B], [C]),
-[[A], [B, C]],
-[[A, B, C]],
+([A], [B], [C]),  <- três percursos, com cada um a entregar uma encomenda.
+[[A, B], [C]),    <- dois percursos, um entrega duas encomendas, outro entrega só uma.
+[[B, A], [C]),    <- Igual ao anterior, mas troca a ordem.
+[[A], [B, C]],    <- dois percursos, um entrega duas encomendas, outro entrega só uma.
+[[A], [C, B]],    <- Igual ao anterior, mas troca a ordem
+[[A, B, C]],      <- um percursos, A entregar todas as encomendas.
+[[A, C, B]]       <- Um exemplo de uma permutação. Acrescentamos todas as hipóteses possíveis de entregar.
 ]
 Como cada estefeta só entrega na sua cidade, vamos procurar todos os possíveis percursos, independentemente do custo.
 """
@@ -50,7 +56,7 @@ def paragens_individuais(locais_entrega):
     Adiciona as paragens individualmente. Por exemplo, se tivermos de passar pelos locais A, B e C, geramos a seguinte lista:
     [A, B, C] -> [[A], [B], [C]]
     @param locais_entrega: Locais por onde temos de passar.
-    @return: Lista dos locais individualmente.
+    @return: Percursos compostos por apenas uma paragem.
     """
     lista_individuais = []
     for um_local in locais_entrega:

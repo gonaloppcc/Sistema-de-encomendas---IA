@@ -154,7 +154,7 @@ def gera_entrega_um_estafeta(estafeta_id, algoritmo):
 # Por isso, uma das encomendas tem o peso que dá para a mota, daí a escolher
 # Mas a outra pesa muito para a mota, logo é o carro que leva
 
-# Gera todas as atribuições
+# Gera todas os circuitos.
 def gerar_entregas(algoritmo):
     lista_estafetas = {atribuicao.estafeta_id for atribuicao in atribuicoes}
 

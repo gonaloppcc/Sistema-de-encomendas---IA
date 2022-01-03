@@ -32,11 +32,13 @@ def calcula_tempo_transporte(meio_transporte, peso_encomenda, distancia):
 
 
 def print_caminho(cam):
-    print("Caminho: ", end="")
+    res = ""
+    res += "Caminho: "
     for nodo in cam:
-        print(nodo.nome, end=" ")
+        res += nodo.nome
+        res += " "
 
-    print()
+    return res
 
 
 # Imprime pares que contêm o caminho e o id da encomenda que é entregue nessa encomenda.

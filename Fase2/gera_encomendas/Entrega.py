@@ -27,12 +27,14 @@ class Entrega:
         self.transporte = transporte
         self.caminho = caminho
 
-    def imprime_entrega(self):
+    def __str__(self):
         """
         Função utilizada para imprimir uma entrega de forma organizada.
         """
-        print("Id da encomenda: ", self.encomenda_id)
-        print("Id da estafeta: ", self.estafeta_id)
-        print("Data entrega: ", self.data_entrega)
-        print("Transporte: ", self.transporte.nome)
-        print_caminho(self.caminho)
+        descricao = ""
+        descricao += (f"Id da encomenda:  {self.encomenda_id}\n")
+        descricao += (f"Id da estafeta: {self.estafeta_id}\n")
+        descricao += (f"Data entrega: {self.data_entrega}\n")
+        descricao += (f"Transporte: {self.transporte.nome}\n")
+        descricao += print_caminho(self.caminho)
+        return descricao
