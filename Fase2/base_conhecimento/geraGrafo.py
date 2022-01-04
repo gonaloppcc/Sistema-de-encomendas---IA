@@ -20,7 +20,9 @@ def verifica_dist(nodo):
     """
     Verifica se o nodo que recebe como parâmetro se encontra a uma distância
     superior à definida em dist_min a todos os outros nodos do grafo a que pertence.
-    :param nodo: Nodo a verificar
+    @param nodo: Nodo a verificar
+    @return True se o nodo estiver a pelo menos dist_min de todos os outros nodos
+            False caso contrário
     """
     for outro_nodo in mapa["grafos"][nodo.freguesia]:
         if calcula_norma(nodo, outro_nodo) < dist_min:
@@ -34,9 +36,9 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     para nome_grafo. A origem é selecionada aleatóriamente
     e o algoritmo garante, através do uso do dfs, que a partir
     desta existe um caminho possível para todos os nodos.
-    :param nome_grafo: Nome que o grafo terá no dicionário de grafos do mapa da base de conhecimento
-    :param num_nodos: Número de nodos que o grafo irá ter
-    :param probabilidade_conexao: Probabilidade de criar uma conexão entre cada dois nodos
+    @param nome_grafo: Nome que o grafo terá no dicionário de grafos do mapa da base de conhecimento
+    @param num_nodos: Número de nodos que o grafo irá ter
+    @param probabilidade_conexao: Probabilidade de criar uma conexão entre cada dois nodos
     """
     mapa["grafos"][nome_grafo] = {}
     # Gerar todos os nodos com nome 'Local_{i}' e freguesia 'Freguesia_{i}'.
