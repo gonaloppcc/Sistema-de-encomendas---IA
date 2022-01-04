@@ -1,6 +1,4 @@
-# Escolhe o veículo que pode entregar uma encomenda.
-# Recebe o caminho e a encomenda, e a partir do peso vê qual o melhor veículo para a entregar.
-# Para já, só vê em função da velocidade, falta ver um critério para o ser "verde".
+
 import logging
 from math import inf
 
@@ -37,6 +35,12 @@ def veiculo_mais_ecologico(distancia_caminho, peso_total):
 
 
 def escolhe_veiculo(circuito):
+    """
+    Escolhe um veículo baseado no caminho (distância) e encomendas id (e pesos das encomendas).
+    Também utilizamos a "flag" flag_ecologico_ou_rapido para saber qual o critério da escolha.
+    @param circuito: Caminho para entregar a encomenda e os ids das encomendas, num par.
+    @return: Veículo escolhido.
+    """
     caminho, enc_ids = circuito
     logging.debug("[Gera veiculos]")
     logging.debug(f"Caminho: {caminho}")
