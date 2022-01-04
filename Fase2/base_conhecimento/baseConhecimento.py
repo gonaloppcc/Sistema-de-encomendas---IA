@@ -80,8 +80,8 @@ barco = Transporte("Barco", 20, 21, 0.6, 41)
 transportes = [bicicleta, moto, carro, barco]
 
 # Definição de uma encomenda
-encomenda1 = Encomenda(1, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 10)
-encomenda2 = Encomenda(2, 1, 80, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 9)
+encomenda1 = Encomenda(1, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 69)
+encomenda2 = Encomenda(2, 1, 80, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 54)
 
 # Map onde guardamos todas as encomendas, por id.
 encomendas = {
@@ -89,7 +89,7 @@ encomendas = {
     2: encomenda2
 }
 
-estafeta1 = Estafeta(1, "marco", "Vila_do_Conde")
+estafeta1 = Estafeta(1, "marco", "Trofa")
 
 # Map onde guardamos todos os estafetas, por id.
 estafetas = {

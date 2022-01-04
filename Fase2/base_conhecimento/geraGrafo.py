@@ -1,3 +1,4 @@
+import logging
 from math import sqrt
 from random import randint
 
@@ -37,7 +38,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     # As coordenadas são selecionadas aleatóriamente no campo de 0-100
     for i in range(num_nodos):
         freguesia = nome_grafo
-        nome = f"Local_{i}"
+        nome = f"Local_{mapa['id_counter']+i}"
         out = False
         local = None
         while not out:
@@ -53,6 +54,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     # dicionário de origens
     origem = list(mapa["grafos"][nome_grafo])[randint(0, num_nodos - 1)]
     origens[nome_grafo] = origem
+    logging.debug(f"Origem: {origem.nome}")
 
     # Para cada nodo percorrer todos os outros nodos
     # havendo uma probabilidade de 50% de criar uma conexão
@@ -85,3 +87,6 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
         if dfs(nodo, origem) is None:
             distancia = calcula_norma(nodo, origem)
             mapa["grafos"][nome_grafo][nodo].append((origem, distancia))
+
+    for nodo in nodos:
+        logging.debug(f"{nodo.nome}: ID: {nodo.id}, Freguesia: {nodo.freguesia}, x: {nodo.x}, y: {nodo.y}")

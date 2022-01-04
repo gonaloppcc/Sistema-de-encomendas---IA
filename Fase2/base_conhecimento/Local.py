@@ -14,6 +14,7 @@ class Local:
 
     @staticmethod
     def encontra_local(id_local: int):
+        t = baseConhecimento.mapa
         for grafo in baseConhecimento.mapa["grafos"].values():
             for local in grafo:
                 if local.id == id_local:
