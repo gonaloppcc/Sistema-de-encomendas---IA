@@ -2,3 +2,4 @@
 *test*
 # Python cache
 *.pyc
+*__pycache__*
