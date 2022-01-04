@@ -3,8 +3,8 @@
 # Para já, só vê em função da velocidade, falta ver um critério para o ser "verde".
 import logging
 
-from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
-from base_conhecimento.baseConhecimento import transportes, encomendas
+from Fase2.algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
+from Fase2.base_conhecimento.baseConhecimento import transportes, encomendas
 
 # Se for falsa, queremos o mais rápido, logo é carro
 # Se for verdadeira, tem de ser o mais ecológico ← Falta implementar

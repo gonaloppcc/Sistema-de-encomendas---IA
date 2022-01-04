@@ -1,11 +1,11 @@
 
-from algoritmos_procura.common import print_caminho
-from base_conhecimento.Local import Local
-from base_conhecimento.baseConhecimento import Transporte, entregas
+from Fase2.algoritmos_procura.common import caminho_to_string
+from Fase2.base_conhecimento.Local import Local
+from Fase2.base_conhecimento.baseConhecimento import entregas
 import logging
 
-from algoritmos_procura.common import caminho_to_string
-from base_conhecimento.baseConhecimento import Transporte
+from Fase2.algoritmos_procura.common import caminho_to_string
+from Fase2.base_conhecimento.baseConhecimento import Transporte
 
 
 # Entrega
@@ -41,7 +41,7 @@ class Entrega:
         descricao += (f"Id da estafeta: {self.estafeta_id}\n")
         descricao += (f"Data entrega: {self.data_entrega}\n")
         descricao += (f"Transporte: {self.transporte.nome}\n")
-        descricao += print_caminho(self.caminho)
+        descricao += caminho_to_string(self.caminho)
         return descricao
 
     def encomenda_entregue(encomenda_id: int) -> bool:

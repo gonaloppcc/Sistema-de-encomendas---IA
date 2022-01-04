@@ -1,18 +1,15 @@
 import logging
 from math import inf
 
-from algoritmos_procura.common import calcula_distancia, maximo_peso_uma_viagem, print_caminho
-from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, origens
-from base_conhecimento.circuitos import adiciona_circuito
-# Entregas realizadas
-from gera_encomendas.Entrega import Entrega
-from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
 
-from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
-from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, locais, origens, transportes
-from gera_encomendas.Entrega import Entrega
+from Fase2.algoritmos_procura.common import maximo_peso_uma_viagem, calcula_distancia, caminho_to_string
+from Fase2.base_conhecimento.baseConhecimento import encomendas, atribuicoes, estafetas, origens
 
 # TODO: Passar isto para metodos de instancia da classe Entrega?
+from Fase2.base_conhecimento.circuitos import adiciona_circuito
+from Fase2.gera_encomendas.Entrega import Entrega
+from Fase2.gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
+
 
 def encomenda_valida(encomenda_id: int):
     """
@@ -25,7 +22,7 @@ def encomenda_valida(encomenda_id: int):
     maximo_possivel = maximo_peso_uma_viagem()
     return (not Entrega.encomenda_entregue(encomenda_id)) and encomendas.get(encomenda_id).peso <= maximo_possivel
 
-#<<<<<<< maisEntregas1
+
 
 def entregas_do_estafeta(estafeta: int):
     """
@@ -102,6 +99,31 @@ def melhor_caminho_descoberto(estafeta_id, melhor_caminho):
             encomendas_entregues_neste_circuito.append(enc_id)
 
 
+
+"""
+# Gera uma entrega a partir da atribuição
+def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do caminho
+    estafeta = estafetas.get(atribuicao.estafeta_id)
+    encomenda = encomendas.get(atribuicao.encomenda_id)
+    cidade_encomenda = locais.get(encomenda.id_local_entrega).freguesia
+
+    if estafeta.cidade is not cidade_encomenda:
+        logging.error("As cidades de encomenda e de estafetas não coincidem")
+        raise Exception("Cidades não coincidem")
+    local_entrega = locais.get(encomenda.id_local_entrega)
+
+    logging.debug(f"estafeta.cidade: {estafeta.cidade} local_entrega: {local_entrega}")
+    cam = algoritmo(origens.get(estafeta.cidade), local_entrega)
+
+    veiculo = escolhe_veiculo(cam, encomenda)
+    logging.info(f"Veículo escolhido: {veiculo}")
+
+    return Entrega(atribuicao.encomenda_id, atribuicao.estafeta_id, 0, veiculo, cam)
+#>>>>>>> main
+"""
+
+
+
 def gera_entrega_um_estafeta(estafeta_id, algoritmo):
     """
     Gera as entregas de um dado estafeta. Recebe o algoritmo usado para o cálculo dos caminhos.
@@ -129,53 +151,6 @@ def gera_entrega_um_estafeta(estafeta_id, algoritmo):
 
         if possivel_por_pesos(um_caminho_possivel):
 
-          =======
-# Entregas realizadas
-entregas = []
-
-# Se for falsa, queremos o mais rápido, logo é carro
-# Se for verdadeira, tem de ser o mais ecológico ← Falta implementar
-ecologico = False
-
-
-def escolhe_veiculo(cam, encomenda):
-    distancia_caminho = calcula_distancia(cam)
-    if not ecologico:
-        tempo_transporte = float('inf')
-        melhor_veiculo = transportes[0]
-        for veiculo in transportes:
-            try:
-                tempo_veiculo = calcula_tempo_transporte(veiculo, encomenda.peso, distancia_caminho)
-                logging.debug(f"escolhe_veiculo: Veiculo: {veiculo.nome}")
-                logging.debug(f"escolhe_veiculo: Tempo: {tempo_veiculo:.3f}")
-                if tempo_veiculo < tempo_transporte:
-                    tempo_transporte = tempo_veiculo
-                    melhor_veiculo = veiculo
-            except:
-                pass
-        return melhor_veiculo
-
-
-# Gera uma entrega a partir da atribuição
-def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do caminho
-    estafeta = estafetas.get(atribuicao.estafeta_id)
-    encomenda = encomendas.get(atribuicao.encomenda_id)
-    cidade_encomenda = locais.get(encomenda.id_local_entrega).freguesia
-
-    if estafeta.cidade is not cidade_encomenda:
-        logging.error("As cidades de encomenda e de estafetas não coincidem")
-        raise Exception("Cidades não coincidem")
-    local_entrega = locais.get(encomenda.id_local_entrega)
-
-    logging.debug(f"estafeta.cidade: {estafeta.cidade} local_entrega: {local_entrega}")
-    cam = algoritmo(origens.get(estafeta.cidade), local_entrega)
-
-    veiculo = escolhe_veiculo(cam, encomenda)
-    logging.info(f"Veículo escolhido: {veiculo}")
-
-    return Entrega(atribuicao.encomenda_id, atribuicao.estafeta_id, 0, veiculo, cam)
-#>>>>>>> main
-
             total_este_caminho = 0
             # Guarda os percursos que faz para entregar as várias encomendas
             caminhos_pos_algoritmos = []
@@ -189,7 +164,7 @@ def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do c
                         (local, enc_id) = sub_caminho[atual]
                         cam = algoritmo(origem_cidade, local)
                         logging.debug("Foi analisado o caminho: ")
-                        logging.debug(print_caminho(cam))
+                        logging.debug(caminho_to_string(cam))
                         caminhos_pos_algoritmos.append((cam, enc_id))
                         total_este_caminho += calcula_distancia(cam)
                     else:
@@ -199,16 +174,15 @@ def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do c
 
                         cam = algoritmo(local1, local2)
                         logging.debug("Foi analisado o caminho: ")
-                        logging.debug(print_caminho(cam))
+                        logging.debug(caminho_to_string(cam))
                         caminhos_pos_algoritmos.append((cam, enc_id2))
                         total_este_caminho += calcula_distancia(cam)
 
-#<<<<<<< maisEntregas1
                 # Tem de voltar à base
                 (local1, enc_id1) = sub_caminho[atual]
                 cam = algoritmo(local1, origem_cidade)
                 logging.debug("Foi analisado o caminho: ")
-                logging.debug(print_caminho(cam))
+                logging.debug(caminho_to_string(cam))
                 total_este_caminho += calcula_distancia(cam)
                 logging.debug(f"Este caminho tem o custo total de: {total_este_caminho}")
                 caminhos_pos_algoritmos.append((cam, -1))
@@ -233,13 +207,3 @@ def gerar_entregas(algoritmo):
 
     for estafeta in lista_estafetas:
         gera_entrega_um_estafeta(estafeta, algoritmo)
-#=======
-# Gera todas as atribuições
-def gerar_entregas(algoritmo):
-    for atribuicao in atribuicoes:
-        logging.debug(f"Atribuição: {atribuicao} Algoritmo: {algoritmo}")
-        entrega = gerar_entrega(atribuicao, algoritmo)
-        if entrega is not None:
-            entregas.append(entrega)
-            entrega.imprime_entrega()
-#>>>>>>> main

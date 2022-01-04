@@ -1,6 +1,6 @@
 import logging
 
-from algoritmos_procura.common import conectados, calcula_norma, arestas
+from Fase2.algoritmos_procura.common import calcula_norma, conectados, arestas
 
 
 def heuristica(nodo1, nodo2):

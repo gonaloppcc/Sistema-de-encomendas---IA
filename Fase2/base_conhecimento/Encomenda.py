@@ -1,6 +1,6 @@
 # Encomendas Usamos o tipo de dados Data de pyhton, juntando dias e horas encomenda: encomendaID, clienteID, peso,
 # volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, localID -> {V,F}.
-from base_conhecimento.Local import Local
+from Fase2.base_conhecimento.Local import Local
 
 
 class Encomenda:

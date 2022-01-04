@@ -20,7 +20,7 @@ Como cada estafeta só entrega na sua cidade, vamos procurar todos os possíveis
 import logging
 from itertools import combinations, permutations
 
-from base_conhecimento.baseConhecimento import encomendas
+from Fase2.base_conhecimento.baseConhecimento import encomendas
 
 
 def pertence(elem, lista_de_listas) -> bool:
