@@ -1,9 +1,11 @@
 import logging
+from datetime import datetime, time
 
+from Fase2.algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
 from Fase2.base_conhecimento import baseConhecimento
 # Gerar entregas
 from Fase2.base_conhecimento.Local import Local
-from Fase2.base_conhecimento.baseConhecimento import entregas
+from Fase2.base_conhecimento.baseConhecimento import entregas, encomendas
 from Fase2.gera_encomendas.Entrega import Entrega
 from Fase2.gera_encomendas.gera_veiculos import escolhe_veiculo
 
@@ -109,9 +111,13 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
     logging.info("<-- Gera um circuito novo --> ")
     # Gerar entrega
     veiculo_escolhido = escolhe_veiculo((caminhos, encomendas_entregues))
-    for encomenda_id in encomendas_entregues:
-        entregas.append(Entrega(encomenda_id, estafeta_id, 0, veiculo_escolhido, caminhos.copy()))
 
+    for encomenda_id in encomendas_entregues:
+        #Calcular tempo de entrega
+        pesos_no_percurso = map(lambda id_encomenda: encomendas.get(id_encomenda).peso, encomendas_entregues)
+        peso_total = sum(pesos_no_percurso)
+        data_entrega = calcula_data_entrega(caminhos, encomenda_id, peso_total, veiculo_escolhido)
+        entregas.append(Entrega(encomenda_id, estafeta_id, data_entrega, veiculo_escolhido, caminhos.copy()))
     # Gerar circuito
     # Formar a key para inserir no circuitos_gerados.
     caminhos_juntos = ""
@@ -130,3 +136,26 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
     logging.info(" ")
 
     add_circuito_aux(caminhos_juntos, encomendas_entregues)
+
+
+def calcula_data_entrega(caminho, encomenda_id, peso_total, veiculo_escolhido):
+    """
+    Calcula a data de entrega de uma encomenda, a partir das suas caraterísticas,
+    @param caminho: Caminho realizado para entregar a encomenda.
+    @param encomenda_id: Id da encomenda.
+    @param peso_total: Peso das encomendas entregues nesse caminho.
+        Para calcular a velocidade de transporte, e consequentemente o tempo de entrega,
+    @param veiculo_escolhido: Veículo usado para realizar a entrega.
+        Necessário para saber a velocidade da entrega, e conseguentemente o tempo.
+    @return: Tempo da entrega, mas no dia seguinte.
+    """
+
+    distancia_caminho = calcula_distancia(caminho)
+    duracao_transporte = calcula_tempo_transporte(veiculo_escolhido, peso_total, distancia_caminho)
+    data_encomenda_f = encomendas.get(encomenda_id).data_encomenda.timestamp()
+    data_entrega_f = data_encomenda_f + duracao_transporte
+    data_entrega = datetime.fromtimestamp(data_entrega_f + 110000)  # .strftime('%Y-%m-%d')
+    logging.info(f"Data de encomenda:  {encomendas.get(encomenda_id).data_encomenda.strftime('%d %b %Y')}")
+    logging.info(f"Data de entrega: {data_entrega.strftime('%d %b %Y')}")
+
+    return data_entrega

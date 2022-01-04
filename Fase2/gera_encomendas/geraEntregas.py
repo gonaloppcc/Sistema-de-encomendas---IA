@@ -99,31 +99,6 @@ def melhor_caminho_descoberto(estafeta_id, melhor_caminho):
             encomendas_entregues_neste_circuito.append(enc_id)
 
 
-
-"""
-# Gera uma entrega a partir da atribuição
-def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do caminho
-    estafeta = estafetas.get(atribuicao.estafeta_id)
-    encomenda = encomendas.get(atribuicao.encomenda_id)
-    cidade_encomenda = locais.get(encomenda.id_local_entrega).freguesia
-
-    if estafeta.cidade is not cidade_encomenda:
-        logging.error("As cidades de encomenda e de estafetas não coincidem")
-        raise Exception("Cidades não coincidem")
-    local_entrega = locais.get(encomenda.id_local_entrega)
-
-    logging.debug(f"estafeta.cidade: {estafeta.cidade} local_entrega: {local_entrega}")
-    cam = algoritmo(origens.get(estafeta.cidade), local_entrega)
-
-    veiculo = escolhe_veiculo(cam, encomenda)
-    logging.info(f"Veículo escolhido: {veiculo}")
-
-    return Entrega(atribuicao.encomenda_id, atribuicao.estafeta_id, 0, veiculo, cam)
-#>>>>>>> main
-"""
-
-
-
 def gera_entrega_um_estafeta(estafeta_id, algoritmo):
     """
     Gera as entregas de um dado estafeta. Recebe o algoritmo usado para o cálculo dos caminhos.
@@ -202,7 +177,11 @@ def gera_entrega_um_estafeta(estafeta_id, algoritmo):
 
 
 # Gera todos os circuitos.
-def gerar_entregas(algoritmo):
+def gerar_circuitos(algoritmo):
+    """
+    Gera todos os circuitos baseando-se nas atribuições.
+    @param algoritmo: Algoritmo usado para descobrir o caminho entre dois pontos.
+    """
     lista_estafetas = {atribuicao.estafeta_id for atribuicao in atribuicoes}
 
     for estafeta in lista_estafetas:

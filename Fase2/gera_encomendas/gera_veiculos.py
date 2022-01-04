@@ -2,12 +2,13 @@
 # Recebe o caminho e a encomenda, e a partir do peso vê qual o melhor veículo para a entregar.
 # Para já, só vê em função da velocidade, falta ver um critério para o ser "verde".
 import logging
+from math import inf
 
 from Fase2.algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
 from Fase2.base_conhecimento.baseConhecimento import transportes, encomendas
 
 # Se for falsa, queremos o mais rápido, logo é carro
-# Se for verdadeira, tem de ser o mais ecológico ← Falta implementar
+# Se for verdadeira, tem de ser o mais ecológico
 flag_ecologico_ou_rapido = True
 
 
@@ -19,8 +20,8 @@ def veiculo_mais_ecologico(distancia_caminho, peso_total):
        @param peso_total: Peso das encomendas desse circuito. Usado para calcular a velocidade de transporte,
        @return: Veículo mais ecológico.
        """
-    melhor_coef_poluicao = transportes[0].coeficiente_poluicao
-    melhor_veiculo = transportes[0]
+    melhor_coef_poluicao = float (inf)
+    melhor_veiculo = None
     for veiculo in transportes:
         try:
             # Verifica se consegue transportar a encomenda.
@@ -48,6 +49,7 @@ def escolhe_veiculo(circuito):
         melhor_veiculo = veiculo_mais_ecologico(distancia_caminho, peso_total)
     else:
         melhor_veiculo = veiculo_mais_rapido(distancia_caminho, peso_total)
+
     return melhor_veiculo
 
 

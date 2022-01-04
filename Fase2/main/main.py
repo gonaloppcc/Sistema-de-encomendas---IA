@@ -2,7 +2,7 @@ import logging
 
 from Fase2.algoritmos_procura.a_estrela import a_estrela
 from Fase2.algoritmos_procura.gulosa import resolve_gulosa
-from Fase2.gera_encomendas.geraEntregas import gerar_entregas
+from Fase2.gera_encomendas.geraEntregas import gerar_circuitos
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
@@ -15,11 +15,11 @@ def main():
     logging.debug('Começou')
 
     logging.info(f"-> Algoritmo da {algoritmo1.__name__}")
-    gerar_entregas(algoritmo1)
+    gerar_circuitos(algoritmo1)
     logging.info("")
 
     logging.info(f"-> Algoritmo da {algoritmo2.__name__}")
-    gerar_entregas(algoritmo2)
+    gerar_circuitos(algoritmo2)
 
     logging.debug('Acabou')
 
