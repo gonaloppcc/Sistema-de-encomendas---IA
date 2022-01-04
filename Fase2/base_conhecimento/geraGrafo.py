@@ -28,7 +28,7 @@ def gera_grafo(nome_grafo, num_nodos):
         local = Local(i, freguesia, nome, x, y)
         baseConhecimento.locais[i] = local,
         g.add_node(nome, pos=(x, y))
-        print(f"Coordenadas{nome}: x={x}, y={y}")
+        print(f"Coordenadas {nome}: x={x}, y={y}")
 
     # Selecionar a origem aleatóriamente e adicioná-la ao
     # dicionário de origens
