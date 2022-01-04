@@ -1,5 +1,11 @@
+
+import logging
+
+
 from base_conhecimento import baseConhecimento, Local
+
 from algoritmos_procura.common import conectados
+from base_conhecimento import baseConhecimento
 
 
 def dfs2(origem, destino, lista_atual):
@@ -7,7 +13,12 @@ def dfs2(origem, destino, lista_atual):
     if origem == destino:
         return lista_atual
     # Caso seja um dead-end
+
+
+    #if origem not in baseConhecimento.distancias:
+
     if origem not in baseConhecimento.grafo1:
+
         return None
     ligados = conectados(origem)
     # Vamos guardar todos os caminhos não nulos
@@ -33,8 +44,12 @@ def dfs2(origem, destino, lista_atual):
 
 def dfs(origem: Local, destino: Local):
     cam = dfs2(origem, destino, [origem])
-    cam.reverse()
+    if cam is None:
+        logging.debug(" Não há caminho\n De: {origem} para {destino}")
+    else:
+        cam.reverse()
     return cam
+
 
 
 # bfs
@@ -99,13 +114,4 @@ def dfs_limited2(origem, destino, lista_atual, nivel_atual):
     return None
 
 
-def dfs_limited(origem, destino):
-    # Tenta procurar uma solução em cada nível
-    lista = None
-    nivel_atual = 1
-    while lista is None:
-        # Se a lista contiver algo, sai do ciclo
-        lista = dfs_limited2(origem, destino, [origem], nivel_atual)
-        nivel_atual += 1
-    lista.reverse()
-    return lista
+

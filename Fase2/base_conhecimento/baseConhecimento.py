@@ -50,7 +50,7 @@ grafo1 = {
     local7: [(local9, 2)],
     local8: [(local9, 3), (local10, 1)],
     local9: [(local10, 2)],
-    local10: []
+    local10: [(local5, 1)]
 }
 
 # Constantes
@@ -77,34 +77,50 @@ origens = {
 """
 
 # Transporte: Nome, peso Máximo possível transportar, velocidade máxima, descrescimento de velocidade, preço por km
-bicicleta = Transporte("Bicicleta", 5, 10, 0.7, 5)
-moto = Transporte("Moto", 20, 35, 0.5, 10)
-carro = Transporte("Carro", 100, 25, 0.1, 20)
-barco = Transporte("Barco", 20, 21, 0.6, 41)
+bicicleta = Transporte("bicicleta", 5, 10, 0.7, 5, 0)
+moto = Transporte("moto", 20, 35, 0.5, 10, 0.5)
+carro = Transporte("carro", 100, 25, 0.1, 20, 1)
+barco = Transporte("barco", 20, 21, 0.6, 41, 0.4)
 
 transportes = [bicicleta, moto, carro, barco]
 
 # Definição de uma encomenda
-encomenda1 = Encomenda(1, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 10)
-encomenda2 = Encomenda(2, 1, 80, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 9)
+encomenda1 = Encomenda(1, 1, 5, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local10)
+encomenda2 = Encomenda(2, 1, 101, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local9)
+encomenda3 = Encomenda(2, 1, 16, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local7)
+encomenda4 = Encomenda(2, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local8)
 
 # Map onde guardamos todas as encomendas, por id.
 encomendas = {
     1: encomenda1,
-    2: encomenda2
+    2: encomenda2,
+    3: encomenda3,
+    4: encomenda4
 }
 
 estafeta1 = Estafeta(1, "marco", "grafo")
-
+estafeta2 = Estafeta(2, "diogo", "grafo")
 # Map onde guardamos todos os estafetas, por id.
 estafetas = {
-    1: estafeta1
+    1: estafeta1,
+    2: estafeta2
 }
 
 # Nós aqui podemos dar o objeto inteiro, mas assim é mais limpo
+# Estafeta id, encomenda id.
 atribuicao1 = Atribuicao(1, 1)
 atribuicao2 = Atribuicao(1, 2)
 
+atribuicao3 = Atribuicao(1, 3)
+atribuicao4 = Atribuicao(2, 3)
+"""
+atribuicao4 = Atribuicao(1, 4)
+atribuicao5 = Atribuicao(2, 2) 
+"""
+
+# Onde guardamos as entregas realizadas.
+entregas = []
+
 # Lista onde guardamos todas as atribuições.
 # Como só as consultamos sequencialmente, para gerar entregas, podem estar numa lista.
-atribuicoes = [atribuicao1, atribuicao2]
+atribuicoes = [atribuicao1]

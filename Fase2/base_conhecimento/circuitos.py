@@ -1,9 +1,18 @@
+import logging
 from base_conhecimento import baseConhecimento
 
 
 # TODO: Criar um dicionário para armazenar as entregas de um percurso
 
+from base_conhecimento import baseConhecimento
 # Gerar entregas
+from base_conhecimento.Local import Local
+from base_conhecimento.baseConhecimento import entregas
+from gera_encomendas.Entrega import Entrega
+from gera_encomendas.gera_veiculos import escolhe_veiculo
+
+# TODO: Criar um dicionário para armazenar as entregas de um percurso
+
 """
 1. Procuramos atribuições
 2. Por cada atribuição vamos buscar o destino da encomenda
@@ -12,6 +21,13 @@ from base_conhecimento import baseConhecimento
 5. Entrega = informações + caminho. Ao decidir o veículo usado na entrega,
 vemos uma flag que diz se queremos ser rápidos ou ecológicos.
 Adicionar aos circuitos efetuados, e criar ‘id’ da entrega.
+ circuito : (counter, peso, volume, entregas)
+ circuito -> String do circuito
+ counter  -> Nº de vezes que o percurso foi feito
+ peso     -> Peso total de todas as entregas feitas neste percurso
+ volume   -> Volume total de todas as entregas feitas neste percurso
+ entregas -> Lista de listas de entregas
+
 
  circuito : (counter, peso, volume, entregas)
  circuito -> String do circuito
@@ -65,13 +81,62 @@ def circuito_mais_usado_volume():
 # de entregas. Caso o circuito não exista, criamos uma nova entrada.
 # Caso contrário, damos append das entregas à lista de entregas e incrementamos
 # o counter de entregas.
-def add_circuito(circuito, entregas):
+#<<<<<<< maisEntregas1
+def add_circuito_aux(circuito, entregas):
     peso = 0
     volume = 0
     for encomenda in entregas:
         peso += baseConhecimento.encomendas[encomenda].peso
         volume += baseConhecimento.encomendas[encomenda].volume
 
+#<<<<<<< maisEntregas1
+    if circuito not in circuitos_efetuados:
+        circuitos_efetuados[circuito] = (1, peso, volume, [entregas])
+    else:
+        nova_l = circuitos_efetuados[circuito][3]
+        nova_l.append(entregas)
+
+        inc = circuitos_efetuados[circuito][0] + 1
+        novo_peso = circuitos_efetuados[circuito][1] + peso
+        novo_vol = circuitos_efetuados[circuito][2] + volume
+
+        circuitos_efetuados[circuito] = (inc, novo_peso, novo_vol, nova_l)
+
+
+def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_id: int):
+    """
+    Função que adiciona um circuito aos circuitos_efetuados.
+    Os caminhos recebidos começam e acabam na origem duma cidade, logo são circuitos de entrega.
+    Aqui tratamos de converter essas informações para entregas, e guardá-las corretamente
+    @param caminhos: Conjunto de paragens pertencentes a um circuito
+    @param encomendas_entregues: Id's das encomendas entregues nesse circuito.
+    @param estafeta_id: Estafeta que realizou o circuito.
+    """
+    logging.info("<-- Gera um circuito novo --> ")
+    # Gerar entrega
+    veiculo_escolhido = escolhe_veiculo((caminhos, encomendas_entregues))
+    for encomenda_id in encomendas_entregues:
+        entregas.append(Entrega(encomenda_id, estafeta_id, 0, veiculo_escolhido, caminhos.copy()))
+
+    # Gerar circuito
+    # Formar a key para inserir no circuitos_gerados.
+    caminhos_juntos = ""
+    ultima_passagem = None
+    for caminho in caminhos:
+        # É importante não repetir elementos repetidos seguidos, isto acontece porque quando duas encomendas são
+        # entregues no mesmo sítio, o circuito é o mesmo, mas para duas vezes para entregar.
+        if caminho != ultima_passagem:
+            caminhos_juntos += caminho.nome + ";"
+            ultima_passagem = caminho
+    for encomenda in encomendas_entregues:
+        logging.info(f"Encomenda entregue: {encomenda}")
+    logging.info(f"Key do circuito: {caminhos_juntos}")
+    logging.info(f"Veículo utilizado: {veiculo_escolhido.nome}")
+
+    logging.info(" ")
+
+    add_circuito_aux(caminhos_juntos, encomendas_entregues)
+#=======
     if circuito not in circuitosEfetuados:
         circuitosEfetuados[circuito] = (1, peso, volume, [entregas])
     else:
@@ -83,3 +148,4 @@ def add_circuito(circuito, entregas):
         novo_vol = circuitosEfetuados[circuito][2] + volume
 
         circuitosEfetuados[circuito] = (inc, novo_peso, novo_vol, nova_l)
+#>>>>>>> main

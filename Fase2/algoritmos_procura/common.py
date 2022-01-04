@@ -1,6 +1,11 @@
 # Funções para descobrir caminhos
 # dfs, utilizando os diapositivos PL(8) das aulas
+
+from base_conhecimento import baseConhecimento
+from base_conhecimento.baseConhecimento import transportes
+
 from math import sqrt
+
 
 from base_conhecimento import baseConhecimento, Local
 
@@ -44,9 +49,24 @@ def calcula_tempo_transporte(meio_transporte, peso_encomenda, distancia):
     return distancia / velocidade_transporte
 
 
+
+
+# Calcual o máximo de peso que podemos levar numa dada viagem, a partir do máximo que os veículos podem transportar
+def maximo_peso_uma_viagem():
+    """
+    Descobre qual o peso máximo que conseguimos transportar num circuito.
+    @return: Peso máximo, em Kgs.
+    """
+    max = 0
+    for veiculo in transportes:
+        if veiculo.peso_maximo >= max:
+            max = veiculo.peso_maximo
+    return max
+
 def caminho_to_string(cam: [Local]):
     caminho = "Caminho: "
     for nodo in cam:
         caminho = caminho + f"{nodo.nome} "
 
     return caminho
+

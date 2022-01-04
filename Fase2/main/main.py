@@ -1,5 +1,3 @@
-import logging
-
 from algoritmos_procura.a_estrela import a_estrela
 from algoritmos_procura.dfs import dfs
 from algoritmos_procura.gulosa import resolve_gulosa
