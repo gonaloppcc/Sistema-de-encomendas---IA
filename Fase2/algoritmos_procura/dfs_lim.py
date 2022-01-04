@@ -1,5 +1,5 @@
-from Fase2.algoritmos_procura.common import conectados
-from Fase2.base_conhecimento import baseConhecimento
+from algoritmos_procura.common import conectados
+from base_conhecimento import baseConhecimento
 
 
 # Busca Iterativa Limitada em Profundidade.

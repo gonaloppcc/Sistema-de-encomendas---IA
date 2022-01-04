@@ -1,5 +1,5 @@
-from Fase2.base_conhecimento import baseConhecimento
-from Fase2.algoritmos_procura.common import conectados, calcula_norma
+from base_conhecimento import baseConhecimento
+from algoritmos_procura.common import conectados, calcula_norma
 
 
 # Função auxiliar que retorna o

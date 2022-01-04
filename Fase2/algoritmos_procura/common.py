@@ -1,9 +1,9 @@
 # Funções para descobrir caminhos
 # dfs, utilizando os diapositivos PL(8) das aulas
 
-from Fase2.base_conhecimento import baseConhecimento
-from Fase2.base_conhecimento.baseConhecimento import transportes
-from Fase2.base_conhecimento import baseConhecimento, Local
+from base_conhecimento import baseConhecimento
+from base_conhecimento.baseConhecimento import transportes
+from base_conhecimento import baseConhecimento, Local
 
 from math import sqrt
 

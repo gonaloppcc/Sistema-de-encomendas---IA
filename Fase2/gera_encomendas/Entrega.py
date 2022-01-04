@@ -1,11 +1,11 @@
 
-from Fase2.algoritmos_procura.common import caminho_to_string
-from Fase2.base_conhecimento.Local import Local
-from Fase2.base_conhecimento.baseConhecimento import entregas
+from algoritmos_procura.common import caminho_to_string
+from base_conhecimento.Local import Local
+from base_conhecimento.baseConhecimento import entregas
 import logging
 
-from Fase2.algoritmos_procura.common import caminho_to_string
-from Fase2.base_conhecimento.baseConhecimento import Transporte
+from algoritmos_procura.common import caminho_to_string
+from base_conhecimento.baseConhecimento import Transporte
 
 
 # Entrega

@@ -2,10 +2,10 @@
 import logging
 
 
-from Fase2.base_conhecimento import baseConhecimento, Local
 
-from Fase2.algoritmos_procura.common import conectados
-from Fase2.base_conhecimento import baseConhecimento
+from base_conhecimento import baseConhecimento, Local
+from algoritmos_procura.common import conectados
+from base_conhecimento import baseConhecimento
 
 
 def dfs2(origem, destino, lista_atual):

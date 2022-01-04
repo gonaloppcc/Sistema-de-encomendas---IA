@@ -1,13 +1,13 @@
 import logging
 from datetime import datetime, time
 
-from Fase2.algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
-from Fase2.base_conhecimento import baseConhecimento
+from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
+from base_conhecimento import baseConhecimento
 # Gerar entregas
-from Fase2.base_conhecimento.Local import Local
-from Fase2.base_conhecimento.baseConhecimento import entregas, encomendas
-from Fase2.gera_encomendas.Entrega import Entrega
-from Fase2.gera_encomendas.gera_veiculos import escolhe_veiculo
+from base_conhecimento.Local import Local
+from base_conhecimento.baseConhecimento import entregas, encomendas
+from gera_encomendas.Entrega import Entrega
+from gera_encomendas.gera_veiculos import escolhe_veiculo
 
 # TODO: Criar um dicionário para armazenar as entregas de um percurso
 

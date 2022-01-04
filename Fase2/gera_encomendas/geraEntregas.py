@@ -2,13 +2,13 @@ import logging
 from math import inf
 
 
-from Fase2.algoritmos_procura.common import maximo_peso_uma_viagem, calcula_distancia, caminho_to_string
-from Fase2.base_conhecimento.baseConhecimento import encomendas, atribuicoes, estafetas, origens
+from algoritmos_procura.common import maximo_peso_uma_viagem, calcula_distancia, caminho_to_string
+from base_conhecimento.baseConhecimento import encomendas, atribuicoes, estafetas, origens
 
 # TODO: Passar isto para metodos de instancia da classe Entrega?
-from Fase2.base_conhecimento.circuitos import adiciona_circuito
-from Fase2.gera_encomendas.Entrega import Entrega
-from Fase2.gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
+from base_conhecimento.circuitos import adiciona_circuito
+from gera_encomendas.Entrega import Entrega
+from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
 
 
 def encomenda_valida(encomenda_id: int):

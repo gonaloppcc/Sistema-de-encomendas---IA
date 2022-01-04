@@ -1,10 +1,10 @@
 import datetime
 
-from Fase2.base_conhecimento.Atribuicao import Atribuicao
-from Fase2.base_conhecimento.Encomenda import Encomenda
-from Fase2.base_conhecimento.Estafeta import Estafeta
-from Fase2.base_conhecimento.Local import Local
-from Fase2.base_conhecimento.Transporte import Transporte
+from base_conhecimento.Atribuicao import Atribuicao
+from base_conhecimento.Encomenda import Encomenda
+from base_conhecimento.Estafeta import Estafeta
+from base_conhecimento.Local import Local
+from base_conhecimento.Transporte import Transporte
 
 # Conhecimento ------------------------------------------------------------
 
