@@ -14,48 +14,39 @@ from base_conhecimento.Transporte import Transporte
 # Locais da primeira fase
 # TODO definir melhor as coordenadas
 
-local1 = Local(1, "povoaVarzim", "local1", 76, 24)
-local2 = Local(2, "vilaDoConde", "local2", 15, 104)
-local3 = Local(3, "trofa", "avenida", 76, 7)
-local4 = Local(4, "lisboa", "praca", 75, 130)
+local1 = Local(1, "Vila_do_Conde", "local1", 76, 24)
+local2 = Local(2, "Vila_do_Conde", "local2", 15, 104)
+local3 = Local(3, "Vila_do_Conde", "avenida", 76, 7)
+local4 = Local(4, "Vila_do_Conde", "praca", 75, 130)
 
 # Locais da segunda fase
-local5 = Local(5, "grafo", "local5", 10, 14)
-local6 = Local(6, "grafo", "local6", 39, 59)
-local7 = Local(7, "grafo", "local7", 20, 76)
-local8 = Local(8, "grafo", "local8", 45, 55)
-local9 = Local(9, "grafo", "local9", 98, 33)
-local10 = Local(10, "grafo", "local10", 16, 98)
+local5 = Local(5, "Vila_do_Conde", "local5", 10, 14)
+local6 = Local(6, "Vila_do_Conde", "local6", 39, 59)
+local7 = Local(7, "Vila_do_Conde", "local7", 20, 76)
+local8 = Local(8, "Vila_do_Conde", "local8", 45, 55)
+local9 = Local(9, "Vila_do_Conde", "local9", 98, 33)
+local10 = Local(10, "Vila_do_Conde", "local10", 16, 98)
 
-# Map onde guardamos todas as ruas, por ‘id’.
-locais = {
-}
-"""
-1: local1,
-2: local2,
-3: local3,
-4: local4,
-5: local5,
-6: local6,
-7: local7,
-8: local8,
-9: local9,
-10: local10,
-"""
 
 # Guarda as distâncias em função do ‘id’ da local
 # Key é o ‘id’ da local, doutro lado temos ‘id’'s de outras locals, mais distâncias
 # https://www.gatevidyalay.com/wp-content/uploads/2018/03/Dijkstra-Algorithm-Problem-01.png
-grafo1 = {
+mapa = {
+    "grafos": {
+        "Vila_do_Conde": {
+            local5: [(local6, 1), (local7, 5)],
+            local6: [(local7, 2), (local8, 2), (local9, 1)],
+            local7: [(local9, 2)],
+            local8: [(local9, 3), (local10, 1)],
+            local9: [(local10, 2)],
+            local10: []
+        }
+    },
+    "id_counter": 10
 }
-"""
-local5: [(local6, 1), (local7, 5)],
-local6: [(local7, 2), (local8, 2), (local9, 1)],
-local7: [(local9, 2)],
-local8: [(local9, 3), (local10, 1)],
-local9: [(local10, 2)],
-local10: []
-"""
+
+
+circuitos_efetuados = {}
 
 # Constantes
 # Map onde guardamos todas as origens em função das cidades, por nome.
@@ -64,10 +55,8 @@ local10: []
 # E os estafetas saiem daí
 
 origens = {
+    "Vila_do_Conde": local5
 }
-"""
-"grafo": local5,
-"""
 
 """
 1-> 2 (1), 3 (5)
@@ -100,7 +89,7 @@ encomendas = {
     2: encomenda2
 }
 
-estafeta1 = Estafeta(1, "marco", "grafo")
+estafeta1 = Estafeta(1, "marco", "Vila_do_Conde")
 
 # Map onde guardamos todos os estafetas, por id.
 estafetas = {

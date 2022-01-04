@@ -1,7 +1,8 @@
 import logging
 
 from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
-from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, locais, origens, transportes
+from base_conhecimento.Local import Local
+from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, origens, transportes
 from gera_encomendas.Entrega import Entrega
 
 # TODO: Passar isto para metodos de instancia da classe Entrega?
@@ -38,12 +39,12 @@ def escolhe_veiculo(cam, encomenda):
 def gerar_entrega(atribuicao, algoritmo):  # Algoritmo usado para a procura do caminho
     estafeta = estafetas.get(atribuicao.estafeta_id)
     encomenda = encomendas.get(atribuicao.encomenda_id)
-    cidade_encomenda = locais.get(encomenda.id_local_entrega).freguesia
+    cidade_encomenda = Local.encontra_local(encomenda.id_local_entrega).freguesia
 
     if estafeta.cidade is not cidade_encomenda:
         logging.error("As cidades de encomenda e de estafetas não coincidem")
         raise Exception("Cidades não coincidem")
-    local_entrega = locais.get(encomenda.id_local_entrega)
+    local_entrega = Local.encontra_local(encomenda.id_local_entrega)
 
     logging.debug(f"estafeta.cidade: {estafeta.cidade} local_entrega: {local_entrega}")
     cam = algoritmo(origens.get(estafeta.cidade), local_entrega)
