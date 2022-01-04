@@ -12,19 +12,20 @@ from base_conhecimento.Transporte import Transporte
 # Local: ID + Cidade + Nome da
 
 # Locais da primeira fase
+# TODO definir melhor as coordenadas
 
-local1 = Local(1, "povoaVarzim", "local1")
-local2 = Local(2, "vilaDoConde", "local1")
-local3 = Local(3, "trofa", "avenida")
-local4 = Local(4, "lisboa", "praca")
+local1 = Local(1, "povoaVarzim", "local1", 76, 24)
+local2 = Local(2, "vilaDoConde", "local2", 15, 104)
+local3 = Local(3, "trofa", "avenida", 76, 7)
+local4 = Local(4, "lisboa", "praca", 75, 130)
 
 # Locais da segunda fase
-local5 = Local(5, "grafo", "localTP2_1")
-local6 = Local(6, "grafo", "localTP2_2")
-local7 = Local(7, "grafo", "localTP2_3")
-local8 = Local(8, "grafo", "localTP2_4")
-local9 = Local(9, "grafo", "localTP2_5")
-local10 = Local(10, "grafo", "localTP2_6")
+local5 = Local(5, "grafo", "local5", 10, 14)
+local6 = Local(6, "grafo", "local6", 39, 59)
+local7 = Local(7, "grafo", "local7", 20, 76)
+local8 = Local(8, "grafo", "local8", 45, 55)
+local9 = Local(9, "grafo", "local9", 98, 33)
+local10 = Local(10, "grafo", "local10", 16, 98)
 
 # Map onde guardamos todas as ruas, por ‘id’.
 locais = {
@@ -43,7 +44,7 @@ locais = {
 # Guarda as distâncias em função do ‘id’ da local
 # Key é o ‘id’ da local, doutro lado temos ‘id’'s de outras locals, mais distâncias
 # https://www.gatevidyalay.com/wp-content/uploads/2018/03/Dijkstra-Algorithm-Problem-01.png
-distancias = {
+grafo1 = {
     local5: [(local6, 1), (local7, 5)],
     local6: [(local7, 2), (local8, 2), (local9, 1)],
     local7: [(local9, 2)],

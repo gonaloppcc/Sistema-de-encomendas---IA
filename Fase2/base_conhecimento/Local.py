@@ -1,5 +1,9 @@
 class Local:
-    def __init__(self, id_: int, freguesia, nome):
+
+   
+       #Falta acrescentar os floats
+
+    def __init__(self, id_: int, freguesia, nome, x: float, y: float):
         """
         Construtor dos vários pontos que compões uma cidade.
         @param id_: Id único que identifica os pontos de entrega de cada encomenda.
@@ -9,3 +13,8 @@ class Local:
         self.id = id_
         self.freguesia = freguesia
         self.nome = nome
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return self.nome

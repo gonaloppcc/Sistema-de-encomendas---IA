@@ -1,6 +1,11 @@
+
 from algoritmos_procura.common import print_caminho
 from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import Transporte, entregas
+import logging
+
+from algoritmos_procura.common import caminho_to_string
+from base_conhecimento.baseConhecimento import Transporte
 
 
 # Entrega
@@ -48,3 +53,8 @@ class Entrega:
             if entrega.encomenda_id == encomenda_id:
                 return True
         return False
+    def imprime_entrega(self):
+        logging.info(
+            f"Id da encomenda: {self.encomenda_id}, Id da estafeta: {self.estafeta_id}, Data entrega: {self.data_entrega}, Transporte: {self.transporte.nome}")
+        logging.info(caminho_to_string(self.caminho))
+        logging.info("")

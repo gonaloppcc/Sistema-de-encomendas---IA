@@ -1,4 +1,8 @@
 import logging
+from base_conhecimento import baseConhecimento
+
+
+# TODO: Criar um dicionário para armazenar as entregas de um percurso
 
 from base_conhecimento import baseConhecimento
 # Gerar entregas
@@ -23,9 +27,16 @@ Adicionar aos circuitos efetuados, e criar ‘id’ da entrega.
  peso     -> Peso total de todas as entregas feitas neste percurso
  volume   -> Volume total de todas as entregas feitas neste percurso
  entregas -> Lista de listas de entregas
-"""
 
-circuitos_efetuados = {
+
+ circuito : (counter, peso, volume, entregas)
+ circuito -> String do circuito
+ counter  -> Nº de vezes que o percurso foi feito
+ peso     -> Peso total de todas as entregas feitas neste percurso
+ volume   -> Volume total de todas as entregas feitas neste percurso
+ entregas -> Lista de listas de entregas
+"""
+circuitosEfetuados = {
 
 }
 
@@ -37,7 +48,7 @@ circuitos_efetuados = {
 # aparecem primeiro.
 def circuitos_mais_produtivos():
     lista = []
-    for (circuito, info) in circuitos_efetuados.items():
+    for (circuito, info) in circuitosEfetuados.items():
         n_entregas = 0
         for entrega in info[3]:
             n_entregas += len(entrega)
@@ -50,19 +61,19 @@ def circuitos_mais_produtivos():
 # Calcula o circuito mais usado com base no
 # número de vezes que foi percorrido
 def circuito_mais_usado_counter():
-    return max(circuitos_efetuados.items(), key=lambda circuito: circuito[1][0])
+    return max(circuitosEfetuados.items(), key=lambda circuito: circuito[1][0])
 
 
 # Calcula o circuito mais usado com base no
 # peso total das entregas do percurso.
 def circuito_mais_usado_peso():
-    return max(circuitos_efetuados.items(), key=lambda x: x[1][1])
+    return max(circuitosEfetuados.items(), key=lambda x: x[1][1])
 
 
 # Calcula o circuito mais usado com base no
 # volume total das entregas do percurso
 def circuito_mais_usado_volume():
-    return max(circuitos_efetuados.items(), key=lambda x: x[1][2])
+    return max(circuitosEfetuados.items(), key=lambda x: x[1][2])
 
 
 # Adicionar circuitos à lista de circuitos
@@ -70,6 +81,7 @@ def circuito_mais_usado_volume():
 # de entregas. Caso o circuito não exista, criamos uma nova entrada.
 # Caso contrário, damos append das entregas à lista de entregas e incrementamos
 # o counter de entregas.
+#<<<<<<< maisEntregas1
 def add_circuito_aux(circuito, entregas):
     peso = 0
     volume = 0
@@ -77,6 +89,7 @@ def add_circuito_aux(circuito, entregas):
         peso += baseConhecimento.encomendas[encomenda].peso
         volume += baseConhecimento.encomendas[encomenda].volume
 
+#<<<<<<< maisEntregas1
     if circuito not in circuitos_efetuados:
         circuitos_efetuados[circuito] = (1, peso, volume, [entregas])
     else:
@@ -123,3 +136,16 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
     logging.info(" ")
 
     add_circuito_aux(caminhos_juntos, encomendas_entregues)
+#=======
+    if circuito not in circuitosEfetuados:
+        circuitosEfetuados[circuito] = (1, peso, volume, [entregas])
+    else:
+        nova_l = circuitosEfetuados[circuito][3]
+        nova_l.append(entregas)
+
+        inc = circuitosEfetuados[circuito][0] + 1
+        novo_peso = circuitosEfetuados[circuito][1] + peso
+        novo_vol = circuitosEfetuados[circuito][2] + volume
+
+        circuitosEfetuados[circuito] = (inc, novo_peso, novo_vol, nova_l)
+#>>>>>>> main
