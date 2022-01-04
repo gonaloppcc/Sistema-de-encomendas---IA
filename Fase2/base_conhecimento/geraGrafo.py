@@ -72,7 +72,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
 
     # Percorrer todos os nodos para veríficar que existe
     # um caminho possível entre estes e a origem selecionada anteriormente.
-    # Aqui usamos o alguritmo depth-first porque não nos interessa que o
+    # Aqui usamos o algoritmo depth-first porque não nos interessa que o
     # caminho encontrado seja o mais rápido. Interessa-nos só que exista
     # um caminho.
     # Caso o caminho não exista, criamos uma ligação direta entre estes.
