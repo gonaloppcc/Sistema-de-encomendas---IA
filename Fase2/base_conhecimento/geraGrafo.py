@@ -17,6 +17,11 @@ dist_min = 0.05 * sqrt((pow((max_x - min_x), 2) + pow((max_y - min_y), 2)))
 
 
 def verifica_dist(nodo):
+    """
+    Verifica se o nodo que recebe como parâmetro se encontra a uma distância
+    superior à definida em dist_min a todos os outros nodos do grafo a que pertence.
+    :param nodo: Nodo a verificar
+    """
     for outro_nodo in mapa["grafos"][nodo.freguesia]:
         if calcula_norma(nodo, outro_nodo) < dist_min:
             return False
@@ -29,9 +34,9 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     para nome_grafo. A origem é selecionada aleatóriamente
     e o algoritmo garante, através do uso do dfs, que a partir
     desta existe um caminho possível para todos os nodos.
-    :param nome_grafo: Nome que o grafo terá no dicionário origens em baseConhecimento
-    :param num_nodos: Número de nodos que o grafo ter
-    :param probabilidade_conexao: Probabilidade de criar uma conexão de cada nodo
+    :param nome_grafo: Nome que o grafo terá no dicionário de grafos do mapa da base de conhecimento
+    :param num_nodos: Número de nodos que o grafo irá ter
+    :param probabilidade_conexao: Probabilidade de criar uma conexão entre cada dois nodos
     """
     mapa["grafos"][nome_grafo] = {}
     # Gerar todos os nodos com nome 'Local_{i}' e freguesia 'Freguesia_{i}'.
@@ -51,14 +56,14 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     # Incrementar o id_counter para o novo max_id
     mapa["id_counter"] += num_nodos
     # Selecionar a origem aleatóriamente e adicioná-la ao
-    # dicionário de origens
+    # dicionário de origens em baseConhecimento
     origem = list(mapa["grafos"][nome_grafo])[randint(0, num_nodos - 1)]
     origens[nome_grafo] = origem
     logging.debug(f"Origem: {origem.nome}")
 
-    # Para cada nodo percorrer todos os outros nodos
-    # havendo uma probabilidade de 50% de criar uma conexão
-    # entre eles.
+    # Para cada nodo, percorrer todos os outros nodos
+    # havendo uma probabilidade igual a probabilidade_conexao
+    # de criar uma conexão entre eles.
     nodos = mapa["grafos"][nome_grafo].keys()
     for nodo in nodos:
         conectados = []
