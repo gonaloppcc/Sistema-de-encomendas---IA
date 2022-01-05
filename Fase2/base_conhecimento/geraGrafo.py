@@ -2,6 +2,9 @@ import logging
 from math import sqrt
 from random import randint
 
+import networkx as nx
+from matplotlib import pyplot as plt
+
 from algoritmos_procura.common import calcula_norma
 from algoritmos_procura.dfs import dfs
 from base_conhecimento.Local import Local
@@ -31,6 +34,7 @@ def verifica_dist(nodo):
 
 
 def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
+    g = nx.DiGraph()
     """
     Gera um grafo aleatório com num_nodos nodos e com o nome
     para nome_grafo. A origem é selecionada aleatóriamente
@@ -61,7 +65,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     # dicionário de origens em baseConhecimento
     origem = list(mapa["grafos"][nome_grafo])[randint(0, num_nodos - 1)]
     origens[nome_grafo] = origem
-    logging.debug(f"Origem: {origem.nome}")
+    logging.info(f"Origem: {origem.nome}")
 
     # Para cada nodo, percorrer todos os outros nodos
     # havendo uma probabilidade igual a probabilidade_conexao
@@ -95,5 +99,14 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
             distancia = calcula_norma(nodo, origem)
             mapa["grafos"][nome_grafo][nodo].append((origem, distancia))
 
-    for nodo in nodos:
-        logging.debug(f"{nodo.nome}: ID: {nodo.id}, Freguesia: {nodo.freguesia}, x: {nodo.x}, y: {nodo.y}")
+    for nodo, conexoes in mapa["grafos"][nome_grafo].items():
+        g.add_node(nodo.id, pos=(nodo.x, nodo.y))
+        logging.info(f"{nodo.nome}: ID: {nodo.id}, Freguesia: {nodo.freguesia}, x: {nodo.x}, y: {nodo.y}")
+        for conectado, dist in conexoes:
+            g.add_edge(nodo.id, conectado.id, distance=dist)
+            logging.info(f"Ligação: {nodo.id} -> {conectado.id}")
+
+    pos = nx.get_node_attributes(g, 'pos')
+    nx.draw_networkx(g, pos, with_labels=True)
+    plt.title(nome_grafo)
+    plt.savefig(nome_grafo + ".png")

@@ -37,5 +37,6 @@ def gulosa(origem, destino, lista_atual):
 
 def resolve_gulosa(origem, destino):
     cam = gulosa(origem, destino, [origem])
-    cam.reverse()
+    if cam is not None:
+        cam.reverse()
     return cam
