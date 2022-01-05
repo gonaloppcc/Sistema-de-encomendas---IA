@@ -44,10 +44,10 @@ mapa = {
     "id_counter": 10
 }
 
-#Guarda os ids dos locais que pertencem a cada cidade, útil para gerarmos as encomendas.
+# Guarda os ids dos locais que pertencem a cada cidade, útil para gerarmos as encomendas.
 id_locais_cidades = {
-    "Vila_do_Conde": (1,  10)
-    }
+    "Vila_do_Conde": (1, 10)
+}
 
 """
  circuito : (counter, peso, volume, entregas)

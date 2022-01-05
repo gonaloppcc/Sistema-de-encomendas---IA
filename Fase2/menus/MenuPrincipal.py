@@ -10,10 +10,12 @@ from algoritmos_procura.dfs_lim import dfs_limited
 from algoritmos_procura.gulosa import resolve_gulosa
 from base_conhecimento.circuitos import *
 from base_conhecimento.geraGrafo import gera_grafo
+from base_conhecimento.gera_atribuicoes import gera_atribuicoes
+from base_conhecimento.gera_encomenda import gera_encomendas
 from gera_encomendas.gera_circuitos import *
 import psutil
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 
 def print_lista(lista):
@@ -23,9 +25,12 @@ def print_lista(lista):
 
 def gerar_grafo():
     nome_grafo = input("Meta o nome do grafo: ")
-    num_nodos = int(input("Meta número de nodos: "))
-    prob_conexao = int(input("Meta probabilidade de conexão: "))
+    num_nodos = int(input("Meta o número de nodos: "))
+    prob_conexao = int(input("Meta a probabilidade de conexão: "))
     gera_grafo(nome_grafo, num_nodos, prob_conexao)
+    num_encomendas = int(input("Meta o número de encomendas: "))
+    gera_encomendas(num_encomendas, nome_grafo)
+    gera_atribuicoes()
     print("Grafo gerado com sucesso!")
     print(f"Grafo guardado com o nome \"{nome_grafo}.png\"\n")
     sleep(2)
@@ -58,7 +63,7 @@ def gerar_circuitoss():
 
     gerar_circuitos(algoritmos.get(alg))
 
-    print(f"Memoria de execução do algoritmo: {(psutil.Process().memory_info().rss - inicio_memoria) / 1.0e-6}")
+    print(f"Memoria de execução do algoritmo: {(psutil.Process().memory_info().rss - inicio_memoria) / 1.0e6}MB")
 
     print(f"Tempo de execução do algoritmo: {time.time()- inicio_tempo}s")
 
