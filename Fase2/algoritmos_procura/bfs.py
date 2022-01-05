@@ -1,11 +1,8 @@
-
-
-# bfs
-# Travessia de grafos, mas usei outro algoritmo
 from algoritmos_procura.common import conectados
 from base_conhecimento import baseConhecimento
 
-
+# bfs
+# Travessia de grafos, mas usei outro algoritmo
 def bfs(origem, destino):
     # Guardamos os pares (nó atual, caminho até ele)
     queue = [(origem, [origem])]

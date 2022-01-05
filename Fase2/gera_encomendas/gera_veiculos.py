@@ -7,7 +7,7 @@ from base_conhecimento.baseConhecimento import transportes, encomendas
 
 # Se for falsa, queremos o mais rápido, logo é carro
 # Se for verdadeira, tem de ser o mais ecológico
-flag_ecologico_ou_rapido = True
+criterio_ecologico = True
 
 
 # Função para escolhermos qual o veículo a usar em função da flag e do circuito.
@@ -49,7 +49,7 @@ def escolhe_veiculo(circuito):
     peso_total = sum(pesos_no_percurso)
 
     distancia_caminho = calcula_distancia(caminho)
-    if flag_ecologico_ou_rapido:
+    if criterio_ecologico:
         melhor_veiculo = veiculo_mais_ecologico(distancia_caminho, peso_total)
     else:
         melhor_veiculo = veiculo_mais_rapido(distancia_caminho, peso_total)
