@@ -1,7 +1,7 @@
 import logging
 
 # Gerar entregas
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
 from base_conhecimento.Local import Local
@@ -101,6 +101,7 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
             ultima_passagem = caminho
     for encomenda in encomendas_entregues:
         logging.info(f"Encomenda entregue: {encomenda}")
+        logging.info(f"Peso da encomenda: {encomendas.get(encomenda).peso}")
     logging.info(f"Key do circuito: {caminhos_juntos}")
     logging.info(f"Veículo utilizado: {veiculo_escolhido.nome}")
 
@@ -123,9 +124,9 @@ def calcula_data_entrega(caminho, encomenda_id, peso_total, veiculo_escolhido):
 
     distancia_caminho = calcula_distancia(caminho)
     duracao_transporte = calcula_tempo_transporte(veiculo_escolhido, peso_total, distancia_caminho)
-    data_encomenda_f = encomendas.get(encomenda_id).data_encomenda.timestamp()
-    data_entrega_f = data_encomenda_f + duracao_transporte
-    data_entrega = datetime.fromtimestamp(data_entrega_f + 110000)
+    data_encomenda = encomendas.get(encomenda_id).data_encomenda
+    data_entrega = data_encomenda + timedelta(days=duracao_transporte )
+
     logging.info(f"Data de encomenda:  {encomendas.get(encomenda_id).data_encomenda.strftime('%d %b %Y')}")
     logging.info(f"Data de entrega: {data_entrega.strftime('%d %b %Y')}")
 

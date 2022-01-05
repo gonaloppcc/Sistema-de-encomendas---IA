@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from algoritmos_procura.common import caminho_to_string
 from base_conhecimento.Local import Local
@@ -14,13 +15,13 @@ from base_conhecimento.baseConhecimento import entregas
 #
 
 class Entrega:
-    def __init__(self, encomenda_id: int, estafeta_id: int, data_entrega: object, transporte: Transporte,
+    def __init__(self, encomenda_id: int, estafeta_id: int, data_entrega: datetime, transporte: Transporte,
                  caminho: [Local]):
         """
         Construtor duma entrega. É chamado ao mesmo tempo que os circuitos são gerados, para saber quais os caminhos de entrega.
         @param encomenda_id: Id da encomenda
         @param estafeta_id: Id do estafeta que entregou.
-        @param data_entrega: 
+        @param data_entrega: Data da encomenda mais a de transporte.
         @param transporte: Veículo utilizado durante a entrega.
         @param caminho: Caminho utilizado durante para a entrega.
         """

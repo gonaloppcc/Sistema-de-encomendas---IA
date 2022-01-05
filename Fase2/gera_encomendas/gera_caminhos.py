@@ -67,7 +67,7 @@ def paragens_individuais(locais_entrega):
 
 
 #
-def descobre_possiveis_caminhos(encomendasID):
+def descobre_possiveis_caminhos(encomendas_id):
     """
     Esta função gera todos os caminhos possíveis para entregar uma encomenda.
     Por exemplo, se tiver de passar por três locais, pode entregar uma encomenda por viagem, duas ou até três.
@@ -75,12 +75,12 @@ def descobre_possiveis_caminhos(encomendasID):
     Depois faz combinações desses locais. Por exemplo: [A, B, C] fica A | B | C | A, B | A, C | B, C | A, B, C
     Mas excluímos os casos da lista separada, que são acrescentados no fim
     A seguir, guardamos em listas os percursos, usando o exemplo de à bocado: se passa em A e B, tem de haver uma viagem só para C
-    @param encomendasID: Encomendas para as quais temos de gerar os percursos possíveis.
+    @param encomendas_id: Encomendas para as quais temos de gerar os percursos possíveis.
     @return: As possibilidades de percurso.
     """
     # Guardamos em set para não termos locais repetidos
     locais_entrega = set(
-        map(lambda encomendaID: (encomendas.get(encomendaID).id_local_entrega, encomendaID), encomendasID))
+        map(lambda encomenda_id: (encomendas.get(encomenda_id).id_local_entrega, encomenda_id), encomendas_id))
     # Já temos todos os locais de entrega
 
     # Obter todos os subcaminhos, com 2 paragens
@@ -106,7 +106,9 @@ def descobre_possiveis_caminhos(encomendasID):
     # Adiciona o caso em que fazemos uma viagem por encomenda
     lista_final.append(paragens_individuais(locais_entrega))
     logging.debug('[gera_caminhos] Lista final da gera_caminhos')
-    # Uma possibilidade é um conjunto de caminhos.
+    return lista_final
+
+"""    # Uma possibilidade é um conjunto de caminhos.
     # Essa possibilidade entrega todas as encomendas previstas.
     # É do tipo:
     # [ [ (local1, Encomenda1),(local2, Encomenda2)] ] (tudo num caminho) ou
@@ -120,7 +122,8 @@ def descobre_possiveis_caminhos(encomendasID):
             # Cada paragem do percurso
             for (id_local, encID) in caminho:
                 local = Local.encontra_local(id_local)
+                local = Local.encontra_local(id_local)
+
                 logging.debug(f" {local.nome} |  {encID}")
             logging.debug(" ")
-
-    return lista_final
+"""

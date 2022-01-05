@@ -3,7 +3,7 @@ from random import randint
 
 from algoritmos_procura.common import maximo_peso_uma_viagem
 from base_conhecimento.Encomenda import Encomenda
-from base_conhecimento.baseConhecimento import id_locais_cidades, encomendas
+from base_conhecimento.baseConhecimento import id_locais_cidades, encomendas, origens
 
 
 def gera_encomendas(num_encomendas, nome_cidade):
@@ -23,9 +23,11 @@ def gera_encomendas(num_encomendas, nome_cidade):
         peso = randint(1, peso_maximo)
         data_encomenda_aleatoria =  data_encomenda_hoje + timedelta( days = randint(-1, 1))
         id_inicio, id_fim = id_locais_cidades.get(nome_cidade)
-        id_local_entrega = randint(id_inicio, id_fim)
+        id_local_entrega = randint(id_inicio+1, id_fim-1)
+        while (id_local_entrega == origens.get(nome_cidade)):
+            id_local_entrega = randint(id_inicio+1, id_fim-1)
         # encomenda_id, cliente_id, peso,  volume, prazo data_encomenda,         id_local_entrega
         nova_encomenda = Encomenda(encomenda_id, 0, peso, 0, data_encomenda_aleatoria+timedelta( days = 2), data_encomenda_aleatoria, id_local_entrega)
-        # print("PEso nova encomenda: ", nova_encomenda.peso)
         encomendas[encomenda_id] = nova_encomenda
+
 

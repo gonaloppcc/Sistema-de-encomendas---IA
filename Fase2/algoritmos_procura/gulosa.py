@@ -19,6 +19,7 @@ def gulosa(origem, destino, lista_atual):
     # Calculamos a estima e ordenamos os nodos com base nesta
     ligados_sorted = []
     for nodo in ligados:
+
         norma = calcula_norma(nodo, destino)
         ligados_sorted.append((nodo, norma))
     ligados_sorted.sort(key=get_norma)

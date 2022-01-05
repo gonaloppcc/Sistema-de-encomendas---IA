@@ -84,7 +84,7 @@ origens = {
 
 # Transporte: Nome, peso Máximo possível transportar, velocidade máxima, descrescimento de velocidade, preço por km
 bicicleta = Transporte("bicicleta", 5, 10, 0.7, 5, 0)
-moto = Transporte("moto", 20, 35, 0.5, 10, 0.5)
+moto = Transporte("moto", 25, 35, 0.5, 10, 0.5)
 carro = Transporte("carro", 100, 25, 0.1, 20, 1)
 barco = Transporte("barco", 20, 21, 0.6, 41, 0.4)
 

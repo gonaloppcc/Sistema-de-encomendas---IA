@@ -3,6 +3,7 @@ from math import inf
 
 from algoritmos_procura.common import calcula_distancia, caminho_to_string
 from algoritmos_procura.common import maximo_peso_uma_viagem
+from base_conhecimento.Estafeta import Estafeta
 from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, origens
 from base_conhecimento.circuitos import adiciona_circuito
@@ -100,13 +101,15 @@ def melhor_caminho_descoberto(estafeta_id, melhor_caminho):
             encomendas_entregues_neste_circuito.append(enc_id)
 
 
-def gera_circuito_um_estafeta(estafeta_id, algoritmo):
+def gera_circuito_um_estafeta(estafeta_id, algoritmo, cidade):
     """
     Gera as entregas de um dado estafeta. Recebe o algoritmo usado para o cálculo dos caminhos.
     @param estafeta_id: Estafeta que queremos analisar.
     @param algoritmo: Qual o algoritmo a usar para gerar os percursos entre paragens.
+    @param cidade: Cidade onde a entrega ocorre.
+
     """
-    estafeta = estafetas.get(estafeta_id)
+    estafeta = estafetas.get(cidade)
     logging.info(f"Vamos analisar o estafeta nr.: {estafeta_id}")
     # Lista de encomendas que o estafeta vai entregar, por dia.
     encomendas_id = entregas_do_estafeta_por_dia(estafeta_id)
@@ -114,20 +117,20 @@ def gera_circuito_um_estafeta(estafeta_id, algoritmo):
         logging.info(f"O estafeta com id {estafeta_id} não tem encomendas atribuídas, ou já foram entregues.")
         return
     for encomendas_um_dia in encomendas_id:
-        gera_circuitos_um_dia(algoritmo, encomendas_um_dia, estafeta)
+        gera_circuitos_um_dia(algoritmo, encomendas_um_dia, estafeta, cidade)
 
 
-def gera_circuitos_um_dia(algoritmo, encomendas_id, estafeta):
+def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, cidade_str: str) -> object:
     """
     Gera as entregas de um dado estafeta para um dia.
     @param algoritmo: Algoritmo utilizado para escolher caminhos entre dois locais.
     @param encomendas_id: Lista de encomendas que tem de entregar num dia.
     @param estafeta: Estafeta que realiza as entregas.
+    @param cidade_str: Cidade onde a entrega ocorre.
     """
     # Combinações dos possíveis caminhos que o estafeta pode usar.
     possiveis_percursos = descobre_possiveis_caminhos(encomendas_id)
-    # Local do centro de entregas, ele tem de partir e voltar para lá
-    origem_cidade = origens.get(estafeta.cidade)
+
     # Guardam as melhores distâncias e caminhos
     melhor_distancia = float(inf)
     # Guarda os caminhos do melhor
@@ -146,7 +149,7 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id, estafeta):
                     if atual == 0:
                         (id_local, enc_id) = sub_caminho[atual]
                         local = Local.encontra_local(id_local)
-                        cam = algoritmo(origem_cidade, local)
+                        cam = algoritmo(origens.get(cidade_str), local)
                         logging.debug("Foi analisado o caminho: ")
                         logging.debug(caminho_to_string(cam))
                         caminhos_pos_algoritmos.append((cam, enc_id))
@@ -168,7 +171,7 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id, estafeta):
                 # Tem de voltar à base
                 (id_local1, enc_id1) = sub_caminho[atual]
                 local1 = Local.encontra_local(id_local1)
-                cam = algoritmo(local1, origem_cidade)
+                cam = algoritmo(local1, origens.get(cidade_str))
                 logging.debug("Foi analisado o caminho: ")
                 logging.debug(caminho_to_string(cam))
                 total_este_caminho += calcula_distancia(cam)
@@ -195,7 +198,9 @@ def gerar_circuitos(algoritmo):
     Gera todos os circuitos baseando-se nas atribuições.
     @param algoritmo: Algoritmo usado para descobrir o caminho entre dois pontos.
     """
-    lista_estafetas = {atribuicao.estafeta_id for atribuicao in atribuicoes}
-
-    for estafeta in lista_estafetas:
-        gera_circuito_um_estafeta(estafeta, algoritmo)
+    lista_estafetas = []
+    for atribuicao in atribuicoes:
+        cidade_encomenda =  encomendas.get(atribuicao.encomenda_id).cidade_encomenda()
+        lista_estafetas.append((atribuicao.estafeta_id, cidade_encomenda))
+    for (estafeta_id, cidade) in lista_estafetas:
+        gera_circuito_um_estafeta(estafeta_id, algoritmo, cidade)
