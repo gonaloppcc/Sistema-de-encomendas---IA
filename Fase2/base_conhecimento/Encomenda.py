@@ -1,11 +1,10 @@
 # Encomendas Usamos o tipo de dados Data de pyhton, juntando dias e horas encomenda: encomendaID, clienteID, peso,
 # volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, localID -> {V,F}.
-from base_conhecimento.Local import Local
 
 
 class Encomenda:
     def __init__(self, encomenda_id: int, cliente_id: int, peso: int, volume: int, prazo: object,
-                 data_encomenda: object, id_local_entrega: Local):
+                 data_encomenda: object, id_local_entrega: id):
         """
         Construtor do tipo encomenda.
         @param encomenda_id: Id da encomenda.

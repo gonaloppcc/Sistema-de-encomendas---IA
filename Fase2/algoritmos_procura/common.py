@@ -1,27 +1,28 @@
 # Funções para descobrir caminhos
 # dfs, utilizando os diapositivos PL(8) das aulas
 
-from math import sqrt
-
-from base_conhecimento import baseConhecimento, Local
-from base_conhecimento.baseConhecimento import transportes
-
 
 # Calcula a distância entre dois nodos através das suas coordenadas
+from math import sqrt
+
+from base_conhecimento.Local import Local
+from base_conhecimento.baseConhecimento import mapa, transportes
+
+
 def calcula_norma(nodo1, nodo2):
     return sqrt(pow((nodo2.x - nodo1.x), 2) + pow((nodo2.y - nodo1.y), 2))
 
 
 def conectados(nodo):
     lista = []
-    adjacentes = baseConhecimento.grafo1.get(nodo)
+    adjacentes = mapa["grafos"][nodo.freguesia].get(nodo)
     for (local, dist) in adjacentes:
         lista.append(local)
     return lista
 
 
 def arestas(nodo):
-    return baseConhecimento.grafo1.get(nodo)
+    return mapa["grafos"][nodo.freguesia].get(nodo)
 
 
 # Calcular distância
@@ -31,8 +32,8 @@ def calcula_distancia(nodos):
 
     total = 0
     for i in range(len(nodos) - 1):
-        nodos_conectados = baseConhecimento.grafo1[nodos[i]]
-        for nome, dist in nodos_conectados:
+        nodos_connectados = mapa["grafos"][nodos[i].freguesia][nodos[i]]
+        for nome, dist in nodos_connectados:
             if nome.nome == nodos[i + 1].nome:
                 total += dist
     return total

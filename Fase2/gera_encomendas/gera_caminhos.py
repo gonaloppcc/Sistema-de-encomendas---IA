@@ -20,6 +20,7 @@ Como cada estafeta só entrega na sua cidade, vamos procurar todos os possíveis
 import logging
 from itertools import combinations, permutations
 
+from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import encomendas
 
 
@@ -117,7 +118,8 @@ def descobre_possiveis_caminhos(encomendasID):
         for caminho in possibilidade:
             logging.debug("[gera_caminhos] Um caminho: ")
             # Cada paragem do percurso
-            for (local, encID) in caminho:
+            for (id_local, encID) in caminho:
+                local = Local.encontra_local(id_local)
                 logging.debug(f" {local.nome} |  {encID}")
             logging.debug(" ")
 

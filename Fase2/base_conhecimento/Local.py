@@ -18,3 +18,13 @@ class Local:
 
     def __str__(self):
         return self.nome
+
+    @staticmethod
+    def encontra_local(id_local: int):
+        from base_conhecimento.baseConhecimento import mapa
+        t = mapa
+        for grafo in mapa["grafos"].values():
+            for local in grafo:
+                if local.id == id_local:
+                    return local
+        return None
