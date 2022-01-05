@@ -2,7 +2,7 @@ import logging
 
 from algoritmos_procura.a_estrela import a_estrela
 from algoritmos_procura.gulosa import resolve_gulosa
-from gera_encomendas.geraEntregas import gerar_circuitos
+from gera_encomendas.gera_circuitos import gerar_circuitos
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 

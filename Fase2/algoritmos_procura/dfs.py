@@ -1,10 +1,7 @@
-
 import logging
 
-
-
-from base_conhecimento import baseConhecimento, Local
 from algoritmos_procura.common import conectados
+from base_conhecimento import Local
 from base_conhecimento import baseConhecimento
 
 
@@ -14,11 +11,9 @@ def dfs2(origem, destino, lista_atual):
         return lista_atual
     # Caso seja um dead-end
 
-
-    #if origem not in baseConhecimento.distancias:
+    # if origem not in baseConhecimento.distancias:
 
     if origem not in baseConhecimento.grafo1:
-
         return None
     ligados = conectados(origem)
     # Vamos guardar todos os caminhos não nulos
@@ -49,7 +44,6 @@ def dfs(origem: Local, destino: Local):
     else:
         cam.reverse()
     return cam
-
 
 
 # bfs
@@ -112,6 +106,3 @@ def dfs_limited2(origem, destino, lista_atual, nivel_atual):
             else:  # Equivale ao backtrace
                 lista_atual = lista_antes_alterar
     return None
-
-
-

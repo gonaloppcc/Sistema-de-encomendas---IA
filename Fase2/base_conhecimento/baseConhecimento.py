@@ -14,10 +14,10 @@ from base_conhecimento.Transporte import Transporte
 # Locais da primeira fase
 # TODO definir melhor as coordenadas
 
-local1 = Local(1, "povoaVarzim", "local1", 76, 24)
-local2 = Local(2, "vilaDoConde", "local2", 15, 104)
-local3 = Local(3, "trofa", "avenida", 76, 7)
-local4 = Local(4, "lisboa", "praca", 75, 130)
+local1 = Local(1, "PovoaVarzim", "local1", 76, 24)
+local2 = Local(2, "VilaDoConde", "local2", 15, 104)
+local3 = Local(3, "Trofa", "avenida", 76, 7)
+local4 = Local(4, "Lisboa", "praça", 75, 130)
 
 # Locais da segunda fase
 local5 = Local(5, "grafo", "local5", 10, 14)
@@ -120,6 +120,9 @@ atribuicao5 = Atribuicao(2, 2)
 
 # Onde guardamos as entregas realizadas.
 entregas = []
+
+# Circuitos já realizados.
+circuitos_efetuados = {}
 
 # Lista onde guardamos todas as atribuições.
 # Como só as consultamos sequencialmente, para gerar entregas, podem estar numa lista.

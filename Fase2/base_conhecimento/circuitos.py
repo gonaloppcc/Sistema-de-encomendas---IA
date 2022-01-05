@@ -1,11 +1,11 @@
 import logging
-from datetime import datetime, time
+from datetime import datetime
 
 from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
 from base_conhecimento import baseConhecimento
 # Gerar entregas
 from base_conhecimento.Local import Local
-from base_conhecimento.baseConhecimento import entregas, encomendas
+from base_conhecimento.baseConhecimento import entregas, encomendas, circuitos_efetuados
 from gera_encomendas.Entrega import Entrega
 from gera_encomendas.gera_veiculos import escolhe_veiculo
 
@@ -34,9 +34,6 @@ Adicionar aos circuitos efetuados, e criar ‘id’ da entrega.
  volume   -> Volume total de todas as entregas feitas neste percurso
  entregas -> Lista de listas de entregas
 """
-circuitos_efetuados = {
-
-}
 
 
 # Retorna uma lista ordenada pelo seu fator
@@ -54,12 +51,6 @@ def circuitos_mais_produtivos():
         lista.append((circuito, produtividade))
     lista.sort(reverse=True, key=lambda x: x[1])
     return lista
-
-
-# Calcula o circuito mais usado com base no
-# número de vezes que foi percorrido
-def circuito_mais_usado_counter():
-    return max(circuitos_efetuados.items(), key=lambda circuito: circuito[1][0])
 
 
 # Calcula o circuito mais usado com base no
@@ -103,7 +94,7 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
     """
     Função que adiciona um circuito aos circuitos_efetuados.
     Os caminhos recebidos começam e acabam na origem duma cidade, logo são circuitos de entrega.
-    Aqui tratamos de converter essas informações para entregas, e guardá-las corretamente
+    Aqui tratamos de converter essas informações para entregas, e guarda-las corretamente
     @param caminhos: Conjunto de paragens pertencentes a um circuito
     @param encomendas_entregues: Id's das encomendas entregues nesse circuito.
     @param estafeta_id: Estafeta que realizou o circuito.
@@ -113,7 +104,7 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
     veiculo_escolhido = escolhe_veiculo((caminhos, encomendas_entregues))
 
     for encomenda_id in encomendas_entregues:
-        #Calcular tempo de entrega
+        # Calcular tempo de entrega
         pesos_no_percurso = map(lambda id_encomenda: encomendas.get(id_encomenda).peso, encomendas_entregues)
         peso_total = sum(pesos_no_percurso)
         data_entrega = calcula_data_entrega(caminhos, encomenda_id, peso_total, veiculo_escolhido)
@@ -146,7 +137,7 @@ def calcula_data_entrega(caminho, encomenda_id, peso_total, veiculo_escolhido):
     @param peso_total: Peso das encomendas entregues nesse caminho.
         Para calcular a velocidade de transporte, e consequentemente o tempo de entrega,
     @param veiculo_escolhido: Veículo usado para realizar a entrega.
-        Necessário para saber a velocidade da entrega, e conseguentemente o tempo.
+        Necessário para saber a velocidade da entrega, e consequentemente o tempo.
     @return: Tempo da entrega, mas no dia seguinte.
     """
 
@@ -154,8 +145,68 @@ def calcula_data_entrega(caminho, encomenda_id, peso_total, veiculo_escolhido):
     duracao_transporte = calcula_tempo_transporte(veiculo_escolhido, peso_total, distancia_caminho)
     data_encomenda_f = encomendas.get(encomenda_id).data_encomenda.timestamp()
     data_entrega_f = data_encomenda_f + duracao_transporte
-    data_entrega = datetime.fromtimestamp(data_entrega_f + 110000)  # .strftime('%Y-%m-%d')
+    data_entrega = datetime.fromtimestamp(data_entrega_f + 110000)
     logging.info(f"Data de encomenda:  {encomendas.get(encomenda_id).data_encomenda.strftime('%d %b %Y')}")
     logging.info(f"Data de entrega: {data_entrega.strftime('%d %b %Y')}")
 
     return data_entrega
+
+
+# Retorna uma lista ordenada pelo seu fator
+# de produtividade, (nº de entregas / nº de percursos).
+# Esta lista está ordenada por ordem descendente, ou seja,
+# os circuitos com um valor de produtividade mais elevado
+# aparecem primeiro.
+def circuitos_mais_produtivos():
+    lista = []
+    for (circuito, info) in circuitos_efetuados.items():
+        n_entregas = 0
+        for entrega in info[3]:
+            n_entregas += len(entrega)
+        produtividade = n_entregas / info[0]
+        lista.append((circuito, produtividade))
+    lista.sort(reverse=True, key=lambda x: x[1])
+    return lista
+
+
+# Calcula o circuito mais usado com base no
+# número de vezes que foi percorrido
+def circuito_mais_usado_counter():
+    return max(circuitos_efetuados.items(), key=lambda circuito: circuito[1][0])
+
+
+# Calcula o circuito mais usado com base no
+# peso total das entregas do percurso.
+def circuito_mais_usado_peso():
+    return max(circuitos_efetuados.items(), key=lambda x: x[1][1])
+
+
+# Calcula o circuito mais usado com base no
+# volume total das entregas do percurso
+def circuito_mais_usado_volume():
+    return max(circuitos_efetuados.items(), key=lambda x: x[1][2])
+
+
+# Adicionar circuitos à lista de circuitos
+# Esta função adiciona um novo elemento ao dicionário
+# de entregas. Caso o circuito não exista, criamos uma nova entrada.
+# Caso contrário, damos append das entregas à lista de entregas e incrementamos
+# o counter de entregas.
+def add_circuito(circuito, entregas):
+    peso = 0
+    volume = 0
+    for encomenda in entregas:
+        peso += baseConhecimento.encomendas[encomenda].peso
+        volume += baseConhecimento.encomendas[encomenda].volume
+
+    if circuito not in circuitos_efetuados:
+        circuitos_efetuados[circuito] = (1, peso, volume, [entregas])
+    else:
+        nova_l = circuitos_efetuados[circuito][3]
+        nova_l.append(entregas)
+
+        inc = circuitos_efetuados[circuito][0] + 1
+        novo_peso = circuitos_efetuados[circuito][1] + peso
+        novo_vol = circuitos_efetuados[circuito][2] + volume
+
+        circuitos_efetuados[circuito] = (inc, novo_peso, novo_vol, nova_l)

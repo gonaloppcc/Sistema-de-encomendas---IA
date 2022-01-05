@@ -1,10 +1,8 @@
 import logging
 from math import inf
 
-
 from algoritmos_procura.common import maximo_peso_uma_viagem, calcula_distancia, caminho_to_string
 from base_conhecimento.baseConhecimento import encomendas, atribuicoes, estafetas, origens
-
 # TODO: Passar isto para metodos de instancia da classe Entrega?
 from base_conhecimento.circuitos import adiciona_circuito
 from gera_encomendas.Entrega import Entrega
@@ -21,7 +19,6 @@ def encomenda_valida(encomenda_id: int):
     # O máximo possível é o peso que o veículo com maior carga pode transportar.
     maximo_possivel = maximo_peso_uma_viagem()
     return (not Entrega.encomenda_entregue(encomenda_id)) and encomendas.get(encomenda_id).peso <= maximo_possivel
-
 
 
 def entregas_do_estafeta_por_dia(estafeta: int):
@@ -101,7 +98,7 @@ def melhor_caminho_descoberto(estafeta_id, melhor_caminho):
             encomendas_entregues_neste_circuito.append(enc_id)
 
 
-def gera_entrega_um_estafeta(estafeta_id, algoritmo):
+def gera_circuito_um_estafeta(estafeta_id, algoritmo):
     """
     Gera as entregas de um dado estafeta. Recebe o algoritmo usado para o cálculo dos caminhos.
     @param estafeta_id: Estafeta que queremos analisar.
@@ -197,4 +194,4 @@ def gerar_circuitos(algoritmo):
     lista_estafetas = {atribuicao.estafeta_id for atribuicao in atribuicoes}
 
     for estafeta in lista_estafetas:
-        gera_entrega_um_estafeta(estafeta, algoritmo)
+        gera_circuito_um_estafeta(estafeta, algoritmo)

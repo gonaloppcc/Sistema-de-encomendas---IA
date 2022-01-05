@@ -1,5 +1,5 @@
-from base_conhecimento import baseConhecimento
 from algoritmos_procura.common import conectados, calcula_norma
+from base_conhecimento import baseConhecimento
 
 
 # Função auxiliar que retorna o

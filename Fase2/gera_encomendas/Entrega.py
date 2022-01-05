@@ -1,11 +1,7 @@
-
 from algoritmos_procura.common import caminho_to_string
 from base_conhecimento.Local import Local
-from base_conhecimento.baseConhecimento import entregas
-import logging
-
-from algoritmos_procura.common import caminho_to_string
 from base_conhecimento.baseConhecimento import Transporte
+from base_conhecimento.baseConhecimento import entregas
 
 
 # Entrega

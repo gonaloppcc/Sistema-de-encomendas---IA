@@ -1,4 +1,3 @@
-
 import logging
 from math import inf
 
@@ -18,7 +17,7 @@ def veiculo_mais_ecologico(distancia_caminho, peso_total):
        @param peso_total: Peso das encomendas desse circuito. Usado para calcular a velocidade de transporte,
        @return: Veículo mais ecológico.
        """
-    melhor_coef_poluicao = float (inf)
+    melhor_coef_poluicao = float(inf)
     melhor_veiculo = None
     for veiculo in transportes:
         try:
