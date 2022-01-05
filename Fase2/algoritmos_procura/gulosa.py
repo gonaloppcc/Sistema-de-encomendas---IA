@@ -1,5 +1,5 @@
 from algoritmos_procura.common import conectados, calcula_norma
-from base_conhecimento import baseConhecimento
+from base_conhecimento.baseConhecimento import mapa
 
 
 # Função auxiliar que retorna o
@@ -13,7 +13,7 @@ def get_norma(p):
 def gulosa(origem, destino, lista_atual):
     if origem == destino:
         return lista_atual
-    if origem not in baseConhecimento.grafo1:
+    if origem not in mapa["grafos"][origem.freguesia]:
         return None
     ligados = conectados(origem)
     # Calculamos a estima e ordenamos os nodos com base nesta
@@ -37,5 +37,6 @@ def gulosa(origem, destino, lista_atual):
 
 def resolve_gulosa(origem, destino):
     cam = gulosa(origem, destino, [origem])
-    cam.reverse()
+    if cam is not None:
+        cam.reverse()
     return cam

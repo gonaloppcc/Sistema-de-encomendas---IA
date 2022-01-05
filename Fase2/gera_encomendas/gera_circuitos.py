@@ -1,11 +1,13 @@
 import logging
 from math import inf
 
-from algoritmos_procura.common import maximo_peso_uma_viagem, calcula_distancia, caminho_to_string
-from base_conhecimento.baseConhecimento import encomendas, atribuicoes, estafetas, origens
-# TODO: Passar isto para metodos de instancia da classe Entrega?
+from algoritmos_procura.common import calcula_distancia, caminho_to_string
+from algoritmos_procura.common import maximo_peso_uma_viagem
+from base_conhecimento.Local import Local
+from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, origens
 from base_conhecimento.circuitos import adiciona_circuito
 from gera_encomendas.Entrega import Entrega
+# Entregas realizadas
 from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
 
 
@@ -134,18 +136,16 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id, estafeta):
     for um_caminho_possivel in possiveis_percursos:
 
         if possivel_por_pesos(um_caminho_possivel):
-
             total_este_caminho = 0
             # Guarda os percursos que faz para entregar as várias encomendas
             caminhos_pos_algoritmos = []
             for sub_caminho in um_caminho_possivel:
                 # [A, B, C]
-                logging.debug("[gera entrega um estafeta1] Um sub caminho é: ")
-                for (local, _) in sub_caminho: logging.debug(f"{local.nome}")
                 for atual in range(0, len(sub_caminho)):
                     # Se for a primeira paragem, tem de sair da base
                     if atual == 0:
-                        (local, enc_id) = sub_caminho[atual]
+                        (id_local, enc_id) = sub_caminho[atual]
+                        local = Local.encontra_local(id_local)
                         cam = algoritmo(origem_cidade, local)
                         logging.debug("Foi analisado o caminho: ")
                         logging.debug(caminho_to_string(cam))
@@ -153,8 +153,11 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id, estafeta):
                         total_este_caminho += calcula_distancia(cam)
                     else:
                         # Liga as outras duas paragens
-                        (local1, enc_id1) = sub_caminho[atual - 1]
-                        (local2, enc_id2) = sub_caminho[atual]
+                        (id_local1, enc_id1) = sub_caminho[atual - 1]
+                        (id_local2, enc_id2) = sub_caminho[atual]
+
+                        local1 = Local.encontra_local(id_local1)
+                        local2 = Local.encontra_local(id_local2)
 
                         cam = algoritmo(local1, local2)
                         logging.debug("Foi analisado o caminho: ")
@@ -163,7 +166,8 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id, estafeta):
                         total_este_caminho += calcula_distancia(cam)
 
                 # Tem de voltar à base
-                (local1, enc_id1) = sub_caminho[atual]
+                (id_local1, enc_id1) = sub_caminho[atual]
+                local1 = Local.encontra_local(id_local1)
                 cam = algoritmo(local1, origem_cidade)
                 logging.debug("Foi analisado o caminho: ")
                 logging.debug(caminho_to_string(cam))
