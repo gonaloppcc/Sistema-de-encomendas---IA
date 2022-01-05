@@ -1,3 +1,4 @@
+import logging
 import time
 from time import sleep
 
@@ -8,6 +9,7 @@ from algoritmos_procura.bfs import bfs
 from algoritmos_procura.dfs import dfs
 from algoritmos_procura.dfs_lim import dfs_limited
 from algoritmos_procura.gulosa import resolve_gulosa
+from base_conhecimento.baseConhecimento import mapa
 from base_conhecimento.circuitos import *
 from base_conhecimento.geraGrafo import gera_grafo
 from base_conhecimento.gera_atribuicoes import gera_atribuicoes
@@ -46,6 +48,19 @@ def mostrar_entregas():
     print_lista(entregas)
 
 
+def gerar_encomendas():
+    print("Lista dos grafos já gerados: ")
+    print_lista(mapa["grafos"].keys())
+    nome_grafo = input("Meta o nome do grafo: ")
+    if nome_grafo not in mapa["grafos"].keys():
+        print("Nome do grafo ainda não gerado.")
+        return
+    num_encomendas = int(input("Meta o número de encomendas: "))
+    gera_encomendas(num_encomendas, nome_grafo)
+    gera_atribuicoes()
+    print("Encomendas geradas com sucesso.")
+
+
 def gerar_circuitoss():
     algoritmos = {
         "dfs": dfs,
@@ -65,7 +80,7 @@ def gerar_circuitoss():
 
     print(f"Memoria de execução do algoritmo: {(psutil.Process().memory_info().rss - inicio_memoria) / 1.0e6}MB")
 
-    print(f"Tempo de execução do algoritmo: {time.time()- inicio_tempo}s")
+    print(f"Tempo de execução do algoritmo: {time.time() - inicio_tempo}s")
 
     print("Circuito gerado com sucesso!")
 
@@ -113,8 +128,9 @@ def menu_principal():
     options = [
         ("Mostrar encomendas", mostrar_encomendas),
         ("Mostrar entregas", mostrar_entregas),
-        ("Entregar encomendar", gerar_circuitoss),
+        ("Gerar encomendas", gerar_encomendas),
         ("Gerar grafo", gerar_grafo),
+        ("Entregar encomendas", gerar_circuitoss),
         ("Mostrar circuitos mais produtivos", circuitoss_mais_produtivos),
         ("Mostrar circuito mais usado", circuito_mais_usado_counterr),
         ("Mostrar circuito com maior número de entregas por peso", circuito_mais_usado_pesoo),
