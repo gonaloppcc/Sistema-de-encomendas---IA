@@ -24,7 +24,7 @@ def encomenda_valida(encomenda_id: int):
 
 
 
-def entregas_do_estafeta(estafeta: int):
+def entregas_do_estafeta_por_dia(estafeta: int):
     """
     Descobre todas as encomendas que um dado estafeta deve fazer por dia, pelas atribuições da base de conhecimento.
     No entanto,verificamos se a encomenda não foi já entregue. Também verifica se é possível entregar a encomenda,
@@ -110,7 +110,7 @@ def gera_entrega_um_estafeta(estafeta_id, algoritmo):
     estafeta = estafetas.get(estafeta_id)
     logging.info(f"Vamos analisar o estafeta nr.: {estafeta_id}")
     # Lista de encomendas que o estafeta vai entregar, por dia.
-    encomendas_id = entregas_do_estafeta(estafeta_id)
+    encomendas_id = entregas_do_estafeta_por_dia(estafeta_id)
     if len(encomendas_id) == 0:
         logging.info(f"O estafeta com id {estafeta_id} não tem encomendas atribuídas, ou já foram entregues.")
         return
