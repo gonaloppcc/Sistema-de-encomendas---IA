@@ -53,8 +53,4 @@ class Entrega:
             if entrega.encomenda_id == encomenda_id:
                 return True
         return False
-    def imprime_entrega(self):
-        logging.info(
-            f"Id da encomenda: {self.encomenda_id}, Id da estafeta: {self.estafeta_id}, Data entrega: {self.data_entrega}, Transporte: {self.transporte.nome}")
-        logging.info(caminho_to_string(self.caminho))
-        logging.info("")
+    

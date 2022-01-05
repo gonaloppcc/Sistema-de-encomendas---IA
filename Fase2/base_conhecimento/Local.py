@@ -1,8 +1,5 @@
 class Local:
 
-   
-       #Falta acrescentar os floats
-
     def __init__(self, id_: int, freguesia, nome, x: float, y: float):
         """
         Construtor dos vários pontos que compões uma cidade.
