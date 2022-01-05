@@ -26,8 +26,10 @@ def a_estrela(origem, destino):
         for nodo in aberto:
             if n is None or distancias[nodo] + heuristica(nodo, destino):
                 n = nodo
+        logging.debug(f"Nodo escolhido: {n}")
 
         if n == destino or conectados(n) == []:
+            logging.debug("n == destino or conectados(n) == [] Verdade")
             pass
         else:
             for (nodo, peso) in arestas(n):
@@ -41,13 +43,8 @@ def a_estrela(origem, destino):
                         # Distancia do nodo encontrada é menor que a distância antiga do nodo.
                         distancias[nodo] = distancias[n] + peso
                         pais[nodo] = n
-
-                    if nodo in fechado:
-                        fechado.remove(nodo)
-                        aberto.append(nodo)
-
         if n is None:
-            logging.info('Path does not exist')
+            logging.info('Caminho não existe!')
             return None
         elif n == destino:
             caminho = []
@@ -62,6 +59,7 @@ def a_estrela(origem, destino):
             logging.debug("Caminho: {}".format(caminho))
             return caminho
 
+        logging.debug("Nodo removido do aberto e adicionado ao fechado")
         aberto.remove(n)
         fechado.append(n)
 

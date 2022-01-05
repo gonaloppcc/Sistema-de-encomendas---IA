@@ -1,3 +1,5 @@
+import logging
+import time
 from time import sleep
 
 from menu import Menu
@@ -7,9 +9,15 @@ from algoritmos_procura.bfs import bfs
 from algoritmos_procura.dfs import dfs
 from algoritmos_procura.dfs_lim import dfs_limited
 from algoritmos_procura.gulosa import resolve_gulosa
+from base_conhecimento.baseConhecimento import mapa
 from base_conhecimento.circuitos import *
 from base_conhecimento.geraGrafo import gera_grafo
+from base_conhecimento.gera_atribuicoes import gera_atribuicoes
+from base_conhecimento.gera_encomenda import gera_encomendas
 from gera_encomendas.gera_circuitos import *
+import psutil
+
+logging.basicConfig(level=logging.INFO)
 
 
 def print_lista(lista):
@@ -19,9 +27,12 @@ def print_lista(lista):
 
 def gerar_grafo():
     nome_grafo = input("Meta o nome do grafo: ")
-    num_nodos = int(input("Meta número de nodos: "))
-    prob_conexao = int(input("Meta probabilidade de conexão: "))
+    num_nodos = int(input("Meta o número de nodos: "))
+    prob_conexao = int(input("Meta a probabilidade de conexão: "))
     gera_grafo(nome_grafo, num_nodos, prob_conexao)
+    num_encomendas = int(input("Meta o número de encomendas: "))
+    gera_encomendas(num_encomendas, nome_grafo)
+    gera_atribuicoes()
     print("Grafo gerado com sucesso!")
     print(f"Grafo guardado com o nome \"{nome_grafo}.png\"\n")
     sleep(2)
@@ -37,26 +48,20 @@ def mostrar_entregas():
     print_lista(entregas)
 
 
-def circuitoss_mais_produtivos():
-    print("Circuitos Mais Produtivos: ")
-    print_lista(circuitos_mais_produtivos())
-    print("\n")
-
-
-def circuito_mais_usado_counterr():
-    print("O circuito mais usado quanto ao número de vezes que foi percorrido é:")
-    print(circuito_mais_usado_counter())
-    print("\n")
-
-
-def circuito_mais_usado_pesoo():
-    print("O circuito mais usado com base no peso total das entregas do percurso é:")
-    print(circuito_mais_usado_peso())
-    print("\n")
+def gerar_encomendas():
+    print("Lista dos grafos já gerados: ")
+    print_lista(mapa["grafos"].keys())
+    nome_grafo = input("Meta o nome do grafo: ")
+    if nome_grafo not in mapa["grafos"].keys():
+        print("Nome do grafo ainda não gerado.")
+        return
+    num_encomendas = int(input("Meta o número de encomendas: "))
+    gera_encomendas(num_encomendas, nome_grafo)
+    gera_atribuicoes()
+    print("Encomendas geradas com sucesso.")
 
 
 def gerar_circuitoss():
-    alg = input("Nome do algoritmo a ser usado: ")
     algoritmos = {
         "dfs": dfs,
         "dfs_lim": dfs_limited,
@@ -64,20 +69,72 @@ def gerar_circuitoss():
         "gulosa": resolve_gulosa,
         "a_estrela": a_estrela
     }
+    print(f"Algoritmos implementados: {algoritmos.keys()}")
+
+    alg = input("Nome do algoritmo a ser usado: ")
+
+    inicio_tempo = time.time()
+    inicio_memoria = psutil.Process().memory_info().rss
 
     gerar_circuitos(algoritmos.get(alg))
+
+    print(f"Memoria de execução do algoritmo: {(psutil.Process().memory_info().rss - inicio_memoria) / 1.0e6}MB")
+
+    print(f"Tempo de execução do algoritmo: {time.time() - inicio_tempo}s")
+
     print("Circuito gerado com sucesso!")
+
+
+def ha_circuitos():
+    return len(circuitos_efetuados) > 0
+
+
+def circuitoss_mais_produtivos():
+    if not ha_circuitos():
+        print("Ainda não foram gerados circuitos.")
+        return
+    print("Circuitos Mais Produtivos: ")
+    print_lista(circuitos_mais_produtivos())
+    print("\n")
+
+
+def circuito_mais_usado_counterr():
+    if not ha_circuitos():
+        print("Ainda não foram gerados circuitos.")
+        return
+    print("O circuito mais usado quanto ao número de vezes que foi percorrido é:")
+    print(circuito_mais_usado_counter())
+    print("\n")
+
+
+def circuito_mais_usado_pesoo():
+    if not ha_circuitos():
+        print("Ainda não foram gerados circuitos.")
+        return
+    print("O circuito mais usado com base no peso total das entregas do percurso é:")
+    print(circuito_mais_usado_peso())
+    print("\n")
+
+
+def circuito_mais_usado_volumee():
+    if not ha_circuitos():
+        print("Ainda não foram gerados circuitos.")
+        return
+    print("O circuito mais usado com base no volume total das entregas do percurso: ")
+    print(circuito_mais_usado_volume())
 
 
 def menu_principal():
     options = [
         ("Mostrar encomendas", mostrar_encomendas),
         ("Mostrar entregas", mostrar_entregas),
-        ("Gerar circuitos", gerar_circuitoss),
+        ("Gerar encomendas", gerar_encomendas),
         ("Gerar grafo", gerar_grafo),
+        ("Entregar encomendas", gerar_circuitoss),
         ("Mostrar circuitos mais produtivos", circuitoss_mais_produtivos),
         ("Mostrar circuito mais usado", circuito_mais_usado_counterr),
         ("Mostrar circuito com maior número de entregas por peso", circuito_mais_usado_pesoo),
+        ("Mostrar circuito com maior número de entregas por volume", circuito_mais_usado_volumee),
         ("Sair", Menu.CLOSE)
     ]
     menu = Menu(title="\n****Green Distribution Management****", options=options)  # customize the options
