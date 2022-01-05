@@ -1,17 +1,20 @@
-import logging
-
 from algoritmos_procura.common import conectados
-from base_conhecimento.Local import Local
-from base_conhecimento.baseConhecimento import mapa
+from base_conhecimento import baseConhecimento
 
 
-def dfs2(origem, destino, lista_atual):
-    # Caso chegue ao destino certo
+# Busca Iterativa Limitada em Profundidade.
+# Eu fiz como diz no ‘diapositivo’: T(5) Classical Search
+# Este método Pesquisa em Profundidade Iterativa
+def dfs_limited2(origem, destino, lista_atual, nivel_atual):
+    if nivel_atual == 0:
+        return None
+        # Caso chegue ao destino certo
     if origem == destino:
         return lista_atual
     # Caso seja um dead-end
-    if origem not in mapa["grafos"][origem.freguesia]:
+    if origem not in baseConhecimento.distancias:
         return None
+    # Nós adjacentes ao atual (origem)
     ligados = conectados(origem)
     # Vamos guardar todos os caminhos não nulos
     # Por cada nó ligado ao atual
@@ -25,19 +28,23 @@ def dfs2(origem, destino, lista_atual):
             lista_atual.insert(0, nodo)
 
             # Chamada recursiva
-            res_rec = dfs2(nodo, destino, lista_atual)
+            res_rec = dfs_limited2(nodo, destino, lista_atual, nivel_atual - 1)
             # Se der nulo, caminho não vai onde queremos, voltamos.
             # Caso contrário, retornamos o caminho válido
             if res_rec is not None:
                 return res_rec
             else:  # Equivale ao backtrace
                 lista_atual = lista_antes_alterar
+    return None
 
 
-def dfs(origem: Local, destino: Local):
-    cam = dfs2(origem, destino, [origem])
-    if cam is None:
-        logging.debug(" Não há caminho\n De: {origem} para {destino}")
-    else:
-        cam.reverse()
-    return cam
+def dfs_limited(origem, destino):
+    # Tenta procurar uma solução em cada nível
+    lista = None
+    nivel_atual = 1
+    while lista is None:
+        # Se a lista contiver algo, sai do ciclo
+        lista = dfs_limited2(origem, destino, [origem], nivel_atual)
+        nivel_atual += 1
+    lista.reverse()
+    return lista

@@ -2,8 +2,8 @@
 # dfs, utilizando os diapositivos PL(8) das aulas
 from math import sqrt
 
-from base_conhecimento.baseConhecimento import mapa
 from base_conhecimento.Local import Local
+from base_conhecimento.baseConhecimento import mapa, transportes
 
 
 # Calcula a distância entre dois nodos através das suas coordenadas
@@ -43,6 +43,19 @@ def calcula_tempo_transporte(meio_transporte, peso_encomenda, distancia):
     if velocidade_transporte == 0:
         raise Exception("O meio de transporte não consegue levar a encomenda")
     return distancia / velocidade_transporte
+
+
+# Calcual o máximo de peso que podemos levar numa dada viagem, a partir do máximo que os veículos podem transportar
+def maximo_peso_uma_viagem():
+    """
+    Descobre qual o peso máximo que conseguimos transportar num circuito.
+    @return: Peso máximo, em Kgs.
+    """
+    max = 0
+    for veiculo in transportes:
+        if veiculo.peso_maximo >= max:
+            max = veiculo.peso_maximo
+    return max
 
 
 def caminho_to_string(cam: [Local]):

@@ -1,23 +1,10 @@
-from base_conhecimento.baseConhecimento import circuitos_efetuados, encomendas
+import logging
 
 # Gerar entregas
-
-"""
-1. Procuramos atribuições
-2. Por cada atribuição vamos buscar o destino da encomenda
-3. Estafeta + destino da encomenda = caminho
-4. Guardar caminho, com ‘id’ da encomenda
-5. Entrega = informações + caminho. Ao decidir o veículo usado na entrega,
-vemos uma flag que diz se queremos ser rápidos ou ecológicos.
-Adicionar aos circuitos efetuados, e criar ‘id’ da entrega.
-
- circuito : (counter, peso, volume, entregas)
- circuito -> String do circuito
- counter  -> Nº de vezes que o percurso foi feito
- peso     -> Peso total de todas as entregas feitas neste percurso
- volume   -> Volume total de todas as entregas feitas neste percurso
- entregas -> Lista de listas de entregas
-"""
+from base_conhecimento.Local import Local
+from base_conhecimento.baseConhecimento import entregas, circuitos_efetuados, encomendas
+from gera_encomendas.Entrega import Entrega
+from gera_encomendas.gera_veiculos import escolhe_veiculo
 
 
 # Retorna uma lista ordenada pelo seu fator
@@ -60,7 +47,7 @@ def circuito_mais_usado_volume():
 # de entregas. Caso o circuito não exista, criamos uma nova entrada.
 # Caso contrário, damos append das entregas à lista de entregas e incrementamos
 # o counter de entregas.
-def add_circuito(circuito, entregas):
+def add_circuito_aux(circuito, entregas):
     peso = 0
     volume = 0
     for encomenda in entregas:
@@ -78,3 +65,38 @@ def add_circuito(circuito, entregas):
         novo_vol = circuitos_efetuados[circuito][2] + volume
 
         circuitos_efetuados[circuito] = (inc, novo_peso, novo_vol, nova_l)
+
+
+def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_id: int):
+    """
+    Função que adiciona um circuito aos circuitos_efetuados.
+    Os caminhos recebidos começam e acabam na origem duma cidade, logo são circuitos de entrega.
+    Aqui tratamos de converter essas informações para entregas, e guardá-las corretamente
+    @param caminhos: Conjunto de paragens pertencentes a um circuito
+    @param encomendas_entregues: Id's das encomendas entregues nesse circuito.
+    @param estafeta_id: Estafeta que realizou o circuito.
+    """
+    logging.info("<-- Gera um circuito novo --> ")
+    # Gerar entrega
+    veiculo_escolhido = escolhe_veiculo((caminhos, encomendas_entregues))
+    for encomenda_id in encomendas_entregues:
+        entregas.append(Entrega(encomenda_id, estafeta_id, 0, veiculo_escolhido, caminhos.copy()))
+
+    # Gerar circuito
+    # Formar a key para inserir no circuitos_gerados.
+    caminhos_juntos = ""
+    ultima_passagem = None
+    for caminho in caminhos:
+        # É importante não repetir elementos repetidos seguidos, isto acontece porque quando duas encomendas são
+        # entregues no mesmo sítio, o circuito é o mesmo, mas para duas vezes para entregar.
+        if caminho != ultima_passagem:
+            caminhos_juntos += caminho.nome + ";"
+            ultima_passagem = caminho
+    for encomenda in encomendas_entregues:
+        logging.info(f"Encomenda entregue: {encomenda}")
+    logging.info(f"Key do circuito: {caminhos_juntos}")
+    logging.info(f"Veículo utilizado: {veiculo_escolhido.nome}")
+
+    logging.info(" ")
+
+    add_circuito_aux(caminhos_juntos, encomendas_entregues)

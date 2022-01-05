@@ -1,8 +1,12 @@
-from base_conhecimento import baseConhecimento
-
-
 class Local:
+
     def __init__(self, id_: int, freguesia, nome, x: float, y: float):
+        """
+        Construtor dos vários pontos que compões uma cidade.
+        @param id_: Id único que identifica os pontos de entrega de cada encomenda.
+        @param freguesia: Cidade a que pertence o local, para podermos ter centros de entrega em várias cidades. (string)
+        @param nome: Nome do local, para ser mais legível quando quisermos analisar este local. (string)
+        """
         self.id = id_
         self.freguesia = freguesia
         self.nome = nome
@@ -14,8 +18,9 @@ class Local:
 
     @staticmethod
     def encontra_local(id_local: int):
-        t = baseConhecimento.mapa
-        for grafo in baseConhecimento.mapa["grafos"].values():
+        from base_conhecimento.baseConhecimento import mapa
+        t = mapa
+        for grafo in mapa["grafos"].values():
             for local in grafo:
                 if local.id == id_local:
                     return local

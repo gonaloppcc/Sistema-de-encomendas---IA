@@ -1,7 +1,6 @@
 import logging
 
 from algoritmos_procura.a_estrela import a_estrela
-from algoritmos_procura.dfs import dfs
 from algoritmos_procura.gulosa import resolve_gulosa
 from base_conhecimento.geraGrafo import gera_grafo
 from gera_encomendas.geraEntregas import gerar_entregas
@@ -11,6 +10,7 @@ logging.basicConfig(filename='fase2.log',
                     format='[%(levelname)s] %(asctime)s -  %(message)s',
                     datefmt='%H:%M:%S',
                     level=logging.INFO)
+
 
 def main():
     gera_grafo("Trofa", 30, 5)
