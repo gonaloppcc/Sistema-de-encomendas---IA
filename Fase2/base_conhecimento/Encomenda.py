@@ -22,3 +22,10 @@ class Encomenda:
         self.prazo = prazo
         self.data_encomenda = data_encomenda
         self.id_local_entrega = id_local_entrega
+
+
+
+    def __str__(self):
+        return \
+            f"""Id={self.encomenda_id}, clienteId={self.cliente_id}, peso={self.peso}, volume={self.volume}, prazo={self.volume}, dataEncomenda={self.data_encomenda}, idLocalEntrega={self.id_local_entrega}
+        """
