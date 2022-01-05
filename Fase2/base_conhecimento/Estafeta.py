@@ -1,8 +1,11 @@
 # Estafetas
 # São caraterizados por um ID, um nome, e um posto de distribuição, cidade.
 # A cidade é uma ‘string’, e é o segundo parâmetro de um Local
+import string
+
+
 class Estafeta:
-    def __init__(self, estafeta_id: int, nome: object, cidade: object):
+    def __init__(self, estafeta_id: int, nome: object, cidade: string):
         """
         Construtor do estafeta.
         @param estafeta_id: Id único que identifica o estafeta nas atribuições.

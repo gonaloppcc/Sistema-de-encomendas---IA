@@ -44,6 +44,11 @@ mapa = {
     "id_counter": 10
 }
 
+#Guarda os ids dos locais que pertencem a cada cidade, útil para gerarmos as encomendas.
+id_locais_cidades = {
+    "Vila_do_Conde": (1,  10)
+    }
+
 """
  circuito : (counter, peso, volume, entregas)
  circuito -> String do circuito
@@ -86,33 +91,32 @@ barco = Transporte("barco", 20, 21, 0.6, 41, 0.4)
 transportes = [bicicleta, moto, carro, barco]
 
 # Definição de uma encomenda
+"""
 encomenda1 = Encomenda(1, 1, 5, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 10)
 encomenda2 = Encomenda(2, 1, 101, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 9)
 encomenda3 = Encomenda(2, 1, 16, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 8)
 encomenda4 = Encomenda(2, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), 7)
-
+"""
 # Map onde guardamos todas as encomendas, por id.
 encomendas = {
-    1: encomenda1,
-    2: encomenda2,
-    3: encomenda3,
-    4: encomenda4
+
 }
 
 estafeta1 = Estafeta(1, "diogo", "Vila_do_Conde")
-# Map onde guardamos todos os estafetas, por id.
+# Map onde guardamos todos os estafetas, por cidade. Assumimos que só existe um estafeta por cidade.
 estafetas = {
-    1: estafeta1
+    "Vila_do_Conde": estafeta1
 }
 
 # Nós aqui podemos dar o objeto inteiro, mas assim é mais limpo
 # Estafeta id, encomenda id.
+"""
 atribuicao1 = Atribuicao(1, 1)
 atribuicao2 = Atribuicao(1, 2)
 
 atribuicao3 = Atribuicao(1, 3)
 atribuicao4 = Atribuicao(2, 3)
-
+"""
 # Onde guardamos as entregas realizadas.
 entregas = []
 
@@ -121,4 +125,4 @@ circuitos_efetuados = {}
 
 # Lista onde guardamos todas as atribuições.
 # Como só as consultamos sequencialmente, para gerar entregas, podem estar numa lista.
-atribuicoes = [atribuicao1, atribuicao2, atribuicao3]
+atribuicoes = []

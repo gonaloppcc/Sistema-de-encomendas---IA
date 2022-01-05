@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 from algoritmos_procura.common import calcula_norma
 from algoritmos_procura.dfs import dfs
 from base_conhecimento.Local import Local
-from base_conhecimento.baseConhecimento import mapa, origens
+from base_conhecimento.baseConhecimento import mapa, origens, id_locais_cidades
 
 min_x = -10000
 max_x = 10000
@@ -45,6 +45,8 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     @param probabilidade_conexao: Probabilidade de criar uma conexão entre cada dois nodos
     """
     mapa["grafos"][nome_grafo] = {}
+    # Para inserir no id_locais_cidades da base de conhecimento.
+    id_counter_antes = mapa['id_counter']
     # Gerar todos os nodos com nome 'Local_{i}' e freguesia 'Freguesia_{i}'.
     # As coordenadas são selecionadas aleatóriamente no campo de 0-100
     for i in range(num_nodos):
@@ -61,6 +63,8 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
 
     # Incrementar o id_counter para o novo max_id
     mapa["id_counter"] += num_nodos
+    # Acrescenta os ids incluídos nesta cidade.
+    id_locais_cidades[nome_grafo] = (id_counter_antes, (mapa["id_counter"]))
     # Selecionar a origem aleatóriamente e adicioná-la ao
     # dicionário de origens em baseConhecimento
     origem = list(mapa["grafos"][nome_grafo])[randint(0, num_nodos - 1)]
