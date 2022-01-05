@@ -55,6 +55,19 @@ def circuito_mais_usado_pesoo():
     print("\n")
 
 
+def gerar_circuitoss():
+    alg = input("Nome do algoritmo a ser usado: ")
+    algoritmos = {
+        "dfs": dfs,
+        "dfs_lim": dfs_limited,
+        "bfs": bfs,
+        "gulosa": resolve_gulosa,
+        "a_estrela": a_estrela
+    }
+
+    gerar_circuitos(algoritmos.get(alg))
+    print("Circuito gerado com sucesso!")
+
 
 def menu_principal():
     options = [
