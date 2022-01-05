@@ -53,4 +53,3 @@ class Entrega:
             if entrega.encomenda_id == encomenda_id:
                 return True
         return False
-    
