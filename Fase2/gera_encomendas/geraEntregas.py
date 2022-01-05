@@ -26,19 +26,21 @@ def encomenda_valida(encomenda_id: int):
 
 def entregas_do_estafeta(estafeta: int):
     """
-    Descobre todas as encomendas que um dado estafeta deve fazer, pelas atribuições da base de conhecimento. No
-    entanto,verificamos se a encomenda não foi já entregue. Também verifica se é possível entregar a encomenda,
-    com os veículos disponibilizados. @param estafeta: Id do estafeta @return: Id's das encomendas que o estafeta
-    deve entregar.
+    Descobre todas as encomendas que um dado estafeta deve fazer por dia, pelas atribuições da base de conhecimento.
+    No entanto,verificamos se a encomenda não foi já entregue. Também verifica se é possível entregar a encomenda,
+    com os veículos disponibilizados. @param estafeta: Id do estafeta @return: Lista de id's das encomendas que o
+    estafeta deve entregar por dia. deve entregar.
     """
-    list_encomendas = []
+    lista_encomendas_por_data = {}
 
     for atribuicao in atribuicoes:
         estafeta_id = atribuicao.estafeta_id
         encomenda_id = atribuicao.encomenda_id
         if estafeta_id == estafeta and encomenda_valida(encomenda_id):
-            list_encomendas.append(encomenda_id)
-    return list_encomendas
+            data_encomenda = encomendas.get(encomenda_id).data_encomenda
+            lista_encomendas_por_data.setdefault(data_encomenda, []).append(encomenda_id)
+
+    return lista_encomendas_por_data.values()
 
 
 def possivel_por_pesos(um_caminho_possivel):
@@ -102,21 +104,31 @@ def melhor_caminho_descoberto(estafeta_id, melhor_caminho):
 def gera_entrega_um_estafeta(estafeta_id, algoritmo):
     """
     Gera as entregas de um dado estafeta. Recebe o algoritmo usado para o cálculo dos caminhos.
-    @param estafeta_id: Estefeta que queremos analisar.
+    @param estafeta_id: Estafeta que queremos analisar.
     @param algoritmo: Qual o algoritmo a usar para gerar os percursos entre paragens.
     """
     estafeta = estafetas.get(estafeta_id)
     logging.info(f"Vamos analisar o estafeta nr.: {estafeta_id}")
-    # Encomendas que o estafeta vai entregar.
+    # Lista de encomendas que o estafeta vai entregar, por dia.
     encomendas_id = entregas_do_estafeta(estafeta_id)
     if len(encomendas_id) == 0:
         logging.info(f"O estafeta com id {estafeta_id} não tem encomendas atribuídas, ou já foram entregues.")
         return
+    for encomendas_um_dia in encomendas_id:
+        gera_circuitos_um_dia(algoritmo, encomendas_um_dia, estafeta)
+
+
+def gera_circuitos_um_dia(algoritmo, encomendas_id, estafeta):
+    """
+    Gera as entregas de um dado estafeta para um dia.
+    @param algoritmo: Algoritmo utilizado para escolher caminhos entre dois locais.
+    @param encomendas_id: Lista de encomendas que tem de entregar num dia.
+    @param estafeta: Estafeta que realiza as entregas.
+    """
     # Combinações dos possíveis caminhos que o estafeta pode usar.
     possiveis_percursos = descobre_possiveis_caminhos(encomendas_id)
     # Local do centro de entregas, ele tem de partir e voltar para lá
     origem_cidade = origens.get(estafeta.cidade)
-
     # Guardam as melhores distâncias e caminhos
     melhor_distancia = float(inf)
     # Guarda os caminhos do melhor
@@ -173,7 +185,7 @@ def gera_entrega_um_estafeta(estafeta_id, algoritmo):
     if melhor_distancia == float(inf):
         logging.info("Nenhuma encomenda foi entregue.")
     else:
-        melhor_caminho_descoberto(estafeta_id, melhor_caminho)
+        melhor_caminho_descoberto(estafeta.estafeta_id, melhor_caminho)
 
 
 # Gera todos os circuitos.

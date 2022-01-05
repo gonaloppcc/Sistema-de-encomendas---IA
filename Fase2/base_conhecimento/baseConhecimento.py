@@ -85,7 +85,7 @@ barco = Transporte("barco", 20, 21, 0.6, 41, 0.4)
 transportes = [bicicleta, moto, carro, barco]
 
 # Definição de uma encomenda
-encomenda1 = Encomenda(1, 1, 5, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local10)
+encomenda1 = Encomenda(1, 1, 5, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 18), local10)
 encomenda2 = Encomenda(2, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local9)
 encomenda3 = Encomenda(2, 1, 16, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local7)
 encomenda4 = Encomenda(2, 1, 20, 26, datetime.datetime(2020, 5, 20), datetime.datetime(2020, 5, 17), local8)
@@ -123,4 +123,4 @@ entregas = []
 
 # Lista onde guardamos todas as atribuições.
 # Como só as consultamos sequencialmente, para gerar entregas, podem estar numa lista.
-atribuicoes = [atribuicao1, atribuicao2]
+atribuicoes = [atribuicao1, atribuicao2, atribuicao3]
