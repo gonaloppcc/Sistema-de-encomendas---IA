@@ -27,9 +27,9 @@ def encomenda_valida(encomenda_id: int):
 def entregas_do_estafeta_por_dia(estafeta: int):
     """
     Descobre todas as encomendas que um dado estafeta deve fazer por dia, pelas atribuições da base de conhecimento.
-    No entanto,verificamos se a encomenda não foi já entregue. Também verifica se é possível entregar a encomenda,
-    com os veículos disponibilizados. @param estafeta: Id do estafeta @return: Lista de id's das encomendas que o
-    estafeta deve entregar por dia. deve entregar.
+    No entanto, verificamos se a encomenda não foi já entregue. Também verifica se é possível entregar a encomenda,
+    com os veículos disponibilizados. @param estafeta: ‘id’ do estafeta @return: Lista de id's das encomendas que o
+    estafeta deve entregar por dia deve entregar.
     """
     lista_encomendas_por_data = {}
 

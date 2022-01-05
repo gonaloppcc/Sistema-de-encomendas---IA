@@ -1,4 +1,6 @@
-from datetime import date
+# Encomendas Usamos o tipo de dados Data de pyhton, juntando dias e horas encomenda: encomendaID, clienteID, peso,
+# volume, prazoEntrega, horasPrazoEntrega, dataDeEncomenda, horasDataEncomenda, localID -> {V,F}.
+
 
 class Encomenda:
     def __init__(self, encomenda_id: int, cliente_id: int, peso: int, volume: int, prazo: date,
@@ -20,6 +22,13 @@ class Encomenda:
         self.prazo = prazo
         self.data_encomenda = data_encomenda
         self.id_local_entrega = id_local_entrega
+
+
+
+    def __str__(self):
+        return \
+            f"""Id={self.encomenda_id}, clienteId={self.cliente_id}, peso={self.peso}, volume={self.volume}, prazo={self.volume}, dataEncomenda={self.data_encomenda}, idLocalEntrega={self.id_local_entrega}
+        """
 
     def cidade_encomenda(self):
         """
