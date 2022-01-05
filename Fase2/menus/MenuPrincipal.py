@@ -41,6 +41,34 @@ def mostrar_entregas():
     print_lista(entregas)
 
 
+def gerar_circuitoss():
+    algoritmos = {
+        "dfs": dfs,
+        "dfs_lim": dfs_limited,
+        "bfs": bfs,
+        "gulosa": resolve_gulosa,
+        "a_estrela": a_estrela
+    }
+    print(f"Algoritmos implementados: {algoritmos.keys()}")
+
+    alg = input("Nome do algoritmo a ser usado: ")
+
+    inicio_tempo = time.time()
+    inicio_memoria = psutil.Process().memory_info().rss
+
+    gerar_circuitos(algoritmos.get(alg))
+
+    print(f"Memoria de execução do algoritmo: {(psutil.Process().memory_info().rss - inicio_memoria) / 1.0e-6}")
+
+    print(f"Tempo de execução do algoritmo: {time.time()- inicio_tempo}s")
+
+    print("Circuito gerado com sucesso!")
+
+
+def ha_circuitos():
+    return len(circuitos_efetuados) > 0
+
+
 def circuitoss_mais_produtivos():
     if not ha_circuitos():
         print("Ainda não foram gerados circuitos.")
