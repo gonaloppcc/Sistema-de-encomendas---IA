@@ -20,7 +20,7 @@ logging.basicConfig(
 
 def main():
     gera_grafo("Trofa", 30, 5)
-    gera_encomendas(10, "Trofa")
+    gera_encomendas(2, "Trofa")
     print("Gera encomenda feita")
     gera_atribuicoes()
     print("Gera atribuicoes feita")
