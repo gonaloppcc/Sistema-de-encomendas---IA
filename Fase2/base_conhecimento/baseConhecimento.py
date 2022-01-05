@@ -14,18 +14,18 @@ from base_conhecimento.Transporte import Transporte
 # Locais da primeira fase
 # TODO definir melhor as coordenadas
 
-local1 = Local(1, "Vila_do_Conde", "local1", 76, 24)
-local2 = Local(2, "Vila_do_Conde", "local2", 15, 104)
-local3 = Local(3, "Vila_do_Conde", "avenida", 76, 7)
-local4 = Local(4, "Vila_do_Conde", "praca", 75, 130)
+local0 = Local(0, "Vila_do_Conde", "local1", 76, 24)
+local1 = Local(1, "Vila_do_Conde", "local2", 15, 104)
+local2 = Local(2, "Vila_do_Conde", "avenida", 76, 7)
+local3 = Local(3, "Vila_do_Conde", "praca", 75, 130)
 
 # Locais da segunda fase
-local5 = Local(5, "Vila_do_Conde", "local5", 10, 14)
-local6 = Local(6, "Vila_do_Conde", "local6", 39, 59)
-local7 = Local(7, "Vila_do_Conde", "local7", 20, 76)
-local8 = Local(8, "Vila_do_Conde", "local8", 45, 55)
-local9 = Local(9, "Vila_do_Conde", "local9", 98, 33)
-local10 = Local(10, "Vila_do_Conde", "local10", 16, 98)
+local4 = Local(4, "Vila_do_Conde", "local5", 10, 14)
+local5 = Local(5, "Vila_do_Conde", "local6", 39, 59)
+local6 = Local(6, "Vila_do_Conde", "local7", 20, 76)
+local7 = Local(7, "Vila_do_Conde", "local8", 45, 55)
+local8 = Local(8, "Vila_do_Conde", "local9", 98, 33)
+local9 = Local(9, "Vila_do_Conde", "local10", 16, 98)
 
 # Guarda as distâncias em função do ‘id’ da local
 # Key é o ‘id’ da local, doutro lado temos ‘id’'s de outras locals, mais distâncias
@@ -33,12 +33,12 @@ local10 = Local(10, "Vila_do_Conde", "local10", 16, 98)
 mapa = {
     "grafos": {
         "Vila_do_Conde": {
-            local5: [(local6, 1), (local7, 5)],
-            local6: [(local7, 2), (local8, 2), (local9, 1)],
-            local7: [(local9, 2)],
-            local8: [(local9, 3), (local10, 1)],
-            local9: [(local10, 2), (local5, 3)],
-            local10: [(local9, 4)]
+            local4: [(local5, 1), (local6, 5)],
+            local5: [(local6, 2), (local7, 2), (local8, 1)],
+            local6: [(local8, 2)],
+            local7: [(local8, 3), (local9, 1)],
+            local8: [(local9, 2), (local4, 3)],
+            local9: [(local8, 4)]
         }
     },
     "id_counter": 10
@@ -61,7 +61,7 @@ circuitos_efetuados = {}
 # E os estafetas saiem daí
 
 origens = {
-    "Vila_do_Conde": local5
+    "Vila_do_Conde": local4
 }
 
 """

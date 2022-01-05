@@ -1,3 +1,4 @@
+import time
 from time import sleep
 
 from menu import Menu
@@ -10,6 +11,9 @@ from algoritmos_procura.gulosa import resolve_gulosa
 from base_conhecimento.circuitos import *
 from base_conhecimento.geraGrafo import gera_grafo
 from gera_encomendas.gera_circuitos import *
+import psutil
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 def print_lista(lista):
@@ -38,35 +42,38 @@ def mostrar_entregas():
 
 
 def circuitoss_mais_produtivos():
+    if not ha_circuitos():
+        print("Ainda não foram gerados circuitos.")
+        return
     print("Circuitos Mais Produtivos: ")
     print_lista(circuitos_mais_produtivos())
     print("\n")
 
 
 def circuito_mais_usado_counterr():
+    if not ha_circuitos():
+        print("Ainda não foram gerados circuitos.")
+        return
     print("O circuito mais usado quanto ao número de vezes que foi percorrido é:")
     print(circuito_mais_usado_counter())
     print("\n")
 
 
 def circuito_mais_usado_pesoo():
+    if not ha_circuitos():
+        print("Ainda não foram gerados circuitos.")
+        return
     print("O circuito mais usado com base no peso total das entregas do percurso é:")
     print(circuito_mais_usado_peso())
     print("\n")
 
 
-def gerar_circuitoss():
-    alg = input("Nome do algoritmo a ser usado: ")
-    algoritmos = {
-        "dfs": dfs,
-        "dfs_lim": dfs_limited,
-        "bfs": bfs,
-        "gulosa": resolve_gulosa,
-        "a_estrela": a_estrela
-    }
-
-    gerar_circuitos(algoritmos.get(alg))
-    print("Circuito gerado com sucesso!")
+def circuito_mais_usado_volumee():
+    if not ha_circuitos():
+        print("Ainda não foram gerados circuitos.")
+        return
+    print("O circuito mais usado com base no volume total das entregas do percurso: ")
+    print(circuito_mais_usado_volume())
 
 
 def menu_principal():
@@ -78,6 +85,7 @@ def menu_principal():
         ("Mostrar circuitos mais produtivos", circuitoss_mais_produtivos),
         ("Mostrar circuito mais usado", circuito_mais_usado_counterr),
         ("Mostrar circuito com maior número de entregas por peso", circuito_mais_usado_pesoo),
+        ("Mostrar circuito com maior número de entregas por volume", circuito_mais_usado_volumee),
         ("Sair", Menu.CLOSE)
     ]
     menu = Menu(title="\n****Green Distribution Management****", options=options)  # customize the options
