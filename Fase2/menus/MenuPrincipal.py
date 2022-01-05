@@ -113,7 +113,7 @@ def menu_principal():
     options = [
         ("Mostrar encomendas", mostrar_encomendas),
         ("Mostrar entregas", mostrar_entregas),
-        ("Gerar circuitos", gerar_circuitoss),
+        ("Entregar encomendar", gerar_circuitoss),
         ("Gerar grafo", gerar_grafo),
         ("Mostrar circuitos mais produtivos", circuitoss_mais_produtivos),
         ("Mostrar circuito mais usado", circuito_mais_usado_counterr),
