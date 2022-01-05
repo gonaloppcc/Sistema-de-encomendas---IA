@@ -2,3 +2,5 @@
 *test*
 # Python cache
 *.pyc
+*.log
+*.png
