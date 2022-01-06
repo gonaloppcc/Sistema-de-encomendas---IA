@@ -124,7 +124,7 @@ def calcula_data_entrega(caminho, encomenda_id, peso_total, veiculo_escolhido):
     distancia_caminho = calcula_distancia(caminho)
     duracao_transporte = calcula_tempo_transporte(veiculo_escolhido, peso_total, distancia_caminho)
     data_encomenda = encomendas.get(encomenda_id).data_encomenda
-    data_entrega = data_encomenda + timedelta(days=duracao_transporte)
+    data_entrega = data_encomenda + timedelta(days=duracao_transporte * 0.4 + 1)
 
     logging.info(f"Data de encomenda:  {encomendas.get(encomenda_id).data_encomenda.strftime('%d %b %Y')}")
     logging.info(f"Data de entrega: {data_entrega.strftime('%d %b %Y')}")
