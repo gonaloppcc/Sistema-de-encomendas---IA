@@ -1,7 +1,3 @@
-import datetime
-
-from base_conhecimento.Atribuicao import Atribuicao
-from base_conhecimento.Encomenda import Encomenda
 from base_conhecimento.Estafeta import Estafeta
 from base_conhecimento.Local import Local
 from base_conhecimento.Transporte import Transporte
@@ -119,9 +115,6 @@ atribuicao4 = Atribuicao(2, 3)
 """
 # Onde guardamos as entregas realizadas.
 entregas = []
-
-# Circuitos já realizados.
-circuitos_efetuados = {}
 
 # Lista onde guardamos todas as atribuições.
 # Como só as consultamos sequencialmente, para gerar entregas, podem estar numa lista.

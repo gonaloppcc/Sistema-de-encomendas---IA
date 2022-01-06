@@ -1,7 +1,7 @@
 """Este ficheiro gera os vários percursos que podem ser realizados por um estafeta para entregar todas as encomendas
 que tem atribuídas. Por isso, devolvemos uma lista com conjuntos de percursos. Esse conjunto de percursos tem de
-incluir todas as encomendas entregues por esse estafeta. Aqui, um percurso é um conjunto de paragens, associadas ao ID da encomenda que será
-entregue.
+incluir todas as encomendas entregues por esse estafeta. Aqui, um percurso é um conjunto de paragens, associadas ao
+ID da encomenda que será entregue.
 
 Ignorando os id's das entregas, teremos algo deste género para as paragens A, B e C:
 [
@@ -20,7 +20,6 @@ Como cada estafeta só entrega na sua cidade, vamos procurar todos os possíveis
 import logging
 from itertools import combinations, permutations
 
-from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import encomendas
 
 
@@ -43,7 +42,7 @@ def adiciona_todas_paragens(circuitos_incompletos, todas_as_paragens):
     [A , B], [C]. As paragens A e B são feitas ao mesmo tempo, e a C é feita numa viagem à parte.
     @param circuitos_incompletos: Percursos avaliados até agora.
     @param todas_as_paragens: Todas as paragens
-    @return: Circuito completo que passa por todos os locais de entregas das encomendas.
+    @return: circuito completo que passa por todos os locais de entregas das encomendas.
     """
     lista_atual = [list(circuitos_incompletos)]
     for uma_paragem in todas_as_paragens:
@@ -55,7 +54,8 @@ def adiciona_todas_paragens(circuitos_incompletos, todas_as_paragens):
 
 def paragens_individuais(locais_entrega):
     """
-    Adiciona as paragens individualmente. Por exemplo, se tivermos de passar pelos locais A, B e C, geramos a seguinte lista:
+    Adiciona as paragens individualmente.
+    Por exemplo, se tivermos de passar pelos locais A, B e C, geramos a seguinte lista:
     [A, B, C] -> [[A], [B], [C]]
     @param locais_entrega: Locais por onde temos de passar.
     @return: Percursos compostos por apenas uma paragem.
@@ -69,16 +69,15 @@ def paragens_individuais(locais_entrega):
 #
 def descobre_possiveis_caminhos(encomendas_id):
     """
-    Esta função gera todos os caminhos possíveis para entregar uma encomenda.
-    Por exemplo, se tiver de passar por três locais, pode entregar uma encomenda por viagem, duas ou até três.
-    Para isso, ela procura todos os locais de entrega que um estafeta tem de passar, a partir dos ids das encomendas.
-    Depois faz combinações desses locais. Por exemplo: [A, B, C] fica A | B | C | A, B | A, C | B, C | A, B, C
-    Mas excluímos os casos da lista separada, que são acrescentados no fim
-    A seguir, guardamos em listas os percursos, usando o exemplo de à bocado: se passa em A e B, tem de haver uma viagem só para C
-    @param encomendas_id: Encomendas para as quais temos de gerar os percursos possíveis.
-    @return: As possibilidades de percurso.
+    Esta função gera todos os caminhos possíveis para entregar uma encomenda. Por exemplo, se tiver de passar por
+    três locais, pode entregar uma encomenda por viagem, duas ou até três. Para isso, ela procura todos os locais de
+    entrega que um estafeta tem de passar, a partir dos ids das encomendas. Depois faz combinações desses locais. Por
+    exemplo: [A, B, C] fica A | B | C | A, B | A, C | B, C | A, B, C. Mas excluímos os casos da lista separada,
+    que são acrescentados no fim. A seguir, guardamos em listas os percursos, usando o exemplo de há bocado: se passa
+    em A e B, tem de haver uma viagem só para C @param encomendas_id: Encomendas para as quais temos de gerar os
+    percursos possíveis. @return: as possibilidades de percurso.
     """
-    # Guardamos em set para não termos locais repetidos
+    # Guardamos em ‘set’ para não termos locais repetidos
     locais_entrega = set(
         map(lambda encomenda_id: (encomendas.get(encomenda_id).id_local_entrega, encomenda_id), encomendas_id))
     # Já temos todos os locais de entrega
@@ -107,6 +106,7 @@ def descobre_possiveis_caminhos(encomendas_id):
     lista_final.append(paragens_individuais(locais_entrega))
     logging.debug('[gera_caminhos] Lista final da gera_caminhos')
     return lista_final
+
 
 """    # Uma possibilidade é um conjunto de caminhos.
     # Essa possibilidade entrega todas as encomendas previstas.

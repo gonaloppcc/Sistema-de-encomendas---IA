@@ -53,11 +53,11 @@ def maximo_peso_uma_viagem():
     Descobre qual o peso máximo que conseguimos transportar num circuito.
     @return: Peso máximo, em Kgs.
     """
-    max = 0
+    maximo = 0
     for veiculo in transportes:
-        if veiculo.peso_maximo >= max:
-            max = veiculo.peso_maximo
-    return max
+        if veiculo.peso_maximo >= maximo:
+            maximo = veiculo.peso_maximo
+    return maximo
 
 
 def caminho_to_string(cam: [Local]):

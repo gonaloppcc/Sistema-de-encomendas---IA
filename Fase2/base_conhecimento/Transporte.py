@@ -22,7 +22,7 @@ class Transporte:
         self.preco_km = preco_km
         self.coeficiente_poluicao = coeficiente_poluicao
 
-    def calcula_velocidade(self, peso_encomenda: int) -> int:
+    def calcula_velocidade(self, peso_encomenda: int) -> float:
         """
         Calcula a velocidade que um veículo consegue atingir a partir do peso da encomenda que irá transportar.
         Utilizamos o coeficiente_kg_velocidade.

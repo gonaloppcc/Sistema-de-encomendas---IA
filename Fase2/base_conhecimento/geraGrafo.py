@@ -51,7 +51,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     # As coordenadas são selecionadas aleatóriamente no campo de 0-100
     for i in range(num_nodos):
         freguesia = nome_grafo
-        nome = f"Local_{mapa['id_counter']+i}"
+        nome = f"Local_{mapa['id_counter'] + i}"
         out = False
         local = None
         while not out:

@@ -23,7 +23,7 @@ def veiculo_mais_ecologico(distancia_caminho, peso_total):
         try:
             # Verifica se consegue transportar a encomenda.
             # Se não conseguir, tem uma exceção.
-            tempo_veiculo = calcula_tempo_transporte(veiculo, peso_total, distancia_caminho)
+            calcula_tempo_transporte(veiculo, peso_total, distancia_caminho)
             coef_poluicao_atual = veiculo.coeficiente_poluicao
             if coef_poluicao_atual < melhor_coef_poluicao:
                 melhor_coef_poluicao = coef_poluicao_atual
