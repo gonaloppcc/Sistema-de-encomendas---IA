@@ -1,6 +1,5 @@
 from algoritmos_procura.common import conectados
 
-
 # bfs
 # Travessia de grafos, mas usei outro algoritmo
 from base_conhecimento.baseConhecimento import mapa
@@ -11,7 +10,7 @@ def bfs(origem, destino):
     queue = [(origem, [origem])]
     # Inicializamos todos os nodos como não visitados, num Map
     visitados = {}
-#    locais = baseConhecimento.distancias.keys()
+    #    locais = baseConhecimento.distancias.keys()
     cidade = origem.encontra_cidade()
     locais = mapa["grafos"][cidade].keys()
     for umaKey in locais:

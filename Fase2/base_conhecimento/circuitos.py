@@ -85,7 +85,7 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
     # Gerar entrega
     veiculo_escolhido = escolhe_veiculo((caminhos, encomendas_entregues))
 
-    #Tamanho do caminho
+    # Tamanho do caminho
     tamanho_do_caminho = calcula_distancia(caminhos)
     for encomenda_id in encomendas_entregues:
         # Calcular tempo de entrega

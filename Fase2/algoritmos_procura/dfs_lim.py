@@ -1,6 +1,5 @@
 from algoritmos_procura.common import conectados
 
-
 # Busca Iterativa Limitada em Profundidade.
 # Tal como diz no ‘diapositivo’: T(5) Classical Search
 # Este método Pesquisa em Profundidade Iterativa

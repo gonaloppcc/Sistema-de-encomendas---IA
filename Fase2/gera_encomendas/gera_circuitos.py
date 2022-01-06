@@ -11,22 +11,30 @@ from base_conhecimento.circuitos import adiciona_circuito
 from gera_encomendas.Entrega import Entrega
 # Entregas realizadas
 from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
-
-#Variável usada para controlar o tempo de procura do melhor caminho.
+# Variável usada para controlar o tempo de procura do melhor caminho.
 from gera_encomendas.gera_veiculos import criterio_ecologico, veiculo_mais_ecologico
 
+# Modo de teste: permite que uma encomenda seja entregue duas vezes.
+modo_teste = False
+
+# Tempo máximo de procura do melhor percurso para um estafeta num dia.
 tempo_maximo = 5
+
 
 def encomenda_valida(encomenda_id: int):
     """
     Indica se uma encomenda é válida. Para isso, não pode ter sido entregue, e o seu peso não deve ultrapassar a
     capacidade de todos os veículos disponíveis.
     @param encomenda_id: Id da encomenda analisada.
-    @return: Se é válida ou não.
+    @return: se é válida ou não.
     """
     # O máximo possível é o peso que o veículo com maior carga pode transportar.
     maximo_possivel = maximo_peso_uma_viagem()
-    return (not Entrega.encomenda_entregue(encomenda_id)) and encomendas.get(encomenda_id).peso <= maximo_possivel
+    entregue = Entrega.encomenda_entregue(encomenda_id)
+    if modo_teste:
+        entregue = False
+
+    return (not entregue) and encomendas.get(encomenda_id).peso <= maximo_possivel
 
 
 def entregas_do_estafeta_por_dia(estafeta: int):
@@ -171,15 +179,16 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
                         logging.debug(caminho_to_string(cam))
 
                         caminhos_pos_algoritmos.append((cam, enc_id))
-                        distancia_este_caminho  = calcula_distancia(cam)
+                        distancia_este_caminho = calcula_distancia(cam)
                         total_este_caminho += distancia_este_caminho
                         # Necessário para o critério da ecologia, para calcular o veículo.
                         if criterio_ecologico:
                             peso_ant = peso_dist_um_circuito[0]
                             dist_ant = peso_dist_um_circuito[1]
-                            peso_dist_um_circuito = (peso_ant + encomendas.get(enc_id).peso, dist_ant + distancia_este_caminho)
-                            #peso_dist_um_circuito[0] = encomendas.get(enc_id).peso + peso_dist_um_circuito[0]
-                            #peso_dist_um_circuito[1] = distancia_este_caminho + peso_dist_um_circuito[1]
+                            peso_dist_um_circuito = (
+                                peso_ant + encomendas.get(enc_id).peso, dist_ant + distancia_este_caminho)
+                            # peso_dist_um_circuito[0] = encomendas.get(enc_id).peso + peso_dist_um_circuito[0]
+                            # peso_dist_um_circuito[1] = distancia_este_caminho + peso_dist_um_circuito[1]
 
 
                     else:
@@ -202,10 +211,10 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
                             peso_ant = peso_dist_um_circuito[0]
                             dist_ant = peso_dist_um_circuito[1]
                             peso_dist_um_circuito = (
-                            peso_ant + encomendas.get(enc_id).peso, dist_ant + distancia_este_caminho)
+                                peso_ant + encomendas.get(enc_id).peso, dist_ant + distancia_este_caminho)
 
-#                            peso_dist_um_circuito[0] = encomendas.get(enc_id).peso + peso_dist_um_circuito[0]
-#                            peso_dist_um_circuito[1] = distancia_este_caminho + peso_dist_um_circuito[1]
+                #                            peso_dist_um_circuito[0] = encomendas.get(enc_id).peso + peso_dist_um_circuito[0]
+                #                            peso_dist_um_circuito[1] = distancia_este_caminho + peso_dist_um_circuito[1]
                 # Tem de voltar à base
                 (id_local1, enc_id1) = sub_caminho[atual]
                 local1 = Local.encontra_local(id_local1)
@@ -221,7 +230,7 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
                     veiculo = veiculo_mais_ecologico(distancia, peso)
                     if veiculo is not None:
                         veiculos_e_distancias.append((veiculo, distancia))
-                    peso_dist_um_circuito = (0,0)
+                    peso_dist_um_circuito = (0, 0)
 
             logging.debug("<---------Fim de análise de um caminho------->")
             # Se quisermos a velocidade, então o mais importante é a distância percorrida no caminho.
@@ -237,7 +246,7 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
                 total_poluicao_este = 0
                 for veiculo, distancia in veiculos_e_distancias:
                     total_poluicao_este += veiculo.coeficiente_poluicao * distancia
-                if total_poluicao_este < menos_poluente :
+                if total_poluicao_este < menos_poluente:
                     menos_poluente = total_poluicao_este
                     logging.debug(f"Altera caminho para um melhor, {total_este_caminho}")
                     # Guarda as informações do melhor caminho
@@ -245,7 +254,7 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
                     melhor_caminho.clear()
                     melhor_caminho = caminhos_pos_algoritmos.copy()
                     veiculos_e_distancias.clear()
-                    peso_dist_um_circuito = (0,0)
+                    peso_dist_um_circuito = (0, 0)
 
     # Nenhum caminho é possível, pode ser porque a encomenda é muito pesada
     # Ou duas, ou mais, entregas dum nodo ultrapassa o máximo.
