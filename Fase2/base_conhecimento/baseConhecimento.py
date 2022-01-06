@@ -34,7 +34,7 @@ mapa = {
             local6: [(local8, 2)],
             local7: [(local8, 3), (local9, 1)],
             local8: [(local9, 2), (local4, 3)],
-            local9: [(local8, 4)]
+            local9: [(local4, 4)]
         }
     },
     "id_counter": 10
@@ -42,7 +42,7 @@ mapa = {
 
 # Guarda os ids dos locais que pertencem a cada cidade, útil para gerarmos as encomendas.
 id_locais_cidades = {
-    "Vila_do_Conde": (1, 10)
+    "Vila_do_Conde": (4, 10)
 }
 
 """
