@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from algoritmos_procura.common import caminho_to_string
+from base_conhecimento.Estafeta import Estafeta
 from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import Transporte, encomendas
 from base_conhecimento.baseConhecimento import entregas
@@ -37,7 +38,7 @@ class Entrega:
         """
         descricao = ""
         descricao += f"\nId da encomenda:  {self.encomenda_id}\n"
-        descricao += f"Id da estafeta: {self.estafeta_id}\n"
+        descricao += f"Estafeta: {Estafeta.get_nome_estafeta(self.estafeta_id)}\n"
         descricao += f"Data entrega: {self.data_entrega}\n"
         descricao += f"Transporte: {self.transporte.nome}\n"
         descricao += f"Peso: {encomendas.get(self.encomenda_id).peso}\n"

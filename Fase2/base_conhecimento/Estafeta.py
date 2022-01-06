@@ -15,3 +15,16 @@ class Estafeta:
         self.estafeta_id = estafeta_id
         self.nome = nome
         self.cidade = cidade
+
+    @staticmethod
+    def get_nome_estafeta(id_estafeta):
+        """
+        Descobre o nome do estafeta en função do id.
+        @param id_estafeta: Id do estafeta.
+        @return: Nome do estafeta
+        """
+        from base_conhecimento.baseConhecimento import estafetas
+        for _, estafeta in estafetas.items():
+            if estafeta.estafeta_id == id_estafeta:
+                return estafeta.nome
+        #return "Zé"
