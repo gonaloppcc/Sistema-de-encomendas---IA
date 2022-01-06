@@ -29,19 +29,22 @@ def circuitos_mais_produtivos():
 # Calcula o circuito mais usado com base no
 # número de vezes que foi percorrido
 def circuito_mais_usado_counter():
-    return max(circuitos_efetuados.items(), key=lambda circuito: circuito[1][0])
+    circ_maior_counter = max(circuitos_efetuados.items(), key=lambda circuito: circuito[1][0])
+    return circ_maior_counter[0], circ_maior_counter[1][0]
 
 
 # Calcula o circuito mais usado com base no
 # peso total das entregas do percurso.
 def circuito_mais_usado_peso():
-    return max(circuitos_efetuados.items(), key=lambda x: x[1][1])
+    circ_maior_peso = max(circuitos_efetuados.items(), key=lambda x: x[1][1])
+    return circ_maior_peso[0], circ_maior_peso[1][1]
 
 
 # Calcula o circuito mais usado com base no
 # volume total das entregas do percurso
 def circuito_mais_usado_volume():
-    return max(circuitos_efetuados.items(), key=lambda x: x[1][2])
+    circ_maior_vol = max(circuitos_efetuados.items(), key=lambda x: x[1][2])
+    return circ_maior_vol[0], circ_maior_vol[1][2]
 
 
 # Adicionar circuitos à lista de circuitos
@@ -57,10 +60,10 @@ def add_circuito_aux(circuito, entregas):
         volume += encomendas[encomenda].volume
 
     if circuito not in circuitos_efetuados:
-        circuitos_efetuados[circuito] = (1, peso, volume, [entregas])
+        circuitos_efetuados[circuito] = (1, peso, volume, [entregas.copy()])
     else:
         nova_l = circuitos_efetuados[circuito][3]
-        nova_l.append(entregas)
+        nova_l.append(entregas.copy())
 
         inc = circuitos_efetuados[circuito][0] + 1
         novo_peso = circuitos_efetuados[circuito][1] + peso
