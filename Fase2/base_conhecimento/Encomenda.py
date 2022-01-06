@@ -38,3 +38,17 @@ class Encomenda:
         for cidade, (id_inicio, id_fim) in id_locais_cidades.items():
             if id_inicio <= self.id_local_entrega <= id_fim:
                 return cidade
+
+    @staticmethod
+    def encomendas_por_entregar():
+        """
+        Função que percorre todas as encomendas, e caso haja alguma que possa ser
+        entregue, devolve a dizer que existe uma encomenda por entregar.
+        @return: Se existem encomendas por entregar.
+        """
+        from base_conhecimento.baseConhecimento import encomendas
+        for encomenda in encomendas.keys():
+            from gera_encomendas.gera_circuitos import encomenda_valida
+            if encomenda_valida(encomenda):
+                return True
+        return False

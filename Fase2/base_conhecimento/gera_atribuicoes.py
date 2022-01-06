@@ -13,6 +13,6 @@ def gera_atribuicoes():
             cidade_destino = encomenda.cidade_encomenda()
             estafeta = estafetas.get(cidade_destino)
             if estafeta is None:
-               estafeta = gerar_estafeta(cidade_destino)
+                estafeta = gerar_estafeta(cidade_destino)
             atribuicao_nova = Atribuicao(estafeta.estafeta_id, encomenda_id)
             atribuicoes.append(atribuicao_nova)

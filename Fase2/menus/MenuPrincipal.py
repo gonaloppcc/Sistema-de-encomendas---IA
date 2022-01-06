@@ -1,5 +1,3 @@
-import time
-
 import psutil
 from menu import Menu
 
@@ -9,14 +7,23 @@ from algoritmos_procura.dfs import dfs
 from algoritmos_procura.dfs_lim import dfs_limited
 from algoritmos_procura.dijkstra import dijkstra
 from algoritmos_procura.gulosa import resolve_gulosa
+from base_conhecimento.Encomenda import Encomenda
 from base_conhecimento.baseConhecimento import mapa
 from base_conhecimento.circuitos import *
 from base_conhecimento.geraGrafo import gera_grafo
 from base_conhecimento.gera_atribuicoes import gera_atribuicoes
 from base_conhecimento.gera_encomenda import gera_encomendas
+from gera_encomendas import gera_circuitos
 from gera_encomendas.gera_circuitos import *
 
-logging.basicConfig(level=logging.INFO)
+algoritmos = {
+    "dfs": dfs,
+    "dfs_lim": dfs_limited,
+    "bfs": bfs,
+    "gulosa": resolve_gulosa,
+    "a_estrela": a_estrela,
+    "dijkstra": dijkstra
+}
 
 
 def print_lista(lista):
@@ -57,24 +64,23 @@ def gerar_encomendas():
 
 
 def gerar_circuitoss():
-    algoritmos = {
-        "dfs": dfs,
-        "dfs_lim": dfs_limited,
-        "bfs": bfs,
-        "gulosa": resolve_gulosa,
-        "a_estrela": a_estrela,
-        "dijkstra": dijkstra
-    }
     print(f"Algoritmos implementados: {algoritmos.keys()}")
 
     alg = input("Nome do algoritmo a ser usado: ")
+    executar_algoritmo(alg)
+
+
+def executar_algoritmo(nome_algoritmo):
+    if not Encomenda.encomendas_por_entregar():
+        print("Não há encomendas para entregar!")
+        return
 
     inicio_tempo = time.time()
     inicio_memoria = psutil.Process().memory_info().rss
 
-    gerar_circuitos(algoritmos.get(alg))
+    gerar_circuitos(algoritmos.get(nome_algoritmo))
 
-    print(f"Memoria de execução do algoritmo: {(psutil.Process().memory_info().rss - inicio_memoria) / 1.0e6}MB")
+    print(f"Memoria de execução do algoritmo: {(psutil.Process().memory_info().rss - inicio_memoria) / 1024 ** 2}MB")
 
     print(f"Tempo de execução do algoritmo: {time.time() - inicio_tempo}s")
 
@@ -120,7 +126,25 @@ def circuito_mais_usado_volumee():
     print(circuito_mais_usado_volume())
 
 
+def mudar_modo_teste():
+    gera_circuitos.modo_teste = not gera_circuitos.modo_teste
+    string = "ativado" if (gera_circuitos.modo_teste is True) else "desativado"
+    print(f"Modo de teste {string}!")
+
+
+def correr_todos():
+    m_teste = gera_circuitos.modo_teste
+    print("De modo a correr todos os algoritmos nas mesmas condições o modo teste será ativado, caso não esteja!")
+    gera_circuitos.modo_teste = True
+    for nome in algoritmos.keys():
+        print(f"Inicia-se a procura com o algoritmo {nome}!")
+        executar_algoritmo(nome)
+    print("A repor o modo de teste...")
+    gera_circuitos.modo_teste = m_teste
+
+
 def menu_principal():
+    logging.basicConfig(level=logging.INFO)
     options = [
         ("Mostrar todas as encomendas", mostrar_encomendas),
         ("Mostrar todas as entregas", mostrar_entregas),
@@ -131,6 +155,8 @@ def menu_principal():
         ("Mostrar circuito mais usado", circuito_mais_usado_counterr),
         ("Mostrar circuito com maior número de entregas por peso", circuito_mais_usado_pesoo),
         ("Mostrar circuito com maior número de entregas por volume", circuito_mais_usado_volumee),
+        ("Ativar/desativar modo de teste", mudar_modo_teste),
+        ("Realizar testes para todos os algoritmos", correr_todos),
         ("Sair", Menu.CLOSE)
     ]
     menu = Menu(title="\n****Green Distribution Management****", options=options)  # customize the options
