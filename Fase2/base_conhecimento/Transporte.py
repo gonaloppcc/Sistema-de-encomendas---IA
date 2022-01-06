@@ -11,7 +11,7 @@ class Transporte:
         @param peso_maximo: Peso máximo que o transporte pode transportar.
         @param velocidade_max: Velocidade máxima que o veículo pode ter.
         @param coeficiente_kg_velocidade: Coeficiente que descreve quão afetada é a velocidade em função do peso transportado.
-        @param preco_km: ?????
+        @param preco_km: Preço que o veículo custa por quilómetro.
         @param coeficiente_poluicao: Indica quão poluente é o veículo. É utilizado para calcular os circuitos mais ecológicos.
 
         """

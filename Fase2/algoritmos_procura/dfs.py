@@ -21,7 +21,7 @@ def dfs2(origem, destino, lista_atual):
             # Temos de guardar a lista porque, caso o dfs2 chegue a um dead-end
             # Temos de continuar a procurar, equivalente a backtrace
             lista_antes_alterar = lista_atual.copy()
-            # Insere à cabeçaporque procuramos sempre o primeiro elemento da lista
+            # Insere à cabeça porque procuramos sempre o primeiro elemento da lista
             lista_atual.insert(0, nodo)
 
             # Chamada recursiva

@@ -17,7 +17,8 @@ class Entrega:
     def __init__(self, encomenda_id: int, estafeta_id: int, data_entrega: datetime, transporte: Transporte,
                  caminho: [Local]):
         """
-        Construtor duma entrega. É chamado ao mesmo tempo que os circuitos são gerados, para saber quais os caminhos de entrega.
+        Construtor duma entrega. É chamado ao mesmo tempo que os circuitos são gerados, para saber quais os caminhos de
+        entrega.
         @param encomenda_id: Id da encomenda
         @param estafeta_id: Id do estafeta que entregou.
         @param data_entrega: Data da encomenda mais a de transporte.

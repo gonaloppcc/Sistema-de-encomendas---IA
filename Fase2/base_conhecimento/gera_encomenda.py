@@ -18,17 +18,17 @@ def gera_encomendas(num_encomendas, nome_cidade):
     if len(encomendas) == 0:
         id_encomenda_atual = 0
     else:
-        for x in encomendas.keys():
-            print(" x is: ", x)
         id_encomenda_atual = max(list(map(int, encomendas.keys()))) + 1
     for encomenda_id in range(id_encomenda_atual, id_encomenda_atual + num_encomendas):
         peso = randint(1, peso_maximo)
+        id_client = randint(1, 100)
+        volume = randint(1, 10)
         data_encomenda_aleatoria = data_encomenda_hoje + timedelta(days=randint(-1, 1))
         id_inicio, id_fim = id_locais_cidades.get(nome_cidade)
         id_local_entrega = randint(id_inicio + 1, id_fim - 1)
         while id_local_entrega == origens.get(nome_cidade):
             id_local_entrega = randint(id_inicio + 1, id_fim - 1)
         # encomenda_id, cliente_id, peso,  volume, prazo data_encomenda,         id_local_entrega
-        nova_encomenda = Encomenda(encomenda_id, 0, peso, 0, data_encomenda_aleatoria + timedelta(days=2),
+        nova_encomenda = Encomenda(encomenda_id, id_client, peso, volume, data_encomenda_aleatoria + timedelta(days=2),
                                    data_encomenda_aleatoria, id_local_entrega)
         encomendas[encomenda_id] = nova_encomenda
