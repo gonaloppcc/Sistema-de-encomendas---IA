@@ -66,10 +66,16 @@ def gerar_encomendas():
 
 
 def gerar_circuitoss():
-    print(f"Algoritmos implementados: {algoritmos.keys()}")
 
+    crit = input("Pretende usar o critério ecológico? (S)im/(N)ão ")
+    import gera_encomendas.gera_veiculos
+    gera_encomendas.gera_veiculos.criterio_ecologico = crit.upper() == "S"
+
+    print(f"Algoritmos implementados: {algoritmos.keys()}")
     alg = input("Nome do algoritmo a ser usado: ")
     executar_algoritmo(alg)
+
+    gera_encomendas.gera_veiculos.criterio_ecologico = False
 
 
 def executar_algoritmo(nome_algoritmo):
