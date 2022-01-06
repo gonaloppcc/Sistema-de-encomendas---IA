@@ -1,6 +1,7 @@
 import logging
 
 from algoritmos_procura.a_estrela import a_estrela
+from algoritmos_procura.bfs import bfs
 from algoritmos_procura.gulosa import resolve_gulosa
 from base_conhecimento.gera_atribuicoes import gera_atribuicoes
 from base_conhecimento.gera_encomenda import gera_encomendas
@@ -25,8 +26,8 @@ def main():
     gera_atribuicoes()
     print("Gera atribuicoes feita")
 
-    algoritmo1 = a_estrela
-    algoritmo2 = resolve_gulosa
+    algoritmo1 = bfs
+    algoritmo2 = bfs
 
     # logging.debug('Começou')
     # logging.info(f"-> Algoritmo da {algoritmo1.__name__}")
