@@ -1,7 +1,6 @@
-import logging
 import time
-from time import sleep
 
+import psutil
 from menu import Menu
 
 from algoritmos_procura.a_estrela import a_estrela
@@ -15,7 +14,6 @@ from base_conhecimento.geraGrafo import gera_grafo
 from base_conhecimento.gera_atribuicoes import gera_atribuicoes
 from base_conhecimento.gera_encomenda import gera_encomendas
 from gera_encomendas.gera_circuitos import *
-import psutil
 
 logging.basicConfig(level=logging.INFO)
 
@@ -26,16 +24,12 @@ def print_lista(lista):
 
 
 def gerar_grafo():
-    nome_grafo = input("Meta o nome do grafo: ")
-    num_nodos = int(input("Meta o número de nodos: "))
-    prob_conexao = int(input("Meta a probabilidade de conexão: "))
+    nome_grafo = input("Insira o nome da cidade: ")
+    num_nodos = int(input("Insira o número de nodos: "))
+    prob_conexao = int(input("Insira a probabilidade de conexão: "))
     gera_grafo(nome_grafo, num_nodos, prob_conexao)
-    num_encomendas = int(input("Meta o número de encomendas: "))
-    gera_encomendas(num_encomendas, nome_grafo)
-    gera_atribuicoes()
-    print("Grafo gerado com sucesso!")
-    print(f"Grafo guardado com o nome \"{nome_grafo}.png\"\n")
-    sleep(2)
+    print("Cidade criada com sucesso!")
+    print(f"Cidade guardada com o nome \"{nome_grafo}.png\"\n")
 
 
 def mostrar_encomendas():
@@ -126,11 +120,11 @@ def circuito_mais_usado_volumee():
 
 def menu_principal():
     options = [
-        ("Mostrar encomendas", mostrar_encomendas),
-        ("Mostrar entregas", mostrar_entregas),
+        ("Mostrar todas as encomendas", mostrar_encomendas),
+        ("Mostrar todas as entregas", mostrar_entregas),
         ("Gerar encomendas", gerar_encomendas),
-        ("Gerar grafo", gerar_grafo),
         ("Entregar encomendas", gerar_circuitoss),
+        ("Criar cidade de entrega", gerar_grafo),
         ("Mostrar circuitos mais produtivos", circuitoss_mais_produtivos),
         ("Mostrar circuito mais usado", circuito_mais_usado_counterr),
         ("Mostrar circuito com maior número de entregas por peso", circuito_mais_usado_pesoo),

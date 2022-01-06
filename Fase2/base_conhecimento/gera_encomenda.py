@@ -18,7 +18,7 @@ def gera_encomendas(num_encomendas, nome_cidade):
     if len(encomendas) == 0:
         id_encomenda_atual = 0
     else:
-        id_encomenda_atual = encomendas.keys().max() + 1
+        id_encomenda_atual = max(list(map(int, encomendas.keys()))) + 1
     for encomenda_id in range(id_encomenda_atual, id_encomenda_atual + num_encomendas):
         peso = randint(1, peso_maximo)
         data_encomenda_aleatoria = data_encomenda_hoje + timedelta(days=randint(-1, 1))

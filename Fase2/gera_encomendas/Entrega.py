@@ -1,4 +1,3 @@
-import logging
 from datetime import datetime
 
 from algoritmos_procura.common import caminho_to_string
@@ -36,17 +35,18 @@ class Entrega:
         Função utilizada para imprimir uma entrega de forma organizada.
         """
         descricao = ""
-        descricao += (f"Id da encomenda:  {self.encomenda_id}\n")
-        descricao += (f"Id da estafeta: {self.estafeta_id}\n")
-        descricao += (f"Data entrega: {self.data_entrega}\n")
-        descricao += (f"Transporte: {self.transporte.nome}\n")
+        descricao += f"Id da encomenda:  {self.encomenda_id}\n"
+        descricao += f"Id da estafeta: {self.estafeta_id}\n"
+        descricao += f"Data entrega: {self.data_entrega}\n"
+        descricao += f"Transporte: {self.transporte.nome}\n"
         descricao += caminho_to_string(self.caminho)
         return descricao
 
+    @staticmethod
     def encomenda_entregue(encomenda_id: int) -> bool:
         """
         Função que verifica se uma encomenda já foi entregue, pelo seu id,
-        @return: Se a encomenda já foi entregue.
+        @return: se a encomenda já foi entregue.
         """
         for entrega in entregas:
             if entrega.encomenda_id == encomenda_id:

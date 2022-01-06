@@ -22,7 +22,7 @@ class Local:
     @staticmethod
     def encontra_local(id_local: int):
         from base_conhecimento.baseConhecimento import mapa
-        t = mapa
+        mapa
         for grafo in mapa["grafos"].values():
             for local in grafo:
                 if local.id == id_local:

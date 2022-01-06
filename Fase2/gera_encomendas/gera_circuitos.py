@@ -120,7 +120,7 @@ def gera_circuito_um_estafeta(estafeta_id, algoritmo, cidade):
         gera_circuitos_um_dia(algoritmo, encomendas_um_dia, estafeta, cidade)
 
 
-def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, cidade_str: str) -> object:
+def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, cidade_str: str):
     """
     Gera as entregas de um dado estafeta para um dia.
     @param algoritmo: Algoritmo utilizado para escolher caminhos entre dois locais.
@@ -200,7 +200,7 @@ def gerar_circuitos(algoritmo):
     """
     lista_estafetas = []
     for atribuicao in atribuicoes:
-        cidade_encomenda =  encomendas.get(atribuicao.encomenda_id).cidade_encomenda()
+        cidade_encomenda = encomendas.get(atribuicao.encomenda_id).cidade_encomenda()
         lista_estafetas.append((atribuicao.estafeta_id, cidade_encomenda))
     for (estafeta_id, cidade) in lista_estafetas:
         gera_circuito_um_estafeta(estafeta_id, algoritmo, cidade)

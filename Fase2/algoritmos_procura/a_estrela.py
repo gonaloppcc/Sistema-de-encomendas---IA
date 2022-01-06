@@ -15,7 +15,7 @@ def a_estrela(origem, destino):
     aberto.append(origem)
 
     distancias = {}  # Distancia + curta até ao nodo
-    pais = {}
+    pais = dict()
 
     distancias[origem] = 0
     pais[origem] = origem
