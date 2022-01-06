@@ -81,7 +81,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
             if nodo == outro_nodo:
                 continue
             if randint(0, 100) <= probabilidade_conexao:
-                distancia = calcula_norma(nodo, outro_nodo)
+                distancia = calcula_norma(nodo, outro_nodo) / 200
                 conectados.append((outro_nodo, distancia))
         mapa["grafos"][nome_grafo][nodo] = conectados
 

@@ -82,6 +82,8 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
     # Gerar entrega
     veiculo_escolhido = escolhe_veiculo((caminhos, encomendas_entregues))
 
+    #Tamanho do caminho
+    tamanho_do_caminho = calcula_distancia(caminhos)
     for encomenda_id in encomendas_entregues:
         # Calcular tempo de entrega
         pesos_no_percurso = map(lambda id_encomenda: encomendas.get(id_encomenda).peso, encomendas_entregues)
@@ -102,6 +104,7 @@ def adiciona_circuito(caminhos: [Local], encomendas_entregues: [int], estafeta_i
         logging.info(f"Encomenda entregue: {encomenda}")
         logging.info(f"Peso da encomenda: {encomendas.get(encomenda).peso}")
     logging.info(f"Key do circuito: {caminhos_juntos}")
+    logging.info(f"Custo do circuito: {tamanho_do_caminho}")
     logging.info(f"Veículo utilizado: {veiculo_escolhido.nome}")
 
     logging.info(" ")

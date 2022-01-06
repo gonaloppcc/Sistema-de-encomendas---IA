@@ -1,4 +1,5 @@
 import logging
+import time
 from math import inf
 
 from algoritmos_procura.common import calcula_distancia, caminho_to_string
@@ -11,6 +12,8 @@ from gera_encomendas.Entrega import Entrega
 # Entregas realizadas
 from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
 
+#Variável usada para controlar o tempo de procura do melhor caminho.
+tempo_maximo = 5
 
 def encomenda_valida(encomenda_id: int):
     """
@@ -136,9 +139,13 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
     melhor_distancia = float(inf)
     # Guarda os caminhos do melhor
     melhor_caminho = []
+    # Guardar tempo inicial.
+    inicio = time.time()
     # um caminho possível = [[A, B, C], [D]]
-    for um_caminho_possivel in possiveis_percursos:
 
+    for um_caminho_possivel in possiveis_percursos:
+        if time.time() - inicio > tempo_maximo:
+            break
         if possivel_por_pesos(um_caminho_possivel):
             total_este_caminho = 0
             # Guarda os percursos que faz para entregar as várias encomendas
