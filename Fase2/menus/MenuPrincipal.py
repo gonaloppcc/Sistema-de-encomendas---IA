@@ -93,12 +93,23 @@ def ha_circuitos():
     return len(circuitos_efetuados) > 0
 
 
+def formata_caminho(caminho):
+    str = ""
+    locais = caminho.split(';')
+    for i in range(len(locais) - 2):
+        str += f"{locais[i]}->"
+    str += f"{locais[len(locais)-2]}"
+    return str
+
+
 def circuitoss_mais_produtivos():
     if not ha_circuitos():
         print("Ainda não foram gerados circuitos.")
         return
     print("Circuitos Mais Produtivos: ")
-    print_lista(circuitos_mais_produtivos())
+    for circuito, produtividade in circuitos_mais_produtivos():
+        print(f"Circuito: {formata_caminho(circuito)}")
+        print(f"    Entregas/percurso: {str(produtividade)}")
     print("\n")
 
 
@@ -107,7 +118,9 @@ def circuito_mais_usado_counterr():
         print("Ainda não foram gerados circuitos.")
         return
     print("O circuito mais usado quanto ao número de vezes que foi percorrido é:")
-    print(circuito_mais_usado_counter())
+    circuito, percursos = circuito_mais_usado_counter()
+    print(f"Circuito: {formata_caminho(circuito)}")
+    print(f"    Percursos: {str(percursos)}")
     print("\n")
 
 
@@ -116,7 +129,10 @@ def circuito_mais_usado_pesoo():
         print("Ainda não foram gerados circuitos.")
         return
     print("O circuito mais usado com base no peso total das entregas do percurso é:")
-    print(circuito_mais_usado_peso())
+    circuito, peso = circuito_mais_usado_peso()
+    print(f"Circuito: {formata_caminho(circuito)}")
+    print(f"    Peso total: {str(peso)}Kg")
+
     print("\n")
 
 
@@ -125,7 +141,10 @@ def circuito_mais_usado_volumee():
         print("Ainda não foram gerados circuitos.")
         return
     print("O circuito mais usado com base no volume total das entregas do percurso: ")
-    print(circuito_mais_usado_volume())
+    #print(circuito_mais_usado_volume())
+    circuito, volume = circuito_mais_usado_volume()
+    print(f"Circuito: {formata_caminho(circuito)}")
+    print(f"    Volume total: {volume}")
 
 
 def mudar_modo_teste():
