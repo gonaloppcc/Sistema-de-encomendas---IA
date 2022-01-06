@@ -4,7 +4,7 @@ from gera_encomendas.gera_estafeta import gerar_estafeta
 
 
 def gera_atribuicoes():
-    encomentas_atribuidas = {}
+    encomentas_atribuidas = {-1}
     for atribuicao in atribuicoes:
         encomentas_atribuidas.add(atribuicao.encomenda_id)
     for encomenda_id in encomendas:
