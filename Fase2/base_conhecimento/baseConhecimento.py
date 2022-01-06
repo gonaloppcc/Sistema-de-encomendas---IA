@@ -10,25 +10,25 @@ from base_conhecimento.Transporte import Transporte
 # Locais da primeira fase
 # TODO definir melhor as coordenadas
 
-local0 = Local(0, "Vila_do_Conde", "local1", 76, 24)
-local1 = Local(1, "Vila_do_Conde", "local2", 15, 104)
-local2 = Local(2, "Vila_do_Conde", "avenida", 76, 7)
-local3 = Local(3, "Vila_do_Conde", "praça", 75, 130)
+local0 = Local(0, "Vila do Conde", "local1", 76, 24)
+local1 = Local(1, "Vila do Conde", "local2", 15, 104)
+local2 = Local(2, "Vila do Conde", "avenida", 76, 7)
+local3 = Local(3, "Vila do Conde", "praça", 75, 130)
 
 # Locais da segunda fase
-local4 = Local(4, "Vila_do_Conde", "local5", 10, 14)
-local5 = Local(5, "Vila_do_Conde", "local6", 39, 59)
-local6 = Local(6, "Vila_do_Conde", "local7", 20, 76)
-local7 = Local(7, "Vila_do_Conde", "local8", 45, 55)
-local8 = Local(8, "Vila_do_Conde", "local9", 98, 33)
-local9 = Local(9, "Vila_do_Conde", "local10", 16, 98)
+local4 = Local(4, "Vila do Conde", "local5", 10, 14)
+local5 = Local(5, "Vila do Conde", "local6", 39, 59)
+local6 = Local(6, "Vila do Conde", "local7", 20, 76)
+local7 = Local(7, "Vila do Conde", "local8", 45, 55)
+local8 = Local(8, "Vila do Conde", "local9", 98, 33)
+local9 = Local(9, "Vila do Conde", "local10", 16, 98)
 
 # Guarda as distâncias em função do ‘id’ da local
 # Key é o ‘id’ da local, doutro lado temos ‘id’'s de outras locals, mais distâncias
 # https://www.gatevidyalay.com/wp-content/uploads/2018/03/Dijkstra-Algorithm-Problem-01.png
 mapa = {
     "grafos": {
-        "Vila_do_Conde": {
+        "Vila do Conde": {
             local4: [(local5, 1), (local6, 5)],
             local5: [(local6, 2), (local7, 2), (local8, 1)],
             local6: [(local8, 2)],
@@ -42,7 +42,7 @@ mapa = {
 
 # Guarda os ids dos locais que pertencem a cada cidade, útil para gerarmos as encomendas.
 id_locais_cidades = {
-    "Vila_do_Conde": (4, 10)
+    "Vila do Conde": (4, 10)
 }
 
 """
@@ -62,7 +62,7 @@ circuitos_efetuados = {}
 # E os estafetas saiem daí
 
 origens = {
-    "Vila_do_Conde": local4
+    "Vila do Conde": local4
 }
 
 """
@@ -98,10 +98,10 @@ encomendas = {
 
 }
 
-estafeta1 = Estafeta(1, "diogo", "Vila_do_Conde")
+estafeta1 = Estafeta(1, "diogo", "Vila do Conde")
 # Map onde guardamos todos os estafetas, por cidade. Assumimos que só existe um estafeta por cidade.
 estafetas = {
-    "Vila_do_Conde": estafeta1
+    "Vila do Conde": estafeta1
 }
 
 # Nós aqui podemos dar o objeto inteiro, mas assim é mais limpo
