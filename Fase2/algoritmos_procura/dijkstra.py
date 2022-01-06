@@ -1,13 +1,9 @@
 import logging
 
-from algoritmos_procura.common import calcula_norma, conectados, arestas
+from algoritmos_procura.common import conectados, arestas
 
 
-def heuristica(nodo1, nodo2):
-    return calcula_norma(nodo1, nodo2)
-
-
-def a_estrela(origem, destino):
+def dijkstra(origem, destino):
     logging.debug(f"Origem: {origem}")
 
     aberto = []  # Nodos ainda não passados
@@ -24,7 +20,7 @@ def a_estrela(origem, destino):
         logging.debug("Passou no while")
         n = None  # Nodo com o menor f
         for nodo in aberto:
-            if n is None or distancias[nodo] + heuristica(nodo, destino) < distancias[n] + heuristica(n, destino):
+            if n is None or distancias[nodo] < distancias[n]:
                 n = nodo
         logging.debug(f"Nodo escolhido: {n}")
 

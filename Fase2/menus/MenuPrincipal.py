@@ -7,6 +7,7 @@ from algoritmos_procura.a_estrela import a_estrela
 from algoritmos_procura.bfs import bfs
 from algoritmos_procura.dfs import dfs
 from algoritmos_procura.dfs_lim import dfs_limited
+from algoritmos_procura.dijkstra import dijkstra
 from algoritmos_procura.gulosa import resolve_gulosa
 from base_conhecimento.baseConhecimento import mapa
 from base_conhecimento.circuitos import *
@@ -45,11 +46,11 @@ def mostrar_entregas():
 def gerar_encomendas():
     print("Lista dos grafos já gerados: ")
     print_lista(mapa["grafos"].keys())
-    nome_grafo = input("Meta o nome do grafo: ")
+    nome_grafo = input("Insira o nome do grafo: ")
     if nome_grafo not in mapa["grafos"].keys():
         print("Nome do grafo ainda não gerado.")
         return
-    num_encomendas = int(input("Meta o número de encomendas: "))
+    num_encomendas = int(input("Insira o número de encomendas: "))
     gera_encomendas(num_encomendas, nome_grafo)
     gera_atribuicoes()
     print("Encomendas geradas com sucesso.")
@@ -61,7 +62,8 @@ def gerar_circuitoss():
         "dfs_lim": dfs_limited,
         "bfs": bfs,
         "gulosa": resolve_gulosa,
-        "a_estrela": a_estrela
+        "a_estrela": a_estrela,
+        "dijkstra": dijkstra
     }
     print(f"Algoritmos implementados: {algoritmos.keys()}")
 
