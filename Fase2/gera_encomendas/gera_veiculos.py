@@ -6,7 +6,7 @@ from base_conhecimento.baseConhecimento import transportes, encomendas
 
 # Se for falsa, queremos o mais rápido, logo é carro
 # Se for verdadeira, tem de ser o mais ecológico
-criterio_ecologico = True
+criterio_ecologico = False
 
 
 # Função para escolhermos qual o veículo a usar em função da flag e do circuito.
