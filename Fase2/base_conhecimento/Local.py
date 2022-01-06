@@ -28,3 +28,10 @@ class Local:
                 if local.id == id_local:
                     return local
         return None
+
+    def encontra_cidade(self):
+        """
+        Encontra a cidade a que pertence um local.
+        @return: Nome da cidade.
+        """
+        return self.encontra_local(self.id).freguesia

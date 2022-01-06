@@ -18,6 +18,8 @@ def gera_encomendas(num_encomendas, nome_cidade):
     if len(encomendas) == 0:
         id_encomenda_atual = 0
     else:
+        for x in encomendas.keys():
+            print(" x is: ", x)
         id_encomenda_atual = max(list(map(int, encomendas.keys()))) + 1
     for encomenda_id in range(id_encomenda_atual, id_encomenda_atual + num_encomendas):
         peso = randint(1, peso_maximo)
