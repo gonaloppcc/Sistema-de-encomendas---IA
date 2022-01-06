@@ -13,6 +13,8 @@ from gera_encomendas.Entrega import Entrega
 from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
 
 #Variável usada para controlar o tempo de procura do melhor caminho.
+from gera_encomendas.gera_veiculos import criterio_ecologico, veiculo_mais_ecologico
+
 tempo_maximo = 5
 
 def encomenda_valida(encomenda_id: int):
@@ -137,6 +139,12 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
 
     # Guardam as melhores distâncias e caminhos
     melhor_distancia = float(inf)
+    # Menor poluicão, para o critério da ecologia.
+    menos_poluente = float(inf)
+    # Peso e distância num circuito.
+    peso_dist_um_circuito = (0, 0)
+    # Veículos que podem entregar um circuito, para o critério ecológico, com a distância percorrida por cada um.
+    veiculos_e_distancias = []
     # Guarda os caminhos do melhor
     melhor_caminho = []
     # Guardar tempo inicial.
@@ -156,12 +164,24 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
                     # Se for a primeira paragem, tem de sair da base
                     if atual == 0:
                         (id_local, enc_id) = sub_caminho[atual]
+
                         local = Local.encontra_local(id_local)
                         cam = algoritmo(origens.get(cidade_str), local)
                         logging.debug("Foi analisado o caminho: ")
                         logging.debug(caminho_to_string(cam))
+
                         caminhos_pos_algoritmos.append((cam, enc_id))
-                        total_este_caminho += calcula_distancia(cam)
+                        distancia_este_caminho  = calcula_distancia(cam)
+                        total_este_caminho += distancia_este_caminho
+                        # Necessário para o critério da ecologia, para calcular o veículo.
+                        if criterio_ecologico:
+                            peso_ant = peso_dist_um_circuito[0]
+                            dist_ant = peso_dist_um_circuito[1]
+                            peso_dist_um_circuito = (peso_ant + encomendas.get(enc_id).peso, dist_ant + distancia_este_caminho)
+                            #peso_dist_um_circuito[0] = encomendas.get(enc_id).peso + peso_dist_um_circuito[0]
+                            #peso_dist_um_circuito[1] = distancia_este_caminho + peso_dist_um_circuito[1]
+
+
                     else:
                         # Liga as outras duas paragens
                         (id_local1, enc_id1) = sub_caminho[atual - 1]
@@ -174,24 +194,59 @@ def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, c
                         logging.debug("Foi analisado o caminho: ")
                         logging.debug(caminho_to_string(cam))
                         caminhos_pos_algoritmos.append((cam, enc_id2))
-                        total_este_caminho += calcula_distancia(cam)
+                        distancia_este_caminho = calcula_distancia(cam)
+                        total_este_caminho += distancia_este_caminho
+                        # Necessário para o critério da ecologia, para calcular o veículo.
+                        # Guardamos o peso da encomenda, e a distância percorrida.
+                        if criterio_ecologico:
+                            peso_ant = peso_dist_um_circuito[0]
+                            dist_ant = peso_dist_um_circuito[1]
+                            peso_dist_um_circuito = (
+                            peso_ant + encomendas.get(enc_id).peso, dist_ant + distancia_este_caminho)
 
+#                            peso_dist_um_circuito[0] = encomendas.get(enc_id).peso + peso_dist_um_circuito[0]
+#                            peso_dist_um_circuito[1] = distancia_este_caminho + peso_dist_um_circuito[1]
                 # Tem de voltar à base
                 (id_local1, enc_id1) = sub_caminho[atual]
                 local1 = Local.encontra_local(id_local1)
                 cam = algoritmo(local1, origens.get(cidade_str))
                 logging.debug("Foi analisado o caminho: ")
                 logging.debug(caminho_to_string(cam))
-                total_este_caminho += calcula_distancia(cam)
+                distancia_este_caminho = calcula_distancia(cam)
+                total_este_caminho += distancia_este_caminho
                 logging.debug(f"Este caminho tem o custo total de: {total_este_caminho}")
                 caminhos_pos_algoritmos.append((cam, -1))
+                if criterio_ecologico:
+                    peso, distancia = peso_dist_um_circuito
+                    veiculo = veiculo_mais_ecologico(distancia, peso)
+                    if veiculo is not None:
+                        veiculos_e_distancias.append((veiculo, distancia))
+                    peso_dist_um_circuito = (0,0)
+
             logging.debug("<---------Fim de análise de um caminho------->")
-            if total_este_caminho < melhor_distancia:
-                logging.debug(f"Altera caminho para um melhor, {total_este_caminho}")
-                # Guarda as informações do melhor caminho
-                melhor_distancia = total_este_caminho
-                melhor_caminho.clear()
-                melhor_caminho = caminhos_pos_algoritmos.copy()
+            # Se quisermos a velocidade, então o mais importante é a distância percorrida no caminho.
+            if not criterio_ecologico:
+                if total_este_caminho < melhor_distancia:
+                    logging.debug(f"Altera caminho para um melhor, {total_este_caminho}")
+                    # Guarda as informações do melhor caminho
+                    melhor_distancia = total_este_caminho
+                    melhor_caminho.clear()
+                    melhor_caminho = caminhos_pos_algoritmos.copy()
+            # Se quisermos entregas mais ecológicas, o importante é a poluição realizada durante o percurso.
+            else:
+                total_poluicao_este = 0
+                for veiculo, distancia in veiculos_e_distancias:
+                    total_poluicao_este += veiculo.coeficiente_poluicao * distancia
+                if total_poluicao_este < menos_poluente :
+                    menos_poluente = total_poluicao_este
+                    logging.debug(f"Altera caminho para um melhor, {total_este_caminho}")
+                    # Guarda as informações do melhor caminho
+                    melhor_distancia = total_este_caminho
+                    melhor_caminho.clear()
+                    melhor_caminho = caminhos_pos_algoritmos.copy()
+                    veiculos_e_distancias.clear()
+                    peso_dist_um_circuito = (0,0)
+
     # Nenhum caminho é possível, pode ser porque a encomenda é muito pesada
     # Ou duas, ou mais, entregas dum nodo ultrapassa o máximo.
     if melhor_distancia == float(inf):

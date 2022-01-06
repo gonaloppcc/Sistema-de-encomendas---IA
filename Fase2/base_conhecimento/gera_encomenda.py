@@ -13,7 +13,7 @@ def gera_encomendas(num_encomendas, nome_cidade):
     @param num_encomendas: número de encomendas para serem geradas.
     @param nome_cidade: Qual a cidade de destino das encomendas geradas.
     """
-    peso_maximo = maximo_peso_uma_viagem()
+    peso_maximo = maximo_peso_uma_viagem() / 2
     data_encomenda_hoje = date.today()
     if len(encomendas) == 0:
         id_encomenda_atual = 0
