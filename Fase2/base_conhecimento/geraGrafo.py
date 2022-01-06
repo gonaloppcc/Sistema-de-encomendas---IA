@@ -33,6 +33,24 @@ def verifica_dist(nodo):
     return True
 
 
+def obtem_proximos(nodo):
+    """
+    Obtem a lista dos 5 nodos mais próximos ao nodo
+    passado como argumento.
+    @param nodo: Nodo a procurar
+    @return: Lista com os 5 nodos mais próximos
+    """
+    lista = []
+    for outro_nodo in mapa["grafos"][nodo.freguesia].keys():
+        if nodo == outro_nodo:
+            continue
+        norma = calcula_norma(nodo, outro_nodo)
+        lista.append((outro_nodo, norma))
+
+    lista.sort(key=lambda x: x[1])
+    return lista[0:5]
+
+
 def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     g = nx.DiGraph()
     """
@@ -77,11 +95,9 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     nodos = mapa["grafos"][nome_grafo].keys()
     for nodo in nodos:
         conectados = []
-        for outro_nodo in nodos:
-            if nodo == outro_nodo:
-                continue
+        lista = obtem_proximos(nodo)
+        for outro_nodo, distancia in lista:
             if randint(0, 100) <= probabilidade_conexao:
-                distancia = calcula_norma(nodo, outro_nodo) / 200
                 conectados.append((outro_nodo, distancia))
         mapa["grafos"][nome_grafo][nodo] = conectados
 
@@ -114,3 +130,4 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     nx.draw_networkx(g, pos, with_labels=True)
     plt.title(nome_grafo)
     plt.savefig(nome_grafo + ".png")
+    plt.close()

@@ -4,6 +4,9 @@ from gera_encomendas.gera_estafeta import gerar_estafeta
 
 
 def gera_atribuicoes():
+    """
+    Função que gera atribuições para encomendas que ainda não foram atribuídas a nenhum estafeta.
+    """
     encomendas_atribuidas = {-1}
     for atribuicao in atribuicoes:
         encomendas_atribuidas.add(atribuicao.encomenda_id)
