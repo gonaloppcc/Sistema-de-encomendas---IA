@@ -48,7 +48,7 @@ class Encomenda:
         """
         from base_conhecimento.baseConhecimento import encomendas
         for encomenda in encomendas.keys():
-            from gera_encomendas.gera_circuitos import encomenda_valida
+            from gera_conhecimento.gera_circuitos import encomenda_valida
             if encomenda_valida(encomenda):
                 return True
         return False

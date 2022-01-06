@@ -1,6 +1,6 @@
-from base_conhecimento.Atribuicao import Atribuicao
 from base_conhecimento.baseConhecimento import encomendas, estafetas, atribuicoes
-from gera_encomendas.gera_estafeta import gerar_estafeta
+from base_conhecimento.entidades.Atribuicao import Atribuicao
+from gera_conhecimento.gera_estafeta import gerar_estafeta
 
 
 def gera_atribuicoes():

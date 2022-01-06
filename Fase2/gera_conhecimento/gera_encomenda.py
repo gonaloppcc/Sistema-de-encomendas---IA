@@ -2,8 +2,8 @@ from datetime import date, timedelta
 from random import randint
 
 from algoritmos_procura.common import maximo_peso_uma_viagem
-from base_conhecimento.Encomenda import Encomenda
 from base_conhecimento.baseConhecimento import id_locais_cidades, encomendas, origens
+from base_conhecimento.entidades.Encomenda import Encomenda
 
 
 def gera_encomendas(num_encomendas, nome_cidade):

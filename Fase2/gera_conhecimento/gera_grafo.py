@@ -7,8 +7,8 @@ from matplotlib import pyplot as plt
 
 from algoritmos_procura.common import calcula_norma
 from algoritmos_procura.dfs import dfs
-from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import mapa, origens, id_locais_cidades
+from base_conhecimento.entidades.Local import Local
 
 min_x = -10000
 max_x = 10000

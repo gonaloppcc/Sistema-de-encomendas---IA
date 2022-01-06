@@ -1,7 +1,7 @@
 from random import randint
 
-from base_conhecimento.Estafeta import Estafeta
 from base_conhecimento.baseConhecimento import estafetas
+from base_conhecimento.entidades.Estafeta import Estafeta
 
 nomes_possiveis_estafeta = ["Marco", "Gonçalo", "Rita", "Diogo"]
 

@@ -4,15 +4,15 @@ from math import inf
 
 from algoritmos_procura.common import calcula_distancia, caminho_to_string
 from algoritmos_procura.common import maximo_peso_uma_viagem
-from base_conhecimento.Estafeta import Estafeta
-from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import atribuicoes, estafetas, encomendas, origens
-from base_conhecimento.circuitos import adiciona_circuito
-from gera_encomendas.Entrega import Entrega
+from base_conhecimento.entidades.Entrega import Entrega
+from base_conhecimento.entidades.Estafeta import Estafeta
+from base_conhecimento.entidades.Local import Local
+from base_conhecimento.entidades.circuitos import adiciona_circuito
 # Entregas realizadas
-from gera_encomendas.gera_caminhos import descobre_possiveis_caminhos
+from gera_conhecimento.gera_caminhos import descobre_possiveis_caminhos
 # Variável usada para controlar o tempo de procura do melhor caminho.
-from gera_encomendas.gera_veiculos import criterio_ecologico, veiculo_mais_ecologico
+from gera_conhecimento.gera_veiculos import criterio_ecologico, veiculo_mais_ecologico
 
 # Modo de teste: permite que uma encomenda seja entregue duas vezes.
 modo_teste = False

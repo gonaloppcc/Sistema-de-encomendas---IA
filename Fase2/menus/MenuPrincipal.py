@@ -9,14 +9,14 @@ from algoritmos_procura.dfs import dfs
 from algoritmos_procura.dfs_lim import dfs_limited
 from algoritmos_procura.dijkstra import dijkstra
 from algoritmos_procura.gulosa import resolve_gulosa
-from base_conhecimento.Encomenda import Encomenda
 from base_conhecimento.baseConhecimento import mapa
-from base_conhecimento.circuitos import *
-from base_conhecimento.geraGrafo import gera_grafo
-from base_conhecimento.gera_atribuicoes import gera_atribuicoes
-from base_conhecimento.gera_encomenda import gera_encomendas
-from gera_encomendas import gera_circuitos
-from gera_encomendas.gera_circuitos import *
+from base_conhecimento.entidades.Encomenda import Encomenda
+from base_conhecimento.entidades.circuitos import *
+from gera_conhecimento import gera_circuitos
+from gera_conhecimento.gera_atribuicoes import gera_atribuicoes
+from gera_conhecimento.gera_circuitos import *
+from gera_conhecimento.gera_encomenda import gera_encomendas
+from gera_conhecimento.gera_grafo import gera_grafo
 
 algoritmos = {
     "dfs": dfs,
@@ -66,16 +66,15 @@ def gerar_encomendas():
 
 
 def gerar_circuitoss():
-
     crit = input("Pretende usar o critério ecológico? (S)im/(N)ão ")
-    import gera_encomendas.gera_veiculos
-    gera_encomendas.gera_veiculos.criterio_ecologico = crit.upper() == "S"
+    import gera_conhecimento.gera_veiculos
+    gera_conhecimento.gera_veiculos.criterio_ecologico = crit.upper() == "S"
 
     print(f"Algoritmos implementados: {algoritmos.keys()}")
     alg = input("Nome do algoritmo a ser usado: ")
     executar_algoritmo(alg)
 
-    gera_encomendas.gera_veiculos.criterio_ecologico = False
+    gera_conhecimento.gera_veiculos.criterio_ecologico = False
 
 
 def executar_algoritmo(nome_algoritmo):
@@ -104,7 +103,7 @@ def formata_caminho(caminho):
     locais = caminho.split(';')
     for i in range(len(locais) - 2):
         str += f"{locais[i]}->"
-    str += f"{locais[len(locais)-2]}"
+    str += f"{locais[len(locais) - 2]}"
     return str
 
 
@@ -147,7 +146,7 @@ def circuito_mais_usado_volumee():
         print("Ainda não foram gerados circuitos.")
         return
     print("O circuito mais usado com base no volume total das entregas do percurso: ")
-    #print(circuito_mais_usado_volume())
+    # print(circuito_mais_usado_volume())
     circuito, volume = circuito_mais_usado_volume()
     print(f"Circuito: {formata_caminho(circuito)}")
     print(f"    Volume total: {volume}")
@@ -216,7 +215,3 @@ def menu_principal():
     menu = Menu(title="\n****Green Distribution Management****", options=options)
     menu.open()
     menu.set_prompt(">")
-
-
-if __name__ == "__main__":
-    menu_principal()

@@ -1,10 +1,10 @@
 from datetime import datetime
 
 from algoritmos_procura.common import caminho_to_string
-from base_conhecimento.Estafeta import Estafeta
-from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import Transporte, encomendas
 from base_conhecimento.baseConhecimento import entregas
+from base_conhecimento.entidades.Estafeta import Estafeta
+from base_conhecimento.entidades.Local import Local
 
 
 # Entrega

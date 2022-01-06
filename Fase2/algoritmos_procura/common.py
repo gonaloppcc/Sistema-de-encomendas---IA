@@ -5,8 +5,8 @@
 # Calcula a distância entre dois nodos através das suas coordenadas
 from math import sqrt
 
-from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import mapa, transportes
+from base_conhecimento.entidades.Local import Local
 
 
 def calcula_norma(nodo1, nodo2):

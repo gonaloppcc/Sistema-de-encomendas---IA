@@ -3,10 +3,10 @@ import logging
 from datetime import timedelta
 
 from algoritmos_procura.common import calcula_distancia, calcula_tempo_transporte
-from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import entregas, circuitos_efetuados, encomendas
-from gera_encomendas.Entrega import Entrega
-from gera_encomendas.gera_veiculos import escolhe_veiculo
+from base_conhecimento.entidades.Entrega import Entrega
+from base_conhecimento.entidades.Local import Local
+from gera_conhecimento.gera_veiculos import escolhe_veiculo
 
 
 # Retorna uma lista ordenada pelo seu fator
@@ -136,5 +136,3 @@ def calcula_data_entrega(caminho, encomenda_id, peso_total, veiculo_escolhido):
     logging.info(f"Data de entrega: {data_entrega.strftime('%d %b %Y')}")
 
     return data_entrega
-
-

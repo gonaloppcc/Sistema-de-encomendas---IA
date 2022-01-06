@@ -27,4 +27,4 @@ class Estafeta:
         for _, estafeta in estafetas.items():
             if estafeta.estafeta_id == id_estafeta:
                 return estafeta.nome
-        #return "Zé"
+        # return "Zé"

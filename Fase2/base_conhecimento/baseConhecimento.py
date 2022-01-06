@@ -1,6 +1,6 @@
-from base_conhecimento.Estafeta import Estafeta
-from base_conhecimento.Local import Local
-from base_conhecimento.Transporte import Transporte
+from base_conhecimento.entidades.Estafeta import Estafeta
+from base_conhecimento.entidades.Local import Local
+from base_conhecimento.entidades.Transporte import Transporte
 
 # Conhecimento ------------------------------------------------------------
 

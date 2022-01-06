@@ -1,8 +1,8 @@
 import logging
 
 from algoritmos_procura.common import conectados
-from base_conhecimento.Local import Local
 from base_conhecimento.baseConhecimento import mapa
+from base_conhecimento.entidades.Local import Local
 
 
 def dfs2(origem, destino, lista_atual):
