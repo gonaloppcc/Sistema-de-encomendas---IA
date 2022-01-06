@@ -5,6 +5,9 @@ from base_conhecimento import baseConhecimento
 # Busca Iterativa Limitada em Profundidade.
 # Eu fiz como diz no ‘diapositivo’: T(5) Classical Search
 # Este método Pesquisa em Profundidade Iterativa
+from base_conhecimento.baseConhecimento import mapa
+
+
 def dfs_limited2(origem, destino, lista_atual, nivel_atual):
     if nivel_atual == 0:
         return None
@@ -12,7 +15,8 @@ def dfs_limited2(origem, destino, lista_atual, nivel_atual):
     if origem == destino:
         return lista_atual
     # Caso seja um dead-end
-    if origem not in baseConhecimento.distancias:
+    cidade = origem.encontra_cidade()
+    if origem not in mapa["grafos"][cidade].keys():
         return None
     # Nós adjacentes ao atual (origem)
     ligados = conectados(origem)
