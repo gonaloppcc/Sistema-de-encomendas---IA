@@ -37,7 +37,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     g = nx.DiGraph()
     """
     Gera um grafo aleatório com num_nodos nodos e com o nome
-    para nome_grafo. A origem é selecionada aleatóriamente
+    para nome_grafo. A origem é selecionada aleatoriamente
     e o algoritmo garante, através do uso do dfs, que a partir
     desta existe um caminho possível para todos os nodos.
     @param nome_grafo: Nome que o grafo terá no dicionário de grafos do mapa da base de conhecimento
@@ -48,7 +48,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     # Para inserir no id_locais_cidades da base de conhecimento.
     id_counter_antes = mapa['id_counter']
     # Gerar todos os nodos com nome 'Local_{i}' e freguesia 'Freguesia_{i}'.
-    # As coordenadas são selecionadas aleatóriamente no campo de 0-100
+    # As coordenadas são selecionadas aleatoriamente no campo de 0-100
     for i in range(num_nodos):
         freguesia = nome_grafo
         nome = f"Local_{mapa['id_counter'] + i}"
@@ -65,7 +65,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
     mapa["id_counter"] += num_nodos
     # Acrescenta os ids incluídos nesta cidade.
     id_locais_cidades[nome_grafo] = (id_counter_antes, (mapa["id_counter"]))
-    # Selecionar a origem aleatóriamente e adicioná-la ao
+    # Selecionar a origem aleatoriamente e adiciona-la ao
     # dicionário de origens em baseConhecimento
     origem = list(mapa["grafos"][nome_grafo])[randint(0, num_nodos - 1)]
     origens[nome_grafo] = origem
@@ -85,7 +85,7 @@ def gera_grafo(nome_grafo, num_nodos, probabilidade_conexao):
                 conectados.append((outro_nodo, distancia))
         mapa["grafos"][nome_grafo][nodo] = conectados
 
-    # Percorrer todos os nodos para veríficar que existe
+    # Percorrer todos os nodos para verificar que existe
     # um caminho possível entre estes e a origem selecionada anteriormente.
     # Aqui usamos o algoritmo depth-first porque não nos interessa que o
     # caminho encontrado seja o mais rápido. Interessa-nos só que exista

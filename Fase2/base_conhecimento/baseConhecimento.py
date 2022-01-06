@@ -13,7 +13,7 @@ from base_conhecimento.Transporte import Transporte
 local0 = Local(0, "Vila_do_Conde", "local1", 76, 24)
 local1 = Local(1, "Vila_do_Conde", "local2", 15, 104)
 local2 = Local(2, "Vila_do_Conde", "avenida", 76, 7)
-local3 = Local(3, "Vila_do_Conde", "praca", 75, 130)
+local3 = Local(3, "Vila_do_Conde", "praça", 75, 130)
 
 # Locais da segunda fase
 local4 = Local(4, "Vila_do_Conde", "local5", 10, 14)

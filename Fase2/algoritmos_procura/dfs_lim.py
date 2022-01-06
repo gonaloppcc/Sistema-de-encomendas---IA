@@ -1,9 +1,8 @@
 from algoritmos_procura.common import conectados
-from base_conhecimento import baseConhecimento
 
 
 # Busca Iterativa Limitada em Profundidade.
-# Eu fiz como diz no ‘diapositivo’: T(5) Classical Search
+# Tal como diz no ‘diapositivo’: T(5) Classical Search
 # Este método Pesquisa em Profundidade Iterativa
 from base_conhecimento.baseConhecimento import mapa
 
@@ -28,7 +27,7 @@ def dfs_limited2(origem, destino, lista_atual, nivel_atual):
             # Temos de guardar a lista porque, caso o dfs2 chegue a um dead-end
             # Temos de continuar a procurar, equivalente a backtrace
             lista_antes_alterar = lista_atual.copy()
-            # Insere à cabeçaporque procuramos sempre o primeiro elemento da lista
+            # Insere à cabeça porque procuramos sempre o primeiro elemento da lista
             lista_atual.insert(0, nodo)
 
             # Chamada recursiva

@@ -1,5 +1,4 @@
 from algoritmos_procura.common import conectados
-from base_conhecimento import baseConhecimento
 
 
 # bfs

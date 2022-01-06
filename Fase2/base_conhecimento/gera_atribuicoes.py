@@ -4,11 +4,11 @@ from gera_encomendas.gera_estafeta import gerar_estafeta
 
 
 def gera_atribuicoes():
-    encomentas_atribuidas = {-1}
+    encomendas_atribuidas = {-1}
     for atribuicao in atribuicoes:
-        encomentas_atribuidas.add(atribuicao.encomenda_id)
+        encomendas_atribuidas.add(atribuicao.encomenda_id)
     for encomenda_id in encomendas:
-        if encomenda_id not in encomentas_atribuidas:
+        if encomenda_id not in encomendas_atribuidas:
             encomenda = encomendas.get(encomenda_id)
             cidade_destino = encomenda.cidade_encomenda()
             estafeta = estafetas.get(cidade_destino)

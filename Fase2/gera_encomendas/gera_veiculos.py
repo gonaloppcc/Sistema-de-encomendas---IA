@@ -41,7 +41,7 @@ def escolhe_veiculo(circuito):
     @return: Veículo escolhido.
     """
     caminho, enc_ids = circuito
-    logging.debug("[Gera veiculos]")
+    logging.debug("[Gera veículos]")
     logging.debug(f"Caminho: {caminho}")
     logging.debug(f"Encomendas: {enc_ids}")
     pesos_no_percurso = map(lambda id_encomenda: encomendas.get(id_encomenda).peso, enc_ids)

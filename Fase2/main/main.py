@@ -1,9 +1,7 @@
 import logging
 
-from algoritmos_procura.a_estrela import a_estrela
 from algoritmos_procura.bfs import bfs
 from algoritmos_procura.dfs_lim import dfs_limited
-from algoritmos_procura.gulosa import resolve_gulosa
 from base_conhecimento.geraGrafo import gera_grafo
 from base_conhecimento.gera_atribuicoes import gera_atribuicoes
 from base_conhecimento.gera_encomenda import gera_encomendas
@@ -26,7 +24,7 @@ def main():
     gera_encomendas(2, "Trofa")
     print("Gera encomenda feita")
     gera_atribuicoes()
-    print("Gera atribuicoes feita")
+    print("Gera atribuições feita")
 
     algoritmo1 = bfs
     algoritmo2 = dfs_limited
@@ -38,7 +36,7 @@ def main():
 
     logging.info(f"-> Algoritmo da {algoritmo2.__name__}")
     gerar_circuitos(algoritmo2)
-    print("Gera cicruitos feita")
+    print("Gera circuitos feita")
 
     logging.debug('Acabou')
 

@@ -77,7 +77,8 @@ def melhor_caminho_descoberto(estafeta_id, melhor_caminho):
     circuito_atual = []
     # Também queremos saber que encomendas foram entregues nesse circuito
     encomendas_entregues_neste_circuito = []
-    # Para não introduzirmos paragens repetidas, porque se entregarmos duas encomendas no mesmo local, esse local aparece em duplicado.
+    # Para não introduzirmos paragens repetidas, porque se entregarmos duas encomendas no mesmo local, esse local
+    # aparece em duplicado.
     ultimo_local = None
     for sub_percurso_atual in range(0, len(melhor_caminho)):
         # Primeiro, vamos ver que encomendas serão entregues nessa viagem
@@ -120,7 +121,7 @@ def gera_circuito_um_estafeta(estafeta_id, algoritmo, cidade):
         gera_circuitos_um_dia(algoritmo, encomendas_um_dia, estafeta, cidade)
 
 
-def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, cidade_str: str) -> object:
+def gera_circuitos_um_dia(algoritmo, encomendas_id: [int], estafeta: Estafeta, cidade_str: str):
     """
     Gera as entregas de um dado estafeta para um dia.
     @param algoritmo: Algoritmo utilizado para escolher caminhos entre dois locais.

@@ -16,7 +16,7 @@ Ignorando os id's das entregas, teremos algo deste género para as paragens A, B
 Como cada estafeta só entrega na sua cidade, vamos procurar todos os possíveis percursos, independentemente do custo.
 """
 
-# Função simples para ver se uma paragem pertence a uma lista ou sublista
+# Função simples para ver se uma paragem pertence a uma lista ou sub-lista
 import logging
 from itertools import combinations, permutations
 
@@ -82,7 +82,7 @@ def descobre_possiveis_caminhos(encomendas_id):
         map(lambda encomenda_id: (encomendas.get(encomenda_id).id_local_entrega, encomenda_id), encomendas_id))
     # Já temos todos os locais de entrega
 
-    # Obter todos os subcaminhos, com 2 paragens
+    # Obter todos os sub-caminhos, com 2 paragens
     combinacoes = list()
     for n in range(2, len(locais_entrega) + 1):
         combinacoes += list(combinations(locais_entrega, n))
