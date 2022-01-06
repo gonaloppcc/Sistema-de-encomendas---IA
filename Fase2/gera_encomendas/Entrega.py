@@ -2,7 +2,7 @@ from datetime import datetime
 
 from algoritmos_procura.common import caminho_to_string
 from base_conhecimento.Local import Local
-from base_conhecimento.baseConhecimento import Transporte
+from base_conhecimento.baseConhecimento import Transporte, encomendas
 from base_conhecimento.baseConhecimento import entregas
 
 
@@ -36,10 +36,11 @@ class Entrega:
         Função utilizada para imprimir uma entrega de forma organizada.
         """
         descricao = ""
-        descricao += f"Id da encomenda:  {self.encomenda_id}\n"
+        descricao += f"\nId da encomenda:  {self.encomenda_id}\n"
         descricao += f"Id da estafeta: {self.estafeta_id}\n"
         descricao += f"Data entrega: {self.data_entrega}\n"
         descricao += f"Transporte: {self.transporte.nome}\n"
+        descricao += f"Peso: {encomendas.get(self.encomenda_id).peso}\n"
         descricao += caminho_to_string(self.caminho)
         return descricao
 
