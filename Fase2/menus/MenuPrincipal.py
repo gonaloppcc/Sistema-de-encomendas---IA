@@ -1,3 +1,5 @@
+from random import randint
+
 import psutil
 from menu import Menu
 
@@ -64,10 +66,16 @@ def gerar_encomendas():
 
 
 def gerar_circuitoss():
-    print(f"Algoritmos implementados: {algoritmos.keys()}")
 
+    crit = input("Pretende usar o critério ecológico? (S)im/(N)ão ")
+    import gera_encomendas.gera_veiculos
+    gera_encomendas.gera_veiculos.criterio_ecologico = crit.upper() == "S"
+
+    print(f"Algoritmos implementados: {algoritmos.keys()}")
     alg = input("Nome do algoritmo a ser usado: ")
     executar_algoritmo(alg)
+
+    gera_encomendas.gera_veiculos.criterio_ecologico = False
 
 
 def executar_algoritmo(nome_algoritmo):
@@ -151,19 +159,46 @@ def mudar_modo_teste():
     print(f"Modo de teste {string}!")
 
 
+def gerar_encomendas_automaticamente():
+    num_encomendas = 15
+
+    grafo_int = randint(0, len(mapa["grafos"]) - 1)
+    grafo = list(mapa["grafos"].keys())[grafo_int]
+    print("Grafo selecionado aleatoriamente!")
+
+    gera_encomendas(num_encomendas, grafo)
+    print(f"Geração de {num_encomendas} encomendas com sucesso!")
+
+    gera_atribuicoes()
+    print("Geração das atribuições das encomendas aos estafetas com sucesso!")
+
+    print("Encomendas geradas com sucesso.")
+
+
 def correr_todos():
+    if not Encomenda.encomendas_por_entregar():
+        gerar_encomendas_automaticamente()
+
     m_teste = gera_circuitos.modo_teste
     print("De modo a correr todos os algoritmos nas mesmas condições o modo teste será ativado, caso não esteja!")
     gera_circuitos.modo_teste = True
+
     for nome in algoritmos.keys():
         print(f"Inicia-se a procura com o algoritmo {nome}!")
         executar_algoritmo(nome)
+
     print("A repor o modo de teste...")
     gera_circuitos.modo_teste = m_teste
 
 
 def menu_principal():
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        filename='output.log',
+        filemode='w',
+        format='[%(levelname)s] %(message)s',
+        datefmt='%H:%M:%S',
+        level=logging.INFO
+    )
     options = [
         ("Mostrar todas as encomendas", mostrar_encomendas),
         ("Mostrar todas as entregas", mostrar_entregas),
@@ -178,7 +213,7 @@ def menu_principal():
         ("Realizar testes para todos os algoritmos", correr_todos),
         ("Sair", Menu.CLOSE)
     ]
-    menu = Menu(title="\n****Green Distribution Management****", options=options)  # customize the options
+    menu = Menu(title="\n****Green Distribution Management****", options=options)
     menu.open()
     menu.set_prompt(">")
 
